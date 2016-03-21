@@ -1,4 +1,4 @@
-HOME_DIR='/var/ui/'
+HOME_DIR='/var/apartment_ui/'
 cd $HOME_DIR
 
 mkdir -p logs
