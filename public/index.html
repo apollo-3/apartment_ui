@@ -2,29 +2,20 @@
 <head>
   <title>Apartment UI</title>
   <script type="text/javascript" src="bower.js"></script>
+  <script type="text/javascript" src="modules/apartments.js"></script>
+  <script type="text/javascript" src="controllers/login.js"></script>  
+  <script type="text/javascript" src="controllers/register.js"></script>  
+  <script type="text/javascript" src="controllers/project.js"></script>    
 </head>
-<body>
+<body ng-app='apartments'>
   <script type="text/javascript">
-    $(document).ready(function() {
-      $('input[type="button"]').on('click', function() {
-        pass = $("input[type='password']").val()
-        mail = $("input[type='text']").val()
-        $.ajax({
-          url: 'http://192.168.33.11:3000/api/users/login',
-          type: 'POSt',
-          data: JSON.stringify({user:{mail: mail, password: pass}}),
-          contentType: 'application/json',
-          dataType: 'json',
-          success: function(data) {
-            console.log(data['token']);
-          }
-        });
-      });     
+    $(document).ready(function() {   
     });
   </script>
+  
   <h3>Apartment UI</h3>
-  <input type="text" value="apollo-3@mail.ru"></input>
-  <input type="password" value="apollo"></input>
-  <input type="button" value="login"></input>
+  <a ui-sref="login">Login</a>  
+  <a ui-sref="register">Register</a>
+  <div ui-view></div>
 </body>
 </html>
