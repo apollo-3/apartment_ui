@@ -1,16 +1,15 @@
 module.exports = function(grunt) {
   grunt.initConfig({
-    watch: {
-      scripts: {
-        files: '**/*.*',
-        tasks: ['default'],
-        options: {
-          interrupt: true,
-        },
-     },
+    bower_concat: {
+      all: {
+        dest: {
+          'js': 'build/bower.js',
+          'css': 'build/bower.css'
+        }
+      }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.registerTask('default', []);
+  grunt.loadNpmTasks('grunt-bower-concat');
+  grunt.registerTask('default', ['bower_concat']);
 };
