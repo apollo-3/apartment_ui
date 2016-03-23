@@ -1,0 +1,30 @@
+<html>
+<head>
+  <title>Verify</title>
+  <script type="text/javascript" src="bower.js"></script>
+</head>
+<body>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $.params = function(name){
+	      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	      return results[1] || 0;
+      }
+      $.ajax({
+        url: 'http://192.168.33.11:3000/api/users/verify',
+        data: 'mail=' + $.params('mail') + '&token=' + $.params('token'),
+        dataType: 'json',
+        method: 'get',
+        success: function(res) {
+          if (res.hasOwnProperty('success')) {
+            alert ('User was verified');
+            window.location.href = '/';
+          } else {
+            alert(res['error']);
+          }
+        }
+      })
+    });
+  </script>
+</body>
+</html>

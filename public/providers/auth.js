@@ -60,7 +60,12 @@ app.factory('auth', function($cookies, $http, $state, values) {
         data: user,
         headers: {'Content-Type': 'application/json'}        
       }).then(function(res) {
-        alert(res.data);
+        if (res.data.hasOwnProperty('error')) {
+          alert(res.data['error']);
+        } else {
+          alert(res.data['success'] + '\n' + res.data['verifing_url']);
+          $state.transitionTo('project');
+        }
       });
     }
   }
