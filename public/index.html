@@ -3,9 +3,11 @@
   <title>Apartment UI</title>
   <script type="text/javascript" src="bower.js"></script>
   <script type="text/javascript" src="modules/apartments.js"></script>
+  <script type="text/javascript" src="controllers/top.js"></script>    
   <script type="text/javascript" src="controllers/login.js"></script>  
   <script type="text/javascript" src="controllers/register.js"></script>  
   <script type="text/javascript" src="controllers/project.js"></script>    
+  <script type="text/javascript" src="providers/auth.js"></script>
 </head>
 <body ng-app='apartments'>
   <script type="text/javascript">
@@ -13,9 +15,7 @@
     });
   </script>
   
-  <h3>Apartment UI</h3>
-  <a ui-sref="login">Login</a>  
-  <a ui-sref="register">Register</a>
-  <div ui-view></div>
+  <div ui-view="top"></div>
+  <div ui-view="main"></div>
 </body>
 </html>
