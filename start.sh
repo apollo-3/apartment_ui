@@ -3,6 +3,8 @@ cd $HOME_DIR
 
 mkdir -p logs
 mkdir -p build
+mkdir -p public/css
 ./stop.sh > /dev/null 2>&1
 grunt
 nohup node index.js > logs/node.log 2>&1 &
+nohup npm run watch_css > logs/nodemon.log 2>&1 &

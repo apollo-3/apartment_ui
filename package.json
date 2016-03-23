@@ -4,6 +4,8 @@
   "description": "apartments",
   "main": "index.js",
   "scripts": {
+    "build_css": "./bin/build_css.sh",
+    "watch_css": "./bin/watch_css.sh",  
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

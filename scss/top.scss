@@ -1,0 +1,15 @@
+$top_bg_color: yellow;
+$auth_menu_color: #EFDBC6;
+
+div.top { 
+  margin: 0; 
+  padding: 0;
+  background-color: $top_bg_color;
+  
+  div.menu {
+    float: right;
+    right: 0px;
+    width: 300px;
+    background-color: $auth_menu_color;
+  }
+}

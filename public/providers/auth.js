@@ -1,9 +1,9 @@
-app.factory('auth', function($cookies, $http, $state) {
+app.factory('auth', function($cookies, $http, $state, values) {
   var session = {
     login: function(user, remember) {
       $http({
         method: 'post',
-        url: 'http://192.168.33.11:3000/api/users/login',
+        url: values.api_url + '/users/login',
         data: JSON.stringify(user),
         headers: {'Content-Type': 'application/json'}
       }).then(function(res) { 
@@ -26,7 +26,7 @@ app.factory('auth', function($cookies, $http, $state) {
     logout: function() {
       $http({
         method: 'post',
-        url: 'http://192.168.33.11:3000/api/users/logout',
+        url: values.api_url +'users/logout',
         data: JSON.stringify({'user':{'mail': $cookies.get('mail'), 'token': $cookies.get('token')}}),
         headers: {'Content-Type': 'application/json'}
       }).then(function(res) { 
@@ -52,6 +52,16 @@ app.factory('auth', function($cookies, $http, $state) {
         ifLogged = true;
       }
       return ifLogged;
+    },
+    register: function(user) {
+      $http({
+        method: 'post',
+        url: values.api_url + 'users/register',
+        data: user,
+        headers: {'Content-Type': 'application/json'}        
+      }).then(function(res) {
+        alert(res.data);
+      });
     }
   }
   return session;
