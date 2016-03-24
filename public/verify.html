@@ -12,12 +12,12 @@
       }
       $.ajax({
         url: 'http://192.168.33.11:3000/api/users/verify',
-        data: 'mail=' + $.params('mail') + '&token=' + $.params('token'),
+        data: 'mail=' + $.params('mail') + '&token=' + $.params('token') + '&action=' + $.params('action'),
         dataType: 'json',
         method: 'get',
         success: function(res) {
           if (res.hasOwnProperty('success')) {
-            alert ('User was verified');
+            alert (res['success']);
             window.location.href = '/';
           } else {
             alert(res['error']);

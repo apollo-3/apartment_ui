@@ -2,7 +2,8 @@
   <div class="menu">
     <a ui-sref="login" ng-hide="isLogged || routerState.current.name=='login'">Login</a>  
     <a ui-sref="register" ng-show="routerState.current.name=='login'">Register</a>
-    <a ng-href='#' ng-click='logout()' ng-show="isLogged">Logout</a>
+    <a ng-href="#" ng-click='logout()' ng-show="isLogged">Logout</a>
+    <a ui-sref="profile" ng-show="isLogged && routerState.current.name!='profile'">Profile</a>
   </div>
   <b>Apartment UI</b>
 </div>

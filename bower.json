@@ -16,6 +16,7 @@
     "jquery": "^2.2.2",
     "angular": "^1.5.2",
     "angular-cookies": "^1.5.2",
-    "angular-ui-router": "^0.2.18"
+    "angular-ui-router": "^0.2.18",
+    "cryptojslib": "^3.1.2"
   }
 }

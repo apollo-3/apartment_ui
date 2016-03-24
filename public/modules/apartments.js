@@ -42,5 +42,31 @@ app.config(function($stateProvider, $urlRouterProvider) {
           controller: "top"          
         }
       }    
+    })
+    .state('reset', {
+      url: "/reset",
+      views: {
+        "main": {
+          templateUrl: "views/reset.html",
+          controller: 'reset'
+        },
+        "top": {
+          templateUrl: "views/top.html",
+          controller: "top"          
+        }
+      }
+    })
+    .state('profile', {
+      url: "/profile",
+      views: {
+        "main": {
+          templateUrl: "views/profile.html",
+          controller: "profile"
+        },
+        "top": {
+          templateUrl: "views/top.html",
+          controller: "top"
+        }
+      }
     });
 });

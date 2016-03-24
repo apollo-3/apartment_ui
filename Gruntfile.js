@@ -5,6 +5,9 @@ module.exports = function(grunt) {
         dest: {
           'js': 'build/bower.js',
           'css': 'build/bower.css'
+        },
+        mainFiles: {
+          'cryptojslib' : 'rollups/md5.js'
         }
       }
     }
