@@ -30,12 +30,25 @@ app.config(function($stateProvider, $urlRouterProvider) {
       }
 
     })
+    .state('workplace', {
+      url: "/workplace",
+      views: {
+        "main": {
+          templateUrl: "views/workplace.html",
+          controller: 'workplace'            
+        },
+        "top": {
+          templateUrl: "views/top.html",
+          controller: "top"          
+        }
+      }    
+    })    
     .state('project', {
       url: "/project",
       views: {
         "main": {
           templateUrl: "views/project.html",
-          controller: 'project'            
+          controller: 'project'          
         },
         "top": {
           templateUrl: "views/top.html",

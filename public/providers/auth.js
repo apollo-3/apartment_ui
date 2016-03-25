@@ -7,11 +7,12 @@ app.factory('auth', function($cookies, $http, $state, values, userData) {
     def_lang: def_lang,
     // Log user in
     login: function(user, remember) {
-      user.user.password = CryptoJS.MD5(user.user.password).toString()
+      user.user.password = CryptoJS.MD5(user.user.password).toString();
+      user.user.defLang = def_lang;
       $http({
         method: 'post',
         url: values.api_url + '/users/login',
-        data: JSON.stringify(user),
+        data: user,
         headers: {'Content-Type': 'application/json'}
       }).then(function(res) { 
         if (res.data.hasOwnProperty('success')) {   
@@ -25,7 +26,7 @@ app.factory('auth', function($cookies, $http, $state, values, userData) {
             $cookies.put('mail', user.user['mail']);
             $cookies.put('token', res.data['token']);           
           }
-          $state.transitionTo('project');
+          $state.transitionTo('workplace');
           return res.data['user'];
         } else {
           alert(res.data['error']);
@@ -37,7 +38,7 @@ app.factory('auth', function($cookies, $http, $state, values, userData) {
       $http({
         method: 'post',
         url: values.api_url +'users/logout',
-        data: {'user':{'mail': $cookies.get('mail'), 'token': $cookies.get('token')}},
+        data: {'user':{'mail': $cookies.get('mail'), 'token': $cookies.get('token'), 'defLang' : def_lang}},
         headers: {'Content-Type': 'application/json'}
       }).then(function(res) { 
           $cookies.remove('mail');
@@ -55,9 +56,9 @@ app.factory('auth', function($cookies, $http, $state, values, userData) {
           $state.transitionTo('login');
         }
       } else if ((mail != undefined) || (token != undefined)) {
-        exceptions = ['profile'];
+        exceptions = ['profile', 'project'];
         if (exceptions.indexOf($state.current.name)==-1) {
-          $state.transitionTo('project');
+          $state.transitionTo('workplace');
         }
       }
     },
@@ -71,6 +72,7 @@ app.factory('auth', function($cookies, $http, $state, values, userData) {
     },
     // User registration
     register: function(user) {
+      user.user.defLang = def_lang;
       user.user.password = CryptoJS.MD5(user.user.password).toString();
       $http({
         method: 'post',
@@ -82,16 +84,16 @@ app.factory('auth', function($cookies, $http, $state, values, userData) {
           alert(res.data['error']);
         } else {
           alert(res.data['success'] + '\n' + res.data['verifing_url']);
-          $state.transitionTo('project');
+          $state.transitionTo('workplace');
         }
       });
     },
     // Reset user's password
-    resetPass: function(mail) {
+    resetPass: function(mail) {      
       $http({
         method: 'post',
         url: values.api_url + 'users/reqreset',
-        data: 'mail=' + mail,
+        data: 'mail=' + mail + '&defLang=' + def_lang,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function(res) {
         if (res.data.hasOwnProperty('error')) {
@@ -104,6 +106,7 @@ app.factory('auth', function($cookies, $http, $state, values, userData) {
     },
     // Delete user
     delUser: function(user) {
+      user.user.defLang = def_lang;
       user.user.password = CryptoJS.MD5(user.user.password).toString();
       $http({
         url: values.api_url + 'users/delete',
@@ -118,6 +121,23 @@ app.factory('auth', function($cookies, $http, $state, values, userData) {
           $cookies.remove('token'); 
           alert(res.data['success']);
           $state.transitionTo('login');
+        }
+      });
+    },
+    // Update user
+    updateUser: function(user) {
+      user.user.defLang = def_lang;
+      $http({
+        url: values.api_url + 'users/update',
+        method: 'post',
+        headers: {'Content-Type':'application/json'},
+        data: user
+      }).then(function(res) {
+        if (res.data.hasOwnProperty('success')) {
+          alert(res.data['success']);
+          userData.setData(res.data['user']);
+        } else {
+          alert(res.data['error']);
         }
       });
     }

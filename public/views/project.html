@@ -1,0 +1,6 @@
+<div>
+  <div ng-repeat="project in projects">
+   {{project.name}}
+   <li ng-repeat="flat in project.flats">{{flat.address}} & {{flat.phone}} & {{flat.contact}}</li>
+  </div>
+</div>
