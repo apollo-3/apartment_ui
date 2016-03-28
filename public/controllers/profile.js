@@ -1,10 +1,11 @@
 app.controller('profile', function($scope, $cookies, auth, userData, $state) {
   auth.checkSession();
-  $scope.user = {user: userData.getData()};
+  tmp = jQuery.extend(true, {}, userData.getData());
+  $scope.user = {user: tmp};
   $scope.user.user.password = '';
   $scope.wannaDelete = false;
   $scope.changePass = false;
-  $scope.langs = ['en', 'ru']
+  $scope.langs = ['en', 'ru'];
   
   $scope.isLogged = auth.isLogged();
   
@@ -24,15 +25,14 @@ app.controller('profile', function($scope, $cookies, auth, userData, $state) {
       user.user['newPassword'] = '';
       delete user.user['newPassword'];
       toSend = user;
+      ORIGINAL = userData.getData();
     }
     auth.updateUser(toSend);
   }
   
   $scope.cancel = function() {
-    userData.reloadData().then(function(res) {
-      userData.setData(res.data['user']);
-      $scope.user = {user: userData.getData()};
-      $state.transitionTo('project');
-    });
+    tmp = userData.getData();
+    $scope.user = {user: tmp};
+    $state.transitionTo('project');
   }
 });

@@ -136,6 +136,7 @@ app.factory('auth', function($cookies, $http, $state, values, userData) {
         if (res.data.hasOwnProperty('success')) {
           alert(res.data['success']);
           userData.setData(res.data['user']);
+          $state.transitionTo('workplace');
         } else {
           alert(res.data['error']);
         }

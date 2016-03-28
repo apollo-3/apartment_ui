@@ -1,6 +1,7 @@
 <div>
   <div ng-repeat="project in projects">
-   {{project.name}}
+   {{project.name}}, Shared: <input type="checkbox" ng-model="project.shared" ng-change="saveProject(project)"/>
+   <button ng-click="delProject(project)">del</button>
    <li ng-repeat="flat in project.flats">{{flat.address}} & {{flat.phone}} & {{flat.contact}}</li>
   </div>
 </div>
