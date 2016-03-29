@@ -43,12 +43,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
       }    
     })    
-    .state('project', {
-      url: "/project",
+    .state('projects', {
+      url: "/projects",
       views: {
         "main": {
-          templateUrl: "views/project.html",
-          controller: 'project'          
+          templateUrl: "views/projects.html",
+          controller: 'projects'          
         },
         "top": {
           templateUrl: "views/top.html",
@@ -69,6 +69,19 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('project', {
+      url: "/project",
+      views: {
+        "main": {
+          templateUrl: "views/project.html",
+          controller: "project"
+        },
+        "top": {
+          templateUrl: "views/top.html",
+          controller: "top"
+        }
+      }
+    })    
     .state('profile', {
       url: "/profile",
       views: {

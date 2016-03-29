@@ -1,4 +1,4 @@
-app.factory('auth', function($cookies, $http, $state, values, userData) {
+app.factory('auth', function($cookies, $http, $state, values, userData, project) {
   // Get default language
   var def_lang = (navigator.language || navigator.userLanguage).split('-')[0];
   
@@ -42,7 +42,9 @@ app.factory('auth', function($cookies, $http, $state, values, userData) {
         headers: {'Content-Type': 'application/json'}
       }).then(function(res) { 
           $cookies.remove('mail');
-          $cookies.remove('token');     
+          $cookies.remove('token');    
+          project.setProjects([]);
+          project.setAllUsers([]);
           $state.transitionTo('login');
       })
     },
@@ -56,7 +58,7 @@ app.factory('auth', function($cookies, $http, $state, values, userData) {
           $state.transitionTo('login');
         }
       } else if ((mail != undefined) || (token != undefined)) {
-        exceptions = ['profile', 'project'];
+        exceptions = ['profile', 'projects'];
         if (exceptions.indexOf($state.current.name)==-1) {
           $state.transitionTo('workplace');
         }

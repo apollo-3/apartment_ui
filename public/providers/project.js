@@ -1,4 +1,5 @@
 app.factory('project', function($http, $cookies, values) {
+  allUsers = [];
   projects = [];
   
   getProjects = function() {
@@ -7,15 +8,7 @@ app.factory('project', function($http, $cookies, values) {
   
   setProjects = function(newProjects) {
     projects = newProjects;
-  }
-  
-  addProject = function(project) {
-    projects.push(project);
-  }
-  
-  delProject = function(project) {
-    projects.splice(projects.indexOf(project));
-  }
+  }  
   
   reloadProjects = function() {
     return $http({
@@ -39,6 +32,19 @@ app.factory('project', function($http, $cookies, values) {
     })
   }
   
+  createProject = function(prj) {
+    prj['mail'] = $cookies.get('mail');
+    prj['token'] = $cookies.get('token');
+    prj['defLang'] = values.def_lang;
+    prj = {project: prj};
+    return $http({
+      url: values.api_url + 'projects/createProject',
+      headers: {'Content-Type':'application/json'},
+      method: 'post',
+      data: prj
+    })    
+  }
+  
   delProject = function(name, shared) {
     return $http({
       url: values.api_url + 'projects/delProject',
@@ -48,12 +54,32 @@ app.factory('project', function($http, $cookies, values) {
     })    
   }
   
+  getAllUsers = function() {
+    return allUsers;
+  }
+  
+  setAllUsers = function(users) {
+    allUsers = users;
+  }
+  
+  reloadAllUsers = function() {
+    return $http({
+      url: values.api_url + 'users/allUsers',
+      headers: {'Content-Type':'application/x-www-form-urlencoded'},
+      method: 'post',
+      data: 'mail=' + $cookies.get('mail') + '&token=' + $cookies.get('token') + '&defLang=' + values.def_lang
+    })
+  }  
+  
   return {
     getProjects: getProjects,
     setProjects: setProjects,
-    addProject: addProject,
     delProject: delProject,
     reloadProjects: reloadProjects,
-    saveProject: saveProject
+    saveProject: saveProject,
+    createProject: createProject,
+    getAllUsers: getAllUsers,
+    setAllUsers: setAllUsers,
+    reloadAllUsers: reloadAllUsers
   }
 });

@@ -4,3 +4,27 @@ body {
   margin: 0; 
   background-color: $body_background; 
 }
+
+div.projects {
+  margin: 10px;
+  
+  div.new_project_form {
+    background-color: orange;
+    margin: 10px 0px 10px 0px;    
+    padding: 5px;
+    
+    div span b {
+      cursor: pointer;
+    }
+  }
+  
+  div.projects_form {
+    margin: 10px 0px 10px 0px;
+    padding: 5px;
+    background-color: lightgreen;
+    
+    button {
+      cursor: pointer;
+    }
+  }
+}

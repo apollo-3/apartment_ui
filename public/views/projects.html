@@ -1,0 +1,37 @@
+<div class="projects">
+  <button ng-click="cancel()">
+    <a ng-hide="newFormVisibility">New Project</a>
+    <a ng-show="newFormVisibility">Cancel</a>
+  </button>
+  <div class="new_project_form" ng-show="newFormVisibility">
+    Name: <input type="text" ng-model="newProject.name" ng-disabled="mode=='edit'"/><br>
+    Shared: <input type="checkbox" ng-model="newProject.shared" ng-change="sharingChanged()"/>
+    <select ng-options="user as user for user in allUsers" ng-model="userToAdd" ng-show="newProject.shared"></select>
+    <button ng-click="addUser()" ng-show="newProject.shared">add</button><br>
+    <div ng-show="newProject.shared">
+      <b>Owners:</b> <span ng-repeat="owner in newProject.owners">{{owner}} <b ng-click="delUser(owner)">(X) </b></span>
+    </div>
+    Description:<br> <textarea ng-model="newProject.description"></textarea><br>
+    <button ng-click="saveProject()">
+      <a ng-show="mode=='create'">Save</a>
+      <a ng-show="mode=='edit'">Update</a>
+    </button>
+  </div>
+  <div class="projects_form">
+    <div ng-repeat="project in projects">
+     <b>{{project.name}}</b>, <span ng-show="project.shared">Shared</span><span ng-hide="project.shared">Private</span>
+     <button ng-click="editProject(project)">edit</button>     
+     <button ng-click="delProject(project)">del</button>
+     <br>
+     <b>Date: </b>{{project.creation_date}}<br>
+     <div ng-show="project.shared">
+      <b>Owners:</b> <span ng-repeat="owner in project.owners">{{owner}} </span>
+     </div>
+     <b>Description:</b> <span>{{project.description}}</span>
+  <!--   
+     <li ng-repeat="flat in project.flats">{{flat.address}} & {{flat.phone}} & {{flat.contact}}</li>
+  -->   
+    <hr>
+    </div>
+  </div>
+</div>
