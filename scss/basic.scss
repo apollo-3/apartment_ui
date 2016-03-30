@@ -5,6 +5,34 @@ body {
   background-color: $body_background; 
 }
 
+div.specific_project {
+  margin: 10px;
+  
+  div.project_description {
+    background-color: lightgreen;
+    margin: 10px 0px 10px 0px;
+    padding: 5px;
+  }
+  
+  div.controls {
+    background-color: #EEB8FC;
+    margin: 10px 0px 10px 0px;
+    padding: 5px;  
+  }
+  
+  div.editor {
+    background-color: #B8E8FC;
+    margin: 10px 0px 10px 0px;
+    padding: 5px;    
+  }
+  
+  div.flats {
+    background-color: orange;
+    margin: 10px 0px 10px 0px;
+    padding: 5px;  
+  }
+}
+
 div.projects {
   margin: 10px;
   
@@ -22,6 +50,11 @@ div.projects {
     margin: 10px 0px 10px 0px;
     padding: 5px;
     background-color: lightgreen;
+    
+    div b.project_name {
+      color: blue;
+      cursor: pointer;
+    }
     
     button {
       cursor: pointer;

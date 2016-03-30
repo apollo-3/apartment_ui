@@ -4,6 +4,12 @@ app.controller('projects', function($scope, auth, project, $state, $cookies) {
   $scope.newFormVisibility = false;
   $scope.mode = 'create';  
   
+  $scope.checkIfEmpty = function() {
+    if ($scope.projects.length == 0) {
+      alert('You have no any prjects yet. Create one!');
+    }
+  }
+  
   if (project.getAllUsers().length == 0) {
     project.reloadAllUsers().then(function(res) {
         $scope.allUsers = res.data['users'];
@@ -47,8 +53,10 @@ app.controller('projects', function($scope, auth, project, $state, $cookies) {
         $scope.projects = res.data;
         angular.forEach($scope.projects, function(item) {
           item['was_shared'] = item['shared'];
+          item['active'] = false;
         });
         project.setProjects(jQuery.extend(true, {}, $scope.projects));
+        $scope.checkIfEmpty();
       }
     });
   } else {
@@ -61,7 +69,6 @@ app.controller('projects', function($scope, auth, project, $state, $cookies) {
         if (res.data.hasOwnProperty('error')) {
           alert(res.data['error']);
         } else {
-          // $scope.newProject = res.data['project'];
           angular.forEach($scope.projects, function(item) {
             if (item['name'] == $scope.newProject['name']) {
               item['was_shared'] = res.data['project']['shared'];
@@ -82,6 +89,7 @@ app.controller('projects', function($scope, auth, project, $state, $cookies) {
       } else {
         $scope.newProject = res.data['project'];
         $scope.newProject['was_shared'] = $scope.newProject['shared'];
+        $scope.newProject['active'] = false;
         newTmp = []
         angular.forEach($scope.projects, function(item) {
           newTmp.push(item);
@@ -110,6 +118,7 @@ app.controller('projects', function($scope, auth, project, $state, $cookies) {
         $scope.projects = newTmp;
         project.setProjects(jQuery.extend(true,{},$scope.projects));
         alert(res.data['success']);
+        $scope.checkIfEmpty();
         if ($scope.newFormVisibility) {
           $scope.cancel();
         }
@@ -121,6 +130,15 @@ app.controller('projects', function($scope, auth, project, $state, $cookies) {
     $scope.newFormVisibility = true;    
     $scope.mode = 'edit';
     $scope.newProject = prj;
-  } 
+  }
+  
+  $scope.goToProject = function(prj) {
+    angular.forEach($scope.projects, function(item) {
+      item.active = false;
+    });
+    prj.active = true;
+    project.setProjects(jQuery.extend(true,{},$scope.projects));
+    $state.transitionTo('project');
+  }
   
 });

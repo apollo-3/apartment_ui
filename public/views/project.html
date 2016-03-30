@@ -1,0 +1,38 @@
+<div class="specific_project">
+  <div class="project_description">
+    <b>Name:</b> {{project.name}} <span ng-show="project.shared">(shared)</span><span ng-hide="project.shared">(private)</span><br>
+    <span ng-show="project.shared">
+      <b>Owners:</b>
+      <span ng-repeat="owner in project.owners">{{owner}} </span><br>
+    </span>
+    <b>Description:</b> {{project.description}}
+  </div>
+  <div class="controls">
+    <button ng-click="toggleEditor()"><span ng-hide="isEditorOpen">New</span><span ng-show="isEditorOpen">Cancel New</span></button>
+  </div>
+  <div class="editor" ng-show="isEditorOpen">
+    <div ng-repeat="phone in toEdit.phones">
+      Phone {{$index + 1}}: <input type="text" ng-model="phone.phone"></input> <button ng-click="delPhone(phone)">del</button>
+    </div>
+   <button ng-click="addPhone()">More phones</button><br><br>
+    Address: <input type="text" ng-model="toEdit.address"></input><br>
+    Contact: <input type="text" ng-model="toEdit.contact"></input><br>
+    Floor: <input type="number" ng-model="toEdit.floor"></input><br>
+    Price: <input type="number" ng-model="toEdit.price"></input><br>
+    <input type="button" value="Confirm" ng-click="confirm()"/>
+  </div>
+  <div class="flats">
+    <div ng-repeat="flat in project.flats">
+      {{flat.address}} |
+      {{flat.contact}} | 
+      {{flat.floor}} | 
+      {{flat.price | currency:currency:0}} |       
+      <span ng-repeat="phone in flat.phones">
+        {{phone.phone}},
+      </span>
+      <span ng-show="flat.modified!='update'"> | {{flat.modified}}</span><span ng-show="flat.modified=='update'"> | beeing edited</span> |
+      <button ng-click="edit(flat)">edit</button>
+      <button ng-click="del(flat)">del</button>
+    </div>
+  </div>
+</div>

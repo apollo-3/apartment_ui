@@ -6,6 +6,7 @@ app.controller('profile', function($scope, $cookies, auth, userData, $state) {
   $scope.wannaDelete = false;
   $scope.changePass = false;
   $scope.langs = ['en', 'ru'];
+  $scope.currencies = ['$','€','₽','Br','£','₣','¥','₴'];
   
   $scope.isLogged = auth.isLogged();
   

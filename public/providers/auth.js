@@ -58,7 +58,7 @@ app.factory('auth', function($cookies, $http, $state, values, userData, project)
           $state.transitionTo('login');
         }
       } else if ((mail != undefined) || (token != undefined)) {
-        exceptions = ['profile', 'projects'];
+        exceptions = ['profile', 'projects', 'project'];
         if (exceptions.indexOf($state.current.name)==-1) {
           $state.transitionTo('workplace');
         }

@@ -19,7 +19,7 @@
   </div>
   <div class="projects_form">
     <div ng-repeat="project in projects">
-     <b>{{project.name}}</b>, <span ng-show="project.shared">Shared</span><span ng-hide="project.shared">Private</span>
+     <b class="project_name" ng-click="goToProject(project)">{{project.name}}</b>, <span ng-show="project.shared">Shared</span><span ng-hide="project.shared">Private</span>
      <button ng-click="editProject(project)">edit</button>     
      <button ng-click="delProject(project)">del</button>
      <br>

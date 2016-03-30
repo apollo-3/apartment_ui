@@ -22,7 +22,8 @@ app.factory('project', function($http, $cookies, values) {
   saveProject = function(prj) {
     prj['mail'] = $cookies.get('mail');
     prj['token'] = $cookies.get('token');
-    prj['defLang'] = values.def_lang;
+    prj['defLang'] = values.def_lang; 
+    delete prj.active;    
     prj = {project: prj};
     return $http({
       url: values.api_url + 'projects/saveProject',
@@ -54,6 +55,14 @@ app.factory('project', function($http, $cookies, values) {
     })    
   }
   
+  syncProject = function(prj) {
+    angular.forEach(projects, function(item) {
+      if (item['name'] == prj['name']) {
+        item['flats'] = jQuery.extend(true,[], prj['flats']);
+      }
+    });
+  }
+  
   getAllUsers = function() {
     return allUsers;
   }
@@ -78,6 +87,7 @@ app.factory('project', function($http, $cookies, values) {
     reloadProjects: reloadProjects,
     saveProject: saveProject,
     createProject: createProject,
+    syncProject: syncProject,
     getAllUsers: getAllUsers,
     setAllUsers: setAllUsers,
     reloadAllUsers: reloadAllUsers
