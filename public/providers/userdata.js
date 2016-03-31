@@ -8,18 +8,29 @@ app.factory('userData', function($http, values, $cookies) {
     data = user;
   };
   
+  reloadData = function() {
+    return $http({
+             url: values.api_url + 'users/getData',
+             method: 'post',
+             headers: {'Content-Type':'application/x-www-form-urlencoded'},
+             data: 'mail=' + $cookies.get('mail') + '&token=' + $cookies.get('token') + '&defLang=' + values.def_lang
+           });
+  }
+  
+  if (jQuery.isEmptyObject(data) && $cookies.get('token')!=undefined && $cookies.get('mail')!=undefined) {
+    reloadData().then(function(res) {
+      if (res.data.hasOwnProperty('error')) {
+        alert(res.data['error']);
+      } else {
+        setData(res.data['user']);
+      }
+    });
+  }
+  
   userData = {
     getData: getData,
     setData: setData,
-    reloadData: function() {
-      def_lang = (navigator.language || navigator.userLanguage).split('-')[0];
-      return $http({
-               url: values.api_url + 'users/getData',
-               method: 'post',
-               headers: {'Content-Type':'application/x-www-form-urlencoded'},
-               data: 'mail=' + $cookies.get('mail') + '&token=' + $cookies.get('token') + '&defLang=' + def_lang
-             });
-    }
+    reloadData: reloadData
   }
   
   return userData;

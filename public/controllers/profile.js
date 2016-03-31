@@ -1,12 +1,23 @@
 app.controller('profile', function($scope, $cookies, auth, userData, $state) {
   auth.checkSession();
+  
+  if (jQuery.isEmptyObject(userData.getData())) {
+    userData.reloadData().then(function(res) {
+      if (res.data.hasOwnProperty('error')) {
+        alert(res.data['errot']);
+      } else {
+        userData.setData(res.data['user']);
+        $scope.user = {user: jQuery.extend(true, {}, res.data['user'])};
+      }
+    });
+  }
+  
   tmp = jQuery.extend(true, {}, userData.getData());
   $scope.user = {user: tmp};
   $scope.user.user.password = '';
   $scope.wannaDelete = false;
   $scope.changePass = false;
   $scope.langs = ['en', 'ru'];
-  $scope.currencies = ['$','€','₽','Br','£','₣','¥','₴'];
   
   $scope.isLogged = auth.isLogged();
   

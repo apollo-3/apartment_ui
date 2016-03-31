@@ -11,6 +11,8 @@
     <div ng-show="newProject.shared">
       <b>Owners:</b> <span ng-repeat="owner in newProject.owners">{{owner}} <b ng-click="delUser(owner)">(X) </b></span>
     </div>
+    Currency: <select ng-options="currency for currency in currencies" ng-model="newProject.currency"></select><br>    
+    Exchange Rate: <input type="number" step="0.01" ng-model="newProject.rate"/><br>
     Description:<br> <textarea ng-model="newProject.description"></textarea><br>
     <button ng-click="saveProject()">
       <a ng-show="mode=='create'">Save</a>
@@ -27,7 +29,9 @@
      <div ng-show="project.shared">
       <b>Owners:</b> <span ng-repeat="owner in project.owners">{{owner}} </span>
      </div>
-     <b>Description:</b> <span>{{project.description}}</span>
+     <b>Currency:</b> {{project.currency}}<br>
+     <b>Exchange Rate:</b> {{project.rate}}<br>
+     <b>Description:</b> <span>{{project.description}}</span><br>
   <!--   
      <li ng-repeat="flat in project.flats">{{flat.address}} & {{flat.phone}} & {{flat.contact}}</li>
   -->   

@@ -1,8 +1,9 @@
 app.controller('projects', function($scope, auth, project, $state, $cookies) {
   auth.checkSession();
-  $scope.newProject = {flats:[], shared: false, owners:[$cookies.get('mail')]};
+  $scope.newProject = {flats:[], shared: false, currency: '$', rate: 1, owners:[$cookies.get('mail')]};
   $scope.newFormVisibility = false;
   $scope.mode = 'create';  
+  $scope.currencies = ['$','€','₽','Br','£','₣','¥','₴'];
   
   $scope.checkIfEmpty = function() {
     if ($scope.projects.length == 0) {
@@ -34,12 +35,12 @@ app.controller('projects', function($scope, auth, project, $state, $cookies) {
       $scope.newProject.owners.splice($scope.newProject.owners.indexOf(user), 1);
     }
   }
-  $scope.saveNewProject = function() {
-    $scope.newProject = {flats:[], shared: false, owners:[$cookies.get('mail')]};
-    $scope.newFormVisibility = false;
-  }
+  // $scope.saveNewProject = function() {
+    // $scope.newProject = {flats:[], shared: false, currency: '$', owners:[$cookies.get('mail')]};
+    // $scope.newFormVisibility = false;
+  // }
   $scope.cancel = function() {
-    $scope.newProject = {flats:[], shared: false, owners:[$cookies.get('mail')]};
+    $scope.newProject = {flats:[], shared: false, currency: '$',  rate: 1, owners:[$cookies.get('mail')]};
     $scope.projects = jQuery.extend(true,{}, project.getProjects());
     $scope.newFormVisibility = !$scope.newFormVisibility;
     $scope.mode = 'create';

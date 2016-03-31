@@ -10,7 +10,6 @@
     State: <input type="text" ng-model="user.user.state" ng-disabled="wannaDelete || changePass"/><br>
     City: <input type="city" ng-model="user.user.city" ng-disabled="wannaDelete || changePass"/><br>
     Language: <select ng-options="lang for lang in langs" ng-model="user.user.lang" ng-disabled="wannaDelete || changePass"></select><br>
-    Currency: <select ng-options="currency for currency in currencies" ng-model="user.user.currency"></select><br>    
     Password: <input type="password" ng-model="user.user.password"/><br>
     New password: <input type="password" ng-model="user.user.newPassword" ng-disabled="!changePass"/><br>
     <input type="submit" ng-click="updateUser(user)" ng-hide="wannaDelete" value="Update"/>
