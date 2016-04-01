@@ -23,7 +23,13 @@ div.specific_project {
   div.editor {
     background-color: #B8E8FC;
     margin: 10px 0px 10px 0px;
-    padding: 5px;    
+    padding: 5px;  
+    
+    div.converter {
+      margin: 5px;
+      padding: 5px;
+      background-color: #FFA7A5;
+    }
   }
   
   div.flats {

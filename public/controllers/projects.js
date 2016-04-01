@@ -19,6 +19,7 @@ app.controller('projects', function($scope, auth, project, $state, $cookies) {
     });  
   } else {
     $scope.allUsers = project.getAllUsers();
+    $scope.userToAdd = $scope.allUsers[0];
   }
   $scope.addUser = function() {
     if ($scope.newProject.owners.indexOf($scope.userToAdd) == -1) {

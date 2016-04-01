@@ -1,4 +1,4 @@
-var app = angular.module('apartments',['ui.router','ngCookies']);
+var app = angular.module('apartments',['ui.router','ngCookies','angularFileUpload']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/login");
