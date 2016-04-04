@@ -25,6 +25,12 @@ div.specific_project {
     margin: 10px 0px 10px 0px;
     padding: 5px;  
     
+    div#map {
+      height: 400px;
+      width: 400px;
+      background-color: green;
+    }
+    
     div.converter {
       margin: 5px;
       padding: 5px;

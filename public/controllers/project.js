@@ -1,4 +1,4 @@
-app.controller('project', function($scope, auth, project, $state, userData, $cookies, values, FileUploader, images) {
+app.controller('project', function($scope, auth, project, $state, userData, $cookies, values, FileUploader, images, gMaps) {
   auth.checkSession();  
   
   $scope.defaultToEdit = {phones:[{phone:''}], modified:'update', 
@@ -64,19 +64,43 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
   
   $scope.toggleEditor = function() {
     if ($scope.mode == 'create') {
-       $scope.toEdit = jQuery.extend(true,{},$scope.defaultToEdit);
       if (!$scope.isEditorOpen) {
+        $scope.toEdit = jQuery.extend(true,{},$scope.defaultToEdit);
         $scope.project.flats.unshift($scope.toEdit);
+        
+        m = new gMaps('myCallBackName', function() {
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 53.904, lng: 27.561},
+            zoom: 11
+          });
+        });        
+        
       } else {
+        angular.forEach($scope.toEdit['images'], function(img) {
+          images.delImage(img['img']);
+        });
         $scope.project.flats.splice(0,1);
-        $scope.useConverter = false;        
+        $scope.useConverter = false;  
+        $scope.toEdit = jQuery.extend(true,{},$scope.defaultToEdit);        
       }
     } else {
       if ($scope.isEditorOpen) {
+        tmpIdx = $scope.project['flats'].indexOf($scope.toEdit);
+        tmpImgs = jQuery.extend(true,{},$scope.toEdit['images']);
+        
         $scope.toEdit = jQuery.extend(true,{},$scope.defaultToEdit);
         $scope.project = jQuery.extend(true,{},$scope.tmpProject);
         $scope.mode = 'create';
         $scope.useConverter = false;
+        
+        angular.forEach(tmpImgs, function(img) {
+          angular.forEach($scope.project['flats'][tmpIdx]['images'], function(oldImg)  {
+            if (oldImg['img'] != img['img']) {
+                images.delImage(img['img']);
+            }
+          });
+        }); 
+        
       }
     }
     $scope.isEditorOpen = !$scope.isEditorOpen;
@@ -96,6 +120,21 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
       }
     });
     $scope.toEdit['phones'] = newPhones;
+    
+    if ($scope.mode == 'edit') {
+      tmpIdx = $scope.project['flats'].indexOf($scope.toEdit);
+      angular.forEach($scope.tmpProject['flats'][tmpIdx]['images'], function(oldImg) {
+        flag = true;
+        angular.forEach($scope.toEdit['images'], function(img)  {
+          if (img['img'] == oldImg['img']) {
+              flag = false;
+          }
+        });
+        if (flag) {
+          images.delImage(oldImg['img']);
+        }
+      });     
+    }
     
     project.saveProject($scope.project).then(function(res) {
       if (res.data.hasOwnProperty('error')) {
@@ -117,11 +156,12 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
   $scope.edit = function(flat) {
     if ($scope.isEditorOpen) {
       $scope.toggleEditor();
+    } else {
+      $scope.mode = 'edit';
+      flat['modified'] = 'update';
+      $scope.toEdit = flat;
+      $scope.isEditorOpen = true;
     }
-    $scope.mode = 'edit';
-    flat['modified'] = 'update';
-    $scope.toEdit = flat;
-    $scope.isEditorOpen = true;
   }
   
   $scope.del = function(flat) {
@@ -169,10 +209,24 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
   }
   
   $scope.removeImage = function(image) {
-    images.delImage(image['big']).then(function(res) {
+    // images.delImage(image['img']).then(function(res) {
       $scope.toEdit['images'].splice($scope.toEdit['images'].indexOf(image),1);
-    });
+      if ($scope.mode == 'create') {
+        images.delImage(image['img']);
+      }
+    // });
   }
   
+  $scope.makeCover = function(image) {
+    if ($scope.toEdit['images'].length > 1) {
+      aIndx = $scope.toEdit['images'].indexOf(image);
+      aImg = $scope.toEdit['images'][aIndx]['img'];
+      $scope.toEdit['images'][aIndx]['img'] = $scope.toEdit['images'][0]['img'];
+      $scope.toEdit['images'][0]['img'] = aImg;
+      console.log($scope.toEdit['images']);
+    }
+  }        
+  
+
   
 });

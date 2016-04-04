@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>Apartment UI</title>
-  <script type="text/javascript" src="bower.js"></script>
+  <script type="text/javascript" src="bower.js"></script> 
   <script type="text/javascript" src="modules/apartments.js"></script>
   <script type="text/javascript" src="directives/thumb.js"></script>  
   <script type="text/javascript" src="controllers/top.js"></script>    
@@ -17,13 +17,16 @@
   <script type="text/javascript" src="providers/project.js"></script>
   <script type="text/javascript" src="providers/auth.js"></script>
   <script type="text/javascript" src="providers/images.js"></script>  
+  <script type="text/javascript" src="providers/gMaps.js"></script>   
+  
   <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body ng-app='apartments'>
-  <script type="text/javascript">
+  <script type="text/javascript"> 
     $(document).ready(function() {   
+
     });
-  </script>
+  </script>  
   <div ui-view="top"></div>
   <div ui-view="main"></div>
 </body>

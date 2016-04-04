@@ -37,7 +37,7 @@
     School: <input type="checkbox" ng-model="toEdit.school"/><br>
     
     Photos: <input type="file" nv-file-select="" uploader="uploader" ng-show="toEdit.images.length<max_images"/>
-    <span ng-repeat="image in toEdit.images"><img ng-src="images/{{image.big}}" height="100" ng-click="removeImage(image)"></img></span>
+    <span ng-repeat="image in toEdit.images"><img ng-src="images/{{image.img}}" height="100" ng-click="removeImage(image)"></img><span ng-click="makeCover(image)">Cover</span></span>
     <ul>
       <li ng-repeat="item in uploader.queue">
           Name: <span ng-bind="item.file.name"></span><br/>
@@ -49,7 +49,8 @@
     <button ng-click="uploader.uploadAll()" ng-hide="!uploader.getNotUploadedItems().length">Upload All</button>
     <button ng-click="uploader.clearQueue()" ng-hide="!uploader.getNotUploadedItems().length">Remove All</button>    
     <br>
-    
+    <div id="map">
+    </div>
     <input type="button" value="Confirm" ng-click="confirm()"/>
   </div>
   <div class="flats">
@@ -75,3 +76,4 @@
     </div>
   </div>
 </div>
+
