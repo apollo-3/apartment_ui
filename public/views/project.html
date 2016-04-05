@@ -18,7 +18,7 @@
       Phone {{$index + 1}}: <input type="text" ng-model="phone.phone"></input> <button ng-click="delPhone(phone)">del</button>
     </div>
    <button ng-click="addPhone()">More phones</button><br><br>
-    Address: <input type="text" ng-model="toEdit.address"></input><br>
+    Address: <input id="address" type="text" ng-model="toEdit.address"></input><br>
     Contact: <input type="text" ng-model="toEdit.contact"></input><br>
     Floor: <input type="number" ng-model="toEdit.floor"></input><br>
     Price: <input type="number" ng-model="toEdit.price" ng-disabled="useConverter"></input>
