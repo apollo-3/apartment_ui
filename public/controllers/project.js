@@ -1,4 +1,4 @@
-app.controller('project', function($scope, auth, project, $state, userData, $cookies, values, FileUploader, images, gMaps) {
+app.controller('project', function($scope, auth, project, $state, userData, $cookies, values, FileUploader, images, gMaps, $window) {
   auth.checkSession();
 
   $scope.defaultToEdit = {phones:[{phone:''}], modified:'update',
@@ -15,9 +15,7 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
 
   $scope.useConverter = false;
   $scope.exchangeRate = 1;
-  $scope.inputCurrency = 0;
-  
-  $scope.trickyInitMapFlag = false;
+  $scope.inputCurrency = 0;  
 
   $scope.uploader = new FileUploader({url: values.api_url + 'images/uploadImage',
                                       alias: 'image',
@@ -46,6 +44,24 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
       alert('Current project is empty. Add some items into it.');
     }
   }
+  
+  messWithMapAllHelper = function() {
+    gMaps.delAllMarkers();
+    angular.forEach($scope.project['flats'], function(flat) {
+      gMaps.addSimpleMarker(flat['position'], flat['callHistory']);
+    });      
+    gMaps.bestView();    
+  }
+  messWithMapAll = function() {
+    if (!gMaps.getCalledPromise()) {
+      gMaps.getPromise().then(function() {
+        gMaps.setCalledPromise();
+        messWithMapAllHelper();
+      });      
+    } else {
+      messWithMapAllHelper();
+    }
+  }  
 
   if (project.getProjects().length == 0) {
     $state.transitionTo('projects');
@@ -57,6 +73,8 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
         $scope.project = jQuery.extend(true,{},item);
         $scope.tmpProject = jQuery.extend(true,{},item);
         $scope.checkIfEmpty();
+        showMap();
+        messWithMapAll();        
       }
     });
     if (!ifActiveExist) {
@@ -77,9 +95,11 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
         $scope.project.flats.splice(0,1);
         $scope.useConverter = false;
         $scope.toEdit = jQuery.extend(true,{},$scope.defaultToEdit);
+        messWithMapAll();
       }
     } else {
       if ($scope.isEditorOpen) {
+        messWithMapAll();
         tmpIdx = $scope.project['flats'].indexOf($scope.toEdit);
         tmpImgs = jQuery.extend(true,{},$scope.toEdit['images']);
 
@@ -95,7 +115,6 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
             }
           });
         });
-
       }
     }
     $scope.isEditorOpen = !$scope.isEditorOpen;
@@ -144,8 +163,13 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
         $scope.isEditorOpen = !$scope.isEditorOpen;
         $scope.useConverter = false;
         $scope.mode = 'create';
+        messWithMapAll();
       }
     });
+  }
+  
+  $scope.callHistoryChanged = function() {
+    gMaps.changeMarkerColor($scope.toEdit['callHistory']);
   }
 
   $scope.edit = function(flat) {
@@ -221,112 +245,64 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
       $scope.toEdit['images'][0]['img'] = aImg;
       console.log($scope.toEdit['images']);
     }
-  }  
+  }    
     
-  messWithMap = function() {
-    
+  messWithMapHelper = function() {
     dragCallBack = function(event) {
       $scope.toEdit['position']['lat'] = event.latLng.lat();
       $scope.toEdit['position']['lng'] = event.latLng.lng();
     }
-    // m = gMaps('editorMap', function() {
-      // default_flat = {lat: 53.904, lng: 27.561};
-
-      // map = new google.maps.Map(document.getElementById('map'), {
-        // center: default_flat,
-        // zoom: 11
-      // });     
-      
-      // return map;
-    // });  
-
-    if ($scope.editorMap == undefined) {
-        $scope.editorMap = gMaps('editorMap', function() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: values.map_center,
-          zoom: values.map_zoom
-        });             
-        return map;
-      }); 
-    }    
     
-    if ($scope.trickyInitMapFlag) {
-      if ($scope.mode == 'edit') {
-        addMarker(new google.maps.LatLng($scope.toEdit['position']), dragCallBack);
-        $scope.editorMap.getMap().setCenter($scope.toEdit['position']);
-      } else {
-        $scope.editorMap.delAllMarkers();
-        $scope.editorMap.getMap().setCenter(values.map_center);
-      }     
-      $scope.editorMap.getMap().setZoom(values.map_zoom);      
-    }
-    
-    $scope.editorMap.getPromise().then(function() {
-      $scope.trickyInitMapFlag = true;
-      map = $scope.editorMap.getMap();
-      
-      // $scope.editorMap.markers = [];
-      // Create the search box and link it to the UI element.
-      var input = document.getElementById('address');
-      var searchBox = new google.maps.places.SearchBox(input);
-      // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input)
-      // Bias the SearchBox results towards current map's viewport.
-      map.addListener('bounds_changed', function() {
-        searchBox.setBounds(map.getBounds());
-      });
-      searchBox.addListener('places_changed', function() {
-        var places = searchBox.getPlaces();
-        if (places.length == 0) {
-          return;
-        }
-        // Clear out the old markers.
-        $scope.editorMap.delAllMarkers();
-        // For each place, get the icon, name and location.
-        var bounds = new google.maps.LatLngBounds();
-        places.forEach(function(place) {
-          // Create a marker for each place.
-          $scope.editorMap.addMarker(place.geometry.location, dragCallBack);
-          $scope.toEdit['position']['lat'] = place.geometry.location.lat();
-          $scope.toEdit['position']['lng'] = place.geometry.location.lng();
-          bounds.extend(place.geometry.location);
-        });
-        map.fitBounds(bounds);
-        var restoreZoom = google.maps.event.addListener(map, "idle", function() { 
-          if (map.getZoom() > values.map_zoom) map.setZoom(values.map_zoom); 
-          google.maps.event.removeListener(restoreZoom); 
-        });        
-      });
-
-      google.maps.event.addListener(map, 'click', function(event) {
-        $scope.editorMap.addMarker(event.latLng, dragCallBack);
-        $scope.toEdit['position']['lat'] = event.latLng.lat();
-        $scope.toEdit['position']['lng'] = event.latLng.lng();
-      });      
-      
-      // addMarker = function(location, map) {
-        // if ($scope.editorMap.markers.length < 1) {
-          // marker = new google.maps.Marker({
-            // position: location,
-            // map: map,
-            // draggable: true
-          // });
-          // $scope.editorMap.markers.push(marker);
-          // $scope.toEdit['position']['lat'] = location.lat();
-          // $scope.toEdit['position']['lng'] = location.lng();
-          // google.maps.event.addListener(marker, 'drag', function(event) {
-            // $scope.toEdit['position']['lat'] = event.latLng.lat();
-            // $scope.toEdit['position']['lng'] = event.latLng.lng();
-          // });
-        // } else {
-          // $scope.editorMap.markers[0].setPosition(location);
-        // }
-      // }      
-      
-      if ($scope.mode == 'edit') {
-        $scope.editorMap.addMarker(new google.maps.LatLng($scope.toEdit['position']), dragCallBack);
-        $scope.editorMap.getMap().setCenter($scope.toEdit['position']);        
-      }     
+    map = gMaps.getMap();    
+    var input = document.getElementById('address');
+    var searchBox = new google.maps.places.SearchBox(input);
+    // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input)
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+      searchBox.setBounds(map.getBounds());
     });
+    searchBox.addListener('places_changed', function() {
+      var places = searchBox.getPlaces();
+      if (places.length == 0) {
+        return;
+      }
+      // Clear out the old markers.
+      gMaps.delAllMarkers();
+      // For each place, get the icon, name and location.
+      var bounds = new google.maps.LatLngBounds();
+      places.forEach(function(place) {
+        // Create a marker for each place.
+        gMaps.addMarker(place.geometry.location, dragCallBack, 'toCall');
+        $scope.toEdit['position']['lat'] = place.geometry.location.lat();
+        $scope.toEdit['position']['lng'] = place.geometry.location.lng();
+        bounds.extend(place.geometry.location);
+      });
+      map.fitBounds(bounds);
+      var restoreZoom = google.maps.event.addListener(map, "idle", function() { 
+        if (map.getZoom() > values.map_zoom) map.setZoom(values.map_zoom); 
+        google.maps.event.removeListener(restoreZoom); 
+      });        
+    });
+
+    google.maps.event.addListener(map, 'click', function(event) {
+      gMaps.addMarker(event.latLng, dragCallBack, 'toCall');
+      $scope.toEdit['position']['lat'] = event.latLng.lat();
+      $scope.toEdit['position']['lng'] = event.latLng.lng();
+    });      
     
+    if ($scope.mode == 'edit') {
+      gMaps.addMarker(new google.maps.LatLng($scope.toEdit['position']), dragCallBack, $scope.toEdit['callHistory']);
+    }
+    gMaps.bestView();
+  }  
+  messWithMap = function() { 
+    gMaps.delAllMarkers();
+    if (!gMaps.getCalledPromise()) {
+      gMaps.setCalledPromise();
+      messWithMapHelper();
+    } else {
+      messWithMapHelper();
+    }    
   }
+  
 });

@@ -28,7 +28,7 @@
       Input Price: <input type="number" ng-model="inputCurrency" ng-change="convertPrice()"/>
     </div>
     Build Year: <input type="number" min="1700" max="2200" ng-model="toEdit.buildYear"/><br>    
-    Call History: <select ng-options="callHist for callHist in callHistoryOptions" ng-model="toEdit.callHistory"></select><br>
+    Call History: <select ng-options="callHist for callHist in callHistoryOptions" ng-model="toEdit.callHistory" ng-change="callHistoryChanged()"></select><br>
     Stars: <select ng-options="star for star in stars" ng-model="toEdit.stars"></select><br>
     Owner: <input type="checkbox" ng-model="toEdit.owner"/><br>    
     Subway: <input type="checkbox" ng-model="toEdit.subway"/><br>
@@ -48,9 +48,7 @@
     </ul>
     <button ng-click="uploader.uploadAll()" ng-hide="!uploader.getNotUploadedItems().length">Upload All</button>
     <button ng-click="uploader.clearQueue()" ng-hide="!uploader.getNotUploadedItems().length">Remove All</button>    
-    <br>
-    <div id="map">
-    </div>
+    <br> 
     <input type="button" value="Confirm" ng-click="confirm()"/>
   </div>
   <div class="flats">

@@ -5,6 +5,24 @@ body {
   background-color: $body_background; 
 }
 
+div#map {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  height: 400px;
+  width: 400px;
+  background-color: green;
+  
+  div#dragger {
+    cursor: crosshair;
+    height: 20px;
+    background-color: blue;
+  }
+  div#draw_area {
+    height: 380px;
+  }
+}
+
 div.specific_project {
   margin: 10px;
   
@@ -23,13 +41,7 @@ div.specific_project {
   div.editor {
     background-color: #B8E8FC;
     margin: 10px 0px 10px 0px;
-    padding: 5px;  
-    
-    div#map {
-      height: 400px;
-      width: 400px;
-      background-color: green;
-    }
+    padding: 5px;      
     
     div.converter {
       margin: 5px;
