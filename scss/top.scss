@@ -2,6 +2,12 @@ $top_bg_color: yellow;
 $auth_menu_color: #EFDBC6;
 $nav_menu: #C4EDDD;
 
+.user_name {
+  color: $link_color;
+  font-weight: bold;
+  font-size: 11pt;  
+}
+
 div.top { 
   margin: 0; 
   padding: 0;

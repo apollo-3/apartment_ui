@@ -19,6 +19,8 @@
     </div>
    <button ng-click="addPhone()">More phones</button><br><br>
     Address: <input id="address" type="text" ng-model="toEdit.address"></input><br>
+    Link: <input type="text" ng-model="toEdit.link"></input><br>
+    Show on map: <input type="checkbox" ng-model="toEdit.display"></input><br>
     Contact: <input type="text" ng-model="toEdit.contact"></input><br>
     Floor: <input type="number" ng-model="toEdit.floor"></input><br>
     Price: <input type="number" ng-model="toEdit.price" ng-disabled="useConverter"></input>
@@ -53,7 +55,9 @@
   </div>
   <div class="flats">
     <div ng-repeat="flat in project.flats">
-      {{flat.address}} |
+      {{flat.address}} |   
+      <a ng-href="{{flat.link}}">Link</a> | 
+      {{flat.display == true ? 'show':'hide'}}
       {{flat.contact}} | 
       {{flat.floor}} | 
       {{flat.buildYear}} |

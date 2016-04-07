@@ -1,0 +1,28 @@
+div.projects {
+  margin: 10px;
+  
+  div.new_project_form {
+    background-color: orange;
+    margin: 10px 0px 10px 0px;    
+    padding: 5px;
+    
+    div span b {
+      cursor: pointer;
+    }
+  }
+  
+  div.projects_form {
+    margin: 10px 0px 10px 0px;
+    padding: 5px;
+    background-color: lightgreen;
+    
+    div b.project_name {
+      color: blue;
+      cursor: pointer;
+    }
+    
+    button {
+      cursor: pointer;
+    }
+  }
+}

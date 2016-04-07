@@ -4,11 +4,11 @@ app.factory('project', function($http, $cookies, values) {
   
   getProjects = function() {
     return projects;
-  }
+  };
   
   setProjects = function(newProjects) {
     projects = newProjects;
-  }  
+  }; 
   
   reloadProjects = function() {
     return $http({
@@ -16,13 +16,13 @@ app.factory('project', function($http, $cookies, values) {
       headers: {'Content-Type':'application/x-www-form-urlencoded'},
       method: 'post',
       data: 'mail=' + $cookies.get('mail') + '&token=' + $cookies.get('token') + '&defLang=' + values.def_lang
-    })
-  }  
+    });
+  }; 
   
   saveProject = function(prj) {
-    prj['mail'] = $cookies.get('mail');
-    prj['token'] = $cookies.get('token');
-    prj['defLang'] = values.def_lang; 
+    prj.mail = $cookies.get('mail');
+    prj.token = $cookies.get('token');
+    prj.defLang = values.def_lang; 
     delete prj.active;    
     prj = {project: prj};
     return $http({
@@ -30,21 +30,21 @@ app.factory('project', function($http, $cookies, values) {
       headers: {'Content-Type':'application/json'},
       method: 'post',
       data: prj
-    })
-  }
+    });
+  };
   
   createProject = function(prj) {
-    prj['mail'] = $cookies.get('mail');
-    prj['token'] = $cookies.get('token');
-    prj['defLang'] = values.def_lang;
+    prj.mail = $cookies.get('mail');
+    prj.token = $cookies.get('token');
+    prj.defLang = values.def_lang;
     prj = {project: prj};
     return $http({
       url: values.api_url + 'projects/createProject',
       headers: {'Content-Type':'application/json'},
       method: 'post',
       data: prj
-    })    
-  }
+    });   
+  };
   
   delProject = function(name, shared) {
     return $http({
@@ -52,24 +52,24 @@ app.factory('project', function($http, $cookies, values) {
       headers: {'Content-Type':'application/x-www-form-urlencoded'},
       method: 'post',
       data: 'mail=' + $cookies.get('mail') + '&token=' + $cookies.get('token') + '&defLang=' + values.def_lang + '&shared=' + shared + '&name=' + name
-    })    
-  }
+    });    
+  };
   
   syncProject = function(prj) {
     angular.forEach(projects, function(item) {
-      if (item['name'] == prj['name']) {
-        item['flats'] = jQuery.extend(true,[], prj['flats']);
+      if (item.name == prj.name) {
+        item.flats = jQuery.extend(true,[], prj.flats);
       }
     });
-  }
+  };
   
   getAllUsers = function() {
     return allUsers;
-  }
+  };
   
   setAllUsers = function(users) {
     allUsers = users;
-  }
+  };
   
   reloadAllUsers = function() {
     return $http({
@@ -77,8 +77,8 @@ app.factory('project', function($http, $cookies, values) {
       headers: {'Content-Type':'application/x-www-form-urlencoded'},
       method: 'post',
       data: 'mail=' + $cookies.get('mail') + '&token=' + $cookies.get('token') + '&defLang=' + values.def_lang
-    })
-  }  
+    });
+  };
   
   return {
     getProjects: getProjects,
@@ -91,5 +91,5 @@ app.factory('project', function($http, $cookies, values) {
     getAllUsers: getAllUsers,
     setAllUsers: setAllUsers,
     reloadAllUsers: reloadAllUsers
-  }
+  };
 });

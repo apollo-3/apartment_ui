@@ -16,22 +16,22 @@ app.factory('auth', function($cookies, $http, $state, values, userData, project)
         headers: {'Content-Type': 'application/json'}
       }).then(function(res) { 
         if (res.data.hasOwnProperty('success')) {   
-          userData.setData(res.data['user']);
+          userData.setData(res.data.user);
           var expires_in = new Date();
           expires_in.setDate(expires_in.getDate() + 365);
-          if (remember == true) {
-            $cookies.put('mail', user.user['mail'], {'expires': expires_in});
-            $cookies.put('token', res.data['token'], {'expires': expires_in});          
+          if (remember === true) {
+            $cookies.put('mail', user.user.mail, {'expires': expires_in});
+            $cookies.put('token', res.data.token, {'expires': expires_in});          
           } else {
-            $cookies.put('mail', user.user['mail']);
-            $cookies.put('token', res.data['token']);           
+            $cookies.put('mail', user.user.mail);
+            $cookies.put('token', res.data.token);           
           }
           $state.transitionTo('workplace');
-          return res.data['user'];
+          return res.data.user;
         } else {
-          alert(res.data['error']);
+          alert(res.data.error);
         }
-      })      
+      });   
     },
     // Logout
     logout: function() {
@@ -46,18 +46,18 @@ app.factory('auth', function($cookies, $http, $state, values, userData, project)
           project.setProjects([]);
           project.setAllUsers([]);
           $state.transitionTo('login');
-      })
+      });
     },
     // Session check, move to login page if not authenticated
     checkSession: function() {
       mail = $cookies.get('mail');
       token = $cookies.get('token');   
-      if ((mail == undefined) || (token == undefined)) {
+      if ((mail === undefined) || (token === undefined)) {
         exceptions = ['register'];
         if (exceptions.indexOf($state.current.name)==-1) {
           $state.transitionTo('login');
         }
-      } else if ((mail != undefined) || (token != undefined)) {
+      } else if ((mail !== undefined) || (token !== undefined)) {
         exceptions = ['profile', 'projects', 'project'];
         if (exceptions.indexOf($state.current.name)==-1) {
           $state.transitionTo('workplace');
@@ -67,7 +67,7 @@ app.factory('auth', function($cookies, $http, $state, values, userData, project)
     // If user is logged in check
     isLogged: function() {
       ifLogged = false;
-      if (($cookies.get('mail') != undefined) && ($cookies.get('token') != undefined)) {
+      if (($cookies.get('mail') !== undefined) && ($cookies.get('token') !== undefined)) {
         ifLogged = true;
       }
       return ifLogged;
@@ -83,9 +83,9 @@ app.factory('auth', function($cookies, $http, $state, values, userData, project)
         headers: {'Content-Type': 'application/json'}        
       }).then(function(res) {
         if (res.data.hasOwnProperty('error')) {
-          alert(res.data['error']);
+          alert(res.data.error);
         } else {
-          alert(res.data['success'] + '\n' + res.data['verifing_url']);
+          alert(res.data.success + '\n' + res.data.verifing_url);
           $state.transitionTo('workplace');
         }
       });
@@ -99,9 +99,9 @@ app.factory('auth', function($cookies, $http, $state, values, userData, project)
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function(res) {
         if (res.data.hasOwnProperty('error')) {
-          alert(res.data['error']);
+          alert(res.data.error);
         } else {
-          alert(res.data['success'] + '\n' + res.data['reset_url']);
+          alert(res.data.success + '\n' + res.data.reset_url);
           $state.transitionTo('login');
         }        
       });
@@ -117,11 +117,11 @@ app.factory('auth', function($cookies, $http, $state, values, userData, project)
         data: user
       }).then(function(res) {
         if (res.data.hasOwnProperty('error')) {
-          alert(res.data['error']);
+          alert(res.data.error);
         } else {
           $cookies.remove('mail');
           $cookies.remove('token'); 
-          alert(res.data['success']);
+          alert(res.data.success);
           $state.transitionTo('login');
         }
       });
@@ -136,14 +136,14 @@ app.factory('auth', function($cookies, $http, $state, values, userData, project)
         data: user
       }).then(function(res) {
         if (res.data.hasOwnProperty('success')) {
-          alert(res.data['success']);
-          userData.setData(res.data['user']);
+          alert(res.data.success);
+          userData.setData(res.data.user);
           $state.transitionTo('workplace');
         } else {
-          alert(res.data['error']);
+          alert(res.data.error);
         }
       });
     }
-  }
+  };
   return session;
 });

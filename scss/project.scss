@@ -1,0 +1,33 @@
+div.specific_project {
+  margin: 10px;
+  
+  div.project_description {
+    background-color: lightgreen;
+    margin: 10px 0px 10px 0px;
+    padding: 5px;
+  }
+  
+  div.controls {
+    background-color: #EEB8FC;
+    margin: 10px 0px 10px 0px;
+    padding: 5px;  
+  }
+  
+  div.editor {
+    background-color: #B8E8FC;
+    margin: 10px 0px 10px 0px;
+    padding: 5px;      
+    
+    div.converter {
+      margin: 5px;
+      padding: 5px;
+      background-color: #FFA7A5;
+    }
+  }
+  
+  div.flats {
+    background-color: orange;
+    margin: 10px 0px 10px 0px;
+    padding: 5px;  
+  }
+}

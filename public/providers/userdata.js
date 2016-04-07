@@ -15,14 +15,14 @@ app.factory('userData', function($http, values, $cookies) {
              headers: {'Content-Type':'application/x-www-form-urlencoded'},
              data: 'mail=' + $cookies.get('mail') + '&token=' + $cookies.get('token') + '&defLang=' + values.def_lang
            });
-  }
+  };
   
-  if (jQuery.isEmptyObject(data) && $cookies.get('token')!=undefined && $cookies.get('mail')!=undefined) {
+  if (jQuery.isEmptyObject(data) && $cookies.get('token')!==undefined && $cookies.get('mail')!==undefined) {
     reloadData().then(function(res) {
       if (res.data.hasOwnProperty('error')) {
-        alert(res.data['error']);
+        alert(res.data.error);
       } else {
-        setData(res.data['user']);
+        setData(res.data.user);
       }
     });
   }
@@ -31,7 +31,7 @@ app.factory('userData', function($http, values, $cookies) {
     getData: getData,
     setData: setData,
     reloadData: reloadData
-  }
+  };
   
   return userData;
 });

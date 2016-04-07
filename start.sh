@@ -8,3 +8,4 @@ mkdir -p public/css
 grunt
 nohup node index.js > logs/node.log 2>&1 &
 nohup npm run watch_css > logs/nodemon.log 2>&1 &
+nohup grunt standby > logs/standby 2>&1 &

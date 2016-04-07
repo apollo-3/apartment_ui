@@ -3,12 +3,13 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
 
   $scope.defaultToEdit = {phones:[{phone:''}], modified:'update',
                           price: 0, owner: false, callHistory: 'toCall',
-                          stars: 0, position: {}, images: []};
+                          stars: 0, position: {}, images: [],
+                          display: true, link:''};
   $scope.toEdit = jQuery.extend(true,{},$scope.defaultToEdit);
   $scope.mode = 'create';
   $scope.isEditorOpen = false;
   $scope.tmpProject = {};
-  $scope.currency = userData.getData()['currency'];
+  $scope.currency = userData.getData().currency;
   $scope.callHistoryOptions = ['called', 'callBack', 'toCall'];
   $scope.stars = [0, 1, 2, 3, 4, 5];
   $scope.max_images = values.max_images;
@@ -36,22 +37,24 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
     }
   });
   $scope.uploader.onCompleteItem = function(item, res) {
-    $scope.toEdit['images'].push(res['image']);
+    $scope.toEdit.images.push(res.image);
   };
 
   $scope.checkIfEmpty = function() {
-    if ($scope.project.flats.length == 0) {
+    if ($scope.project.flats.length === 0) {
       alert('Current project is empty. Add some items into it.');
     }
-  }
+  };
   
   messWithMapAllHelper = function() {
     gMaps.delAllMarkers();
-    angular.forEach($scope.project['flats'], function(flat) {
-      gMaps.addSimpleMarker(flat['position'], flat['callHistory']);
+    angular.forEach($scope.project.flats, function(flat) {
+      if (flat.display) {
+        gMaps.addSimpleMarker(flat.position, flat.callHistory, flat);  
+      }
     });      
     gMaps.bestView();    
-  }
+  };
   messWithMapAll = function() {
     if (!gMaps.getCalledPromise()) {
       gMaps.getPromise().then(function() {
@@ -61,14 +64,14 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
     } else {
       messWithMapAllHelper();
     }
-  }  
+  }; 
 
-  if (project.getProjects().length == 0) {
+  if (project.getProjects().length === 0) {
     $state.transitionTo('projects');
   } else {
     ifActiveExist = false;
     angular.forEach(project.getProjects(), function(item) {
-      if (item.active == true) {
+      if (item.active === true) {
         ifActiveExist = true;
         $scope.project = jQuery.extend(true,{},item);
         $scope.tmpProject = jQuery.extend(true,{},item);
@@ -89,8 +92,8 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
         $scope.project.flats.unshift($scope.toEdit);
         messWithMap();
       } else {
-        angular.forEach($scope.toEdit['images'], function(img) {
-          images.delImage(img['img']);
+        angular.forEach($scope.toEdit.images, function(img) {
+          images.delImage(img.img);
         });
         $scope.project.flats.splice(0,1);
         $scope.useConverter = false;
@@ -100,8 +103,8 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
     } else {
       if ($scope.isEditorOpen) {
         messWithMapAll();
-        tmpIdx = $scope.project['flats'].indexOf($scope.toEdit);
-        tmpImgs = jQuery.extend(true,{},$scope.toEdit['images']);
+        tmpIdx = $scope.project.flats.indexOf($scope.toEdit);
+        tmpImgs = jQuery.extend(true,{},$scope.toEdit.images);
 
         $scope.toEdit = jQuery.extend(true,{},$scope.defaultToEdit);
         $scope.project = jQuery.extend(true,{},$scope.tmpProject);
@@ -109,23 +112,23 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
         $scope.useConverter = false;
 
         angular.forEach(tmpImgs, function(img) {
-          angular.forEach($scope.project['flats'][tmpIdx]['images'], function(oldImg)  {
-            if (oldImg['img'] != img['img']) {
-                images.delImage(img['img']);
+          angular.forEach($scope.project.flats[tmpIdx].images, function(oldImg)  {
+            if (oldImg.img != img.img) {
+                images.delImage(img.img);
             }
           });
         });
       }
     }
     $scope.isEditorOpen = !$scope.isEditorOpen;
-  }
+  };
 
   $scope.confirm = function() {
     newPhones = [];
-    angular.forEach($scope.toEdit['phones'], function(phone) {
+    angular.forEach($scope.toEdit.phones, function(phone) {
       flag = true;
       angular.forEach(newPhones, function(phone2) {
-        if (phone2['phone'] == phone['phone']) {
+        if (phone2.phone == phone.phone) {
           flag = false;
         }
       });
@@ -133,29 +136,29 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
         newPhones.push(phone);
       }
     });
-    $scope.toEdit['phones'] = newPhones;
+    $scope.toEdit.phones = newPhones;
 
     if ($scope.mode == 'edit') {
-      tmpIdx = $scope.project['flats'].indexOf($scope.toEdit);
-      angular.forEach($scope.tmpProject['flats'][tmpIdx]['images'], function(oldImg) {
+      tmpIdx = $scope.project.flats.indexOf($scope.toEdit);
+      angular.forEach($scope.tmpProject.flats[tmpIdx].images, function(oldImg) {
         flag = true;
-        angular.forEach($scope.toEdit['images'], function(img)  {
-          if (img['img'] == oldImg['img']) {
+        angular.forEach($scope.toEdit.images, function(img)  {
+          if (img.img == oldImg.img) {
               flag = false;
           }
         });
         if (flag) {
-          images.delImage(oldImg['img']);
+          images.delImage(oldImg.img);
         }
       });
     }
 
     project.saveProject($scope.project).then(function(res) {
       if (res.data.hasOwnProperty('error')) {
-        alert(res.data['error']);
+        alert(res.data.error);
       } else {
-        $scope.project = res.data['project'];
-        $scope.project['was_shared'] = $scope.project['shared'];
+        $scope.project = res.data.project;
+        $scope.project.was_shared = $scope.project.shared;
         $scope.tmpProject = jQuery.extend(true,{},$scope.project);
         $scope.toEdit = {phones: [{phone:''}], modified: 'update'};
         $scope.project = jQuery.extend(true,{},$scope.tmpProject);
@@ -166,92 +169,90 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
         messWithMapAll();
       }
     });
-  }
+  };
   
   $scope.callHistoryChanged = function() {
-    gMaps.changeMarkerColor($scope.toEdit['callHistory']);
-  }
+    gMaps.changeMarkerColor($scope.toEdit.callHistory);
+  };
 
   $scope.edit = function(flat) {
     if ($scope.isEditorOpen) {
       $scope.toggleEditor();
     } else {
       $scope.mode = 'edit';
-      flat['modified'] = 'update';
+      flat.modified = 'update';
       $scope.toEdit = flat;
       messWithMap();
       $scope.isEditorOpen = true;
     }
-  }
+  };
 
   $scope.del = function(flat) {
     if ($scope.isEditorOpen) {
       $scope.toggleEditor();
     }
-    $scope.project['flats'].splice($scope.project['flats'].indexOf(flat),1);
+    $scope.project.flats.splice($scope.project.flats.indexOf(flat),1);
     project.saveProject($scope.project).then(function(res) {
       if (res.data.hasOwnProperty('success')) {
         project.syncProject($scope.project);
         $scope.tmpProject = jQuery.extend(true,{},$scope.project);
       } else {
-        alert(res.data['error']);
+        alert(res.data.error);
         $scope.project = jQuery.extend(true,{},$scope.tmpProject);
       }
     });
-  }
+  };
 
   $scope.addPhone = function(phone) {
     flag = true;
-    angular.forEach($scope.toEdit['phones'], function(phone) {
-      if (phone['phone'] == '') {
+    angular.forEach($scope.toEdit.phones, function(phone) {
+      if (phone.phone === '') {
         flag = false;
       }
     });
     if (flag) {
-      $scope.toEdit['phones'].push({phone:''});
+      $scope.toEdit.phones.push({phone:''});
     }
-  }
+  };
 
   $scope.delPhone = function(phone) {
-    if ($scope.toEdit['phones'].length > 1) {
-      $scope.toEdit['phones'].splice($scope.toEdit['phones'].indexOf(phone),1);
+    if ($scope.toEdit.phones.length > 1) {
+      $scope.toEdit.phones.splice($scope.toEdit.phones.indexOf(phone),1);
     }
-  }
+  };
 
   $scope.converterClick = function() {
-    $scope.exchangeRate = $scope.project['rate'];
+    $scope.exchangeRate = $scope.project.rate;
     if ($scope.useConverter)  {
-      $scope.inputCurrency = Math.round($scope.toEdit['price'] * $scope.exchangeRate);
+      $scope.inputCurrency = Math.round($scope.toEdit.price * $scope.exchangeRate);
     }
-  }
+  };
   $scope.convertPrice = function() {
-    $scope.toEdit['price'] = Math.round($scope.exchangeRate * $scope.inputCurrency);
-  }
+    $scope.toEdit.price = Math.round($scope.exchangeRate * $scope.inputCurrency);
+  };
 
   $scope.removeImage = function(image) {
-    // images.delImage(image['img']).then(function(res) {
-      $scope.toEdit['images'].splice($scope.toEdit['images'].indexOf(image),1);
-      if ($scope.mode == 'create') {
-        images.delImage(image['img']);
-      }
-    // });
-  }
+    $scope.toEdit.images.splice($scope.toEdit.images.indexOf(image),1);
+    if ($scope.mode == 'create') {
+      images.delImage(image.img);
+    }
+  };
 
   $scope.makeCover = function(image) {
-    if ($scope.toEdit['images'].length > 1) {
-      aIndx = $scope.toEdit['images'].indexOf(image);
-      aImg = $scope.toEdit['images'][aIndx]['img'];
-      $scope.toEdit['images'][aIndx]['img'] = $scope.toEdit['images'][0]['img'];
-      $scope.toEdit['images'][0]['img'] = aImg;
-      console.log($scope.toEdit['images']);
+    if ($scope.toEdit.images.length > 1) {
+      aIndx = $scope.toEdit.images.indexOf(image);
+      aImg = $scope.toEdit.images[aIndx].img;
+      $scope.toEdit.images[aIndx].img = $scope.toEdit.images[0].img;
+      $scope.toEdit.images[0].img = aImg;
+      console.log($scope.toEdit.images);
     }
-  }    
+  }; 
     
   messWithMapHelper = function() {
     dragCallBack = function(event) {
-      $scope.toEdit['position']['lat'] = event.latLng.lat();
-      $scope.toEdit['position']['lng'] = event.latLng.lng();
-    }
+      $scope.toEdit.position.lat = event.latLng.lat();
+      $scope.toEdit.position.lng = event.latLng.lng();
+    };
     
     map = gMaps.getMap();    
     var input = document.getElementById('address');
@@ -263,7 +264,7 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
     });
     searchBox.addListener('places_changed', function() {
       var places = searchBox.getPlaces();
-      if (places.length == 0) {
+      if (places.length === 0) {
         return;
       }
       // Clear out the old markers.
@@ -273,8 +274,8 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
       places.forEach(function(place) {
         // Create a marker for each place.
         gMaps.addMarker(place.geometry.location, dragCallBack, 'toCall');
-        $scope.toEdit['position']['lat'] = place.geometry.location.lat();
-        $scope.toEdit['position']['lng'] = place.geometry.location.lng();
+        $scope.toEdit.position.lat = place.geometry.location.lat();
+        $scope.toEdit.position.lng = place.geometry.location.lng();
         bounds.extend(place.geometry.location);
       });
       map.fitBounds(bounds);
@@ -286,15 +287,15 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
 
     google.maps.event.addListener(map, 'click', function(event) {
       gMaps.addMarker(event.latLng, dragCallBack, 'toCall');
-      $scope.toEdit['position']['lat'] = event.latLng.lat();
-      $scope.toEdit['position']['lng'] = event.latLng.lng();
+      $scope.toEdit.position.lat = event.latLng.lat();
+      $scope.toEdit.position.lng = event.latLng.lng();
     });      
     
     if ($scope.mode == 'edit') {
-      gMaps.addMarker(new google.maps.LatLng($scope.toEdit['position']), dragCallBack, $scope.toEdit['callHistory']);
+      gMaps.addMarker(new google.maps.LatLng($scope.toEdit.position), dragCallBack, $scope.toEdit.callHistory);
     }
     gMaps.bestView();
-  }  
+  };  
   messWithMap = function() { 
     gMaps.delAllMarkers();
     if (!gMaps.getCalledPromise()) {
@@ -303,6 +304,6 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
     } else {
       messWithMapHelper();
     }    
-  }
+  };
   
 });

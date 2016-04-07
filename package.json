@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build_css": "./bin/build_css.sh",
-    "watch_css": "./bin/watch_css.sh",  
+    "watch_css": "./bin/watch_css.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,6 +14,11 @@
     "express": "~4.13.4",
     "grunt-cli": "~0.1.13",
     "grunt": "~0.4.5",
-    "grunt-bower-concat": "~1.0.0"
+    "grunt-bower-concat": "~1.0.0",
+    "grunt-contrib-jshint": "~1.0.0",
+    "grunt-contrib-watch": "~1.0.0",
+    "grunt-contrib-concat": "~1.0.0",
+    "grunt-contrib-uglify": "~1.0.1",
+    "grunt-contrib-copy": "~1.0.0"
   }
 }

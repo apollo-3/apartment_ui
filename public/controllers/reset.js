@@ -3,5 +3,5 @@ app.controller('reset', function($scope, auth) {
   
   $scope.resetPass = function(mail) {
     auth.resetPass(mail);
-  }
+  };
 });

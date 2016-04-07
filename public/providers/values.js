@@ -5,6 +5,6 @@ app.factory('values', function() {
     max_images: 4,
     map_zoom: 11,
     map_center: {lat: 53.904, lng: 27.561}
-  }
+  };
   return values;
 });
