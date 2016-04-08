@@ -16,20 +16,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
       },
     })
-    .state('register', {
-      url: "/register",
-      views: {
-        "main": {
-          templateUrl: "views/register.html",
-          controller: "register"          
-        },
-        "top": {
-          templateUrl: "views/top.html",
-          controller: "top"          
-        }
-      }
-
-    })
     .state('workplace', {
       url: "/workplace",
       views: {
@@ -55,19 +41,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
           controller: "top"          
         }
       }    
-    })
-    .state('reset', {
-      url: "/reset",
-      views: {
-        "main": {
-          templateUrl: "views/reset.html",
-          controller: 'reset'
-        },
-        "top": {
-          templateUrl: "views/top.html",
-          controller: "top"          
-        }
-      }
     })
     .state('project', {
       url: "/project",

@@ -1,5 +1,5 @@
 $body_background: white;
-$link_color: #337ab7
+$link_color: #337ab7;
 
 body {
   margin: 0; 
@@ -22,4 +22,16 @@ div#map {
   div#draw_area {
     height: 380px;
   }
+}
+
+div#loading {
+  position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background: #2ECC71;
+  z-index: 1000;
+  display: none;
+  text-align: center;
 }

@@ -10,11 +10,11 @@ app.factory('userData', function($http, values, $cookies) {
   
   reloadData = function() {
     return $http({
-             url: values.api_url + 'users/getData',
-             method: 'post',
-             headers: {'Content-Type':'application/x-www-form-urlencoded'},
-             data: 'mail=' + $cookies.get('mail') + '&token=' + $cookies.get('token') + '&defLang=' + values.def_lang
-           });
+     url: values.api_url + 'users/getData',
+     method: 'post',
+     headers: {'Content-Type':'application/x-www-form-urlencoded'},
+     data: 'mail=' + $cookies.get('mail') + '&token=' + $cookies.get('token') + '&defLang=' + values.def_lang
+   });
   };
   
   if (jQuery.isEmptyObject(data) && $cookies.get('token')!==undefined && $cookies.get('mail')!==undefined) {

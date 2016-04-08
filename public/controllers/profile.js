@@ -23,23 +23,35 @@ app.controller('profile', function($scope, $cookies, auth, userData, $state) {
   
   $scope.delUser = function(password) {
     user = {'user':{'mail':$cookies.get('mail'), 'password':password, 'token':$cookies.get('token')}};
-    auth.delUser(user);
+    auth.delUser(user).then(function(res) {
+      if (res.data.hasOwnProperty('error')) {
+        alert(res.data.error);
+      } else {
+        auth.cleanCookies();
+        alert(res.data.success);
+        $state.transitionTo('login');
+      }
+    });
   };
   
   $scope.updateUser = function(user) {    
     toSend = {};
-    user.user.password = CryptoJS.MD5(user.user.password).toString();
     if ($scope.changePass) {
-      user.user.newPassword = CryptoJS.MD5(user.user.newPassword).toString();
       toSend = {'user':{'mail':$cookies.get('mail'),'password':user.user.password,'newPassword':user.user.newPassword, 'token':$cookies.get('token')}};
     } else {
       user.user.token = $cookies.get('token');
-      user.user.newPassword = '';
-      delete user.user.newPassword;
       toSend = user;
-      ORIGINAL = userData.getData();
     }
-    auth.updateUser(toSend);
+    
+    auth.updateUser(toSend, $scope.changePass).then(function(res) {
+      if (res.data.hasOwnProperty('success')) {
+        alert(res.data.success);
+        userData.setData(res.data.user);
+        $state.transitionTo('workplace');
+      } else {
+        alert(res.data.error);
+      }
+    });
   };
   
   $scope.cancel = function() {

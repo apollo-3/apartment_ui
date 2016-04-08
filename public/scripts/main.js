@@ -7,4 +7,11 @@ $(document).ready(function() {
     $("#map").css('opacity','1');
   };
   hideMap();
+  
+  fakeLoadOn = function() {
+    $("#loading").css('display','block');
+  };
+  fakeLoadOff = function() {
+    $("#loading").css('display','none');
+  };
 });

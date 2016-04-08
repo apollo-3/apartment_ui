@@ -13,12 +13,6 @@
           <li ng-class="{active: routerState.current.name=='workplace'}"><a ui-sref="workplace" >Workplace</a></li>
           <li ng-class="{active: routerState.current.name=='projects'}"><a ui-sref="projects" >Projects</a></li>
         </ul>
-        <p class="navbar-text navbar-right" ng-hide="isLogged || routerState.current.name=='login'">
-          <a ui-sref="login">Sign in</a>
-        </p>
-        <p class="navbar-text navbar-right" ng-show="routerState.current.name=='login'">
-          <a ui-sref="register">Sign up</a>
-        </p>
         <p class="navbar-text navbar-right" ng-show="isLogged">
           <a ng-href="#" ng-click='logout()'>Sign out</a>
         </p>

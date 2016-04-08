@@ -3,26 +3,26 @@
   <title>Apartment UI</title>
   <script type="text/javascript" src="bower.js"></script> 
   <link rel="stylesheet" type="text/css" href="bower.css">  
-  <script type="text/javascript" src="concat.js"></script>   
 <!--  
+  <script type="text/javascript" src="concat.js"></script>   
+-->
   <script type="text/javascript" src="scripts/main.js"></script>
-  <script type="text/javascript" src="modules/apartments.js"></script>
-  <script type="text/javascript" src="directives/thumb.js"></script>  
+  <script type="text/javascript" src="modules/apartments.js"></script>  
+  <script type="text/javascript" src="directives/thumb.js"></script>    
+  <script type="text/javascript" src="directives/enter.js"></script>  
+  <script type="text/javascript" src="directives/inputCleaner.js"></script>   
   <script type="text/javascript" src="controllers/top.js"></script>    
   <script type="text/javascript" src="controllers/login.js"></script>  
-  <script type="text/javascript" src="controllers/register.js"></script>
   <script type="text/javascript" src="controllers/workplace.js"></script>  
   <script type="text/javascript" src="controllers/project.js"></script>   
   <script type="text/javascript" src="controllers/projects.js"></script> 
   <script type="text/javascript" src="controllers/profile.js"></script>   
-  <script type="text/javascript" src="controllers/reset.js"></script>
   <script type="text/javascript" src="providers/values.js"></script>
   <script type="text/javascript" src="providers/userdata.js"></script>
   <script type="text/javascript" src="providers/project.js"></script>
   <script type="text/javascript" src="providers/auth.js"></script>
   <script type="text/javascript" src="providers/images.js"></script>  
-  <script type="text/javascript" src="providers/gMaps.js"></script>  
--->   
+  <script type="text/javascript" src="providers/gMaps.js"></script>     
   <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body ng-app='apartments'>
@@ -32,5 +32,6 @@
     <div id="draw_area"></div>
   </div>
   <div ui-view="main"></div>
+  <div id="loading"><img src="images/loading.gif"></img></div>
 </body>
 </html>

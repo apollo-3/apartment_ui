@@ -1,9 +1,21 @@
 $login_form_color: #CFFCA1;
 
+.cleaner {
+  display: block;
+  width: 19px;
+  heght: 21px;
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  cursor: pointer;
+  z-index: 3;  
+  opacity: 0.2;  
+}
+
+.hover-cleaner-remove {
+  opacity: 0.8;
+}
+
 div.login {
-  position: relative;
-  width: 300px;
-  margin: auto;
-  top: 20px;
-  background-color: $login_form_color;
+
 }
