@@ -1,4 +1,10 @@
 app.factory('auth', function($cookies, $http, $state, values, project) {
+  
+  cleanCookies = function() {
+    $cookies.remove('mail');
+    $cookies.remove('token');     
+    $cookies.remove('lang');          
+  }
 
   var session = {
     // Log user in
@@ -21,8 +27,7 @@ app.factory('auth', function($cookies, $http, $state, values, project) {
         data: {'user':{'mail': $cookies.get('mail'), 'token': $cookies.get('token'), 'defLang' : values.def_lang}},
         headers: {'Content-Type': 'application/json'}
       }).then(function(res) { 
-          $cookies.remove('mail');
-          $cookies.remove('token');    
+          cleanCookies();        
           project.setProjects([]);
           project.setAllUsers([]);
           $state.transitionTo('login');
@@ -103,22 +108,22 @@ app.factory('auth', function($cookies, $http, $state, values, project) {
       });
     },
     // Set Cookies
-    setCookies: function(remember, mail, token) {
+    setCookies: function(remember, mail, token, lang) {
       var expires_in = new Date();
       expires_in.setDate(expires_in.getDate() + 365);
       if (remember === true) {
         $cookies.put('mail', mail, {'expires': expires_in});
-        $cookies.put('token', token, {'expires': expires_in});          
+        $cookies.put('token', token, {'expires': expires_in});  
+        $cookies.put('lang', lang, {'expires': expires_in}); 
       } else {
         $cookies.put('mail', mail);
-        $cookies.put('token', token);           
+        $cookies.put('token', token);    
+        $cookies.put('lang', lang);         
       }      
     },
     // Clean Cookies
-    cleanCookies: function() {
-      $cookies.remove('mail');
-      $cookies.remove('token');      
-    }
+    cleanCookies: cleanCookies
   };
+  
   return session;
 });

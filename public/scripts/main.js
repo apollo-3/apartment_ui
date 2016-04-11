@@ -13,5 +13,6 @@ $(document).ready(function() {
   };
   fakeLoadOff = function() {
     $("#loading").css('display','none');
-  };
+  };  
+  
 });

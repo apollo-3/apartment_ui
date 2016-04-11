@@ -46,6 +46,11 @@ app.controller('profile', function($scope, $cookies, auth, userData, $state) {
     auth.updateUser(toSend, $scope.changePass).then(function(res) {
       if (res.data.hasOwnProperty('success')) {
         alert(res.data.success);
+        
+        var expires_in = new Date();
+        expires_in.setDate(expires_in.getDate() + 365);
+        $cookies.put('lang', res.data.user.lang, {'expires': expires_in});
+        
         userData.setData(res.data.user);
         $state.transitionTo('workplace');
       } else {

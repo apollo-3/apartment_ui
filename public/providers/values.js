@@ -4,7 +4,10 @@ app.factory('values', function() {
     def_lang : (navigator.language || navigator.userLanguage).split('-')[0],
     max_images: 4,
     map_zoom: 11,
-    map_center: {lat: 53.904, lng: 27.561}
+    map_center: {lat: 53.904, lng: 27.561},
+    min_password_length: 4,
+    max_password_length: 16,
+    max_mail_length: 32
   };
   return values;
 });
