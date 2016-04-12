@@ -55,12 +55,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
       }
     })    
-    .state('profile', {
-      url: "/profile",
+    .state('settings', {
+      url: "/settings",
       views: {
         "main": {
-          templateUrl: "views/profile.html",
-          controller: "profile"
+          templateUrl: "views/settings.html",
+          controller: "settings"
         },
         "top": {
           templateUrl: "views/top.html",

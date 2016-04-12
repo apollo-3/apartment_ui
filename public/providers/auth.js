@@ -21,6 +21,7 @@ app.factory('auth', function($cookies, $http, $state, values, project) {
     },
     // Logout
     logout: function() {
+      fakeLoadOn();
       $http({
         method: 'post',
         url: values.api_url +'users/logout',
@@ -31,6 +32,7 @@ app.factory('auth', function($cookies, $http, $state, values, project) {
           project.setProjects([]);
           project.setAllUsers([]);
           $state.transitionTo('login');
+          fakeLoadOff();
       });
     },
     // Session check, move to login page if not authenticated
@@ -91,14 +93,12 @@ app.factory('auth', function($cookies, $http, $state, values, project) {
       });
     },
     // Update user
-    updateUser: function(user, changePass) {
+    updateUser: function(user) {
       tUser = jQuery.extend(true,{},user);
       tUser.user.password = CryptoJS.MD5(tUser.user.password).toString();
-      if (changePass) {
+      if (tUser.user.hasOwnProperty('newPassword')) {
         tUser.user.newPassword = CryptoJS.MD5(tUser.user.newPassword).toString();
-      } else {
-        delete tUser.newPassword;
-      }      
+      }
       tUser.user.defLang = values.def_lang;
       return $http({
         url: values.api_url + 'users/update',

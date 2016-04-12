@@ -1,0 +1,110 @@
+<div class="login">
+  <div class="container-fluid">
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" style="margin-top:50px;">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <div class="panel-title">{{LNG.settings | capitalize}}</div>
+        </div>   
+        <div style="padding-top:30px" class="panel-body">
+          <form class="form-horizontal" role="form">
+            <div ng-show="error!=''" class="alert alert-danger">
+              <b>{{LNG.error | capitalize}}:</b> {{error}}
+            </div>          
+            <div class="form-group radio">
+              <div class="col-md-11 col-md-offset-1" style="margin-bottom: 15px;">
+                <label>
+                  <input type="radio" ng-model="mode" value="change"></input>
+                  {{LNG.change_data | capitalize}}&nbsp&nbsp
+                </label>              
+                <label>
+                  <input type="radio" ng-model="mode" value="password"></input>               
+                  {{LNG.change_password | capitalize}}&nbsp&nbsp
+                </label>              
+                <label>
+                  <input type="radio" ng-model="mode" value="delete"></input>               
+                  {{LNG.del_account | capitalize}}
+                </label>              
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">{{LNG.email | capitalize}}:</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" ng-model="user.user.mail" placeholder="{{LNG.email}}" disabled></input>              
+              </div>                         
+            </div>
+            <div ng-show="mode=='change'">
+              <div class="form-group" ng-show="mode=='change'">
+                <label class="control-label col-md-3">{{LNG.name | capitalize}}:</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" ng-class="{'warning': warn_name}" ng-model="user.user.name" placeholder="{{LNG.name}}" ng-change="customFilter('name')"></input>              
+                  <input-cleaner action="user.user.name=''" style="margin-right:13px;"></input-cleaner>
+                </div>           
+              </div> 
+              <div class="form-group">
+                <label class="control-label col-md-3">{{LNG.birth_year | capitalize}}:</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" ng-class="{'warning':warn_birth_year}" ng-model="user.user.birthYear" placeholder="{{LNG.birth_year}}" ng-change="customFilter('birth_year')"></input>              
+                  <input-cleaner action="user.user.birthYear=''" style="margin-right:13px;"></input-cleaner>
+                </div>           
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3">{{LNG.phone | capitalize}}:</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" ng-class="{'warning': warn_phone}" ng-model="user.user.phone" placeholder="{{LNG.phone}}" ng-change="customFilter('phone')"></input>              
+                  <input-cleaner action="user.user.phone=''" style="margin-right:13px;"></input-cleaner>
+                </div>           
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3">{{LNG.country | capitalize}}:</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" ng-model="user.user.country" placeholder="{{LNG.country}}"></input>              
+                  <input-cleaner action="user.user.country=''" style="margin-right:13px;"></input-cleaner>
+                </div>           
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3">{{LNG.state | capitalize}}:</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" ng-model="user.user.state" placeholder="{{LNG.state}}"></input>              
+                  <input-cleaner action="user.user.state=''" style="margin-right:13px;"></input-cleaner>
+                </div>           
+              </div>  
+              <div class="form-group">
+                <label class="control-label col-md-3">{{LNG.city | capitalize}}:</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" ng-model="user.user.city" placeholder="{{LNG.city}}"></input>              
+                  <input-cleaner action="user.user.city=''" style="margin-right:13px;"></input-cleaner>
+                </div>           
+              </div>       
+              <div class="form-group">
+                <label class="control-label col-md-3">{{LNG.language | capitalize}}:</label>
+                <div class="col-md-9">
+                  <select ng-options="lang for lang in langs" class="form-control" ng-model="user.user.lang"></select>
+                </div>           
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">{{LNG.password | capitalize}}:</label>
+              <div class="col-md-9">
+                <input type="password" class="form-control" ng-class="{'warning': warn_password}" ng-model="user.user.password" placeholder="{{LNG.password}}" ng-change="customFilter('password')" ng-enter="confirm()"></input>
+                <input-cleaner action="user.user.password=''" style="margin-right:13px;"></input-cleaner>
+              </div>           
+            </div> 
+            <div class="form-group" ng-show="mode=='password'">
+              <label class="control-label col-md-3">{{LNG.new_password | capitalize}}:</label>
+              <div class="col-md-9">
+                <input type="password" class="form-control" ng-class="{'warning': warn_new_password}" ng-model="user.user.newPassword" placeholder="{{LNG.new_password}}" ng-change="customFilter('new_password')"></input>              
+                <input-cleaner action="user.user.newPassword=''" style="margin-right:13px;"></input-cleaner>
+              </div>           
+            </div>     
+            <div class="form-group">  
+              <div class="col-md-6 col-md-offset-3" style="margin-top:10px;">
+                <button type="button" class="btn btn-danger" style="margin-right:6px;" ng-click="confirm()">{{LNG.confirm | capitalize}}</button>            
+                <button type="button" class="btn btn-success" ng-click="cancel()">{{LNG.cancel | capitalize}}</button>            
+              </div>
+            </div>          
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

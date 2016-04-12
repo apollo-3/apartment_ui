@@ -16,9 +16,40 @@ app.filter('password', function(values) {
   };
 });
 
+app.filter('name', function(values) {
+  return function(input) {
+    result = false;
+    if ((input.length >= values.min_name_length) && 
+      (input.length <= values.max_name_length)) { result = true; }
+    return result;
+  };
+});
+
+app.filter('phone', function(values) {
+  return function(input) {
+    result = false;
+    if ((input.length >= values.min_phone_length) && 
+      (input.length <= values.max_phone_length) &&
+      (input.match(/^\d+$/))) { result = true; }
+    return result;
+  };
+});
+
+app.filter('year', function() {
+  return function(input) {
+    result = false;
+    if (typeof input === 'number') {
+      input = input.toString();
+    }
+    if (input.match(/^\d{4}$/)) { result = true; }
+    return result;
+  };
+});
+
 app.filter('capitalize', function() {
   return function(input) {
-    input = input.toLowerCase();
-    return input.substring(0,1).toUpperCase() + input.substring(1);
+    return input.replace(/(\s.{1})|(^.{1})/g, function(v) {
+      return v.toUpperCase();
+    });   
   }
 });

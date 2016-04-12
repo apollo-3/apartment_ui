@@ -7,7 +7,11 @@ app.factory('values', function() {
     map_center: {lat: 53.904, lng: 27.561},
     min_password_length: 4,
     max_password_length: 16,
-    max_mail_length: 32
+    max_mail_length: 32,
+    min_name_length: 2,
+    max_name_length: 32,
+    min_phone_length: 6,
+    max_phone_length: 16
   };
   return values;
 });

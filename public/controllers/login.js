@@ -56,20 +56,12 @@ app.controller('login', function($scope, auth, userData, $state, $filter, values
   $scope.customFilters = function(name) {
     switch (name) {
       case 'email':     
-        handleHilight($('.login-username'), $filter('email')($scope.user.user.mail));
+        $scope.warn_mail = !$filter('email')($scope.user.user.mail);
         break;
       case 'password':
-        handleHilight(el = $('.login-password'), $filter('password')($scope.user.user.password));
+        $scope.warn_password = !$filter('password')($scope.user.user.password);
         break;        
     }        
-  };
-  
-  handleHilight = function(el, fResult) {
-    if (fResult) {
-      el.removeClass('warning');
-    } else {
-      el.addClass('warning');
-    }    
   };
   
 });

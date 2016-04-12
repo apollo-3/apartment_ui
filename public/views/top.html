@@ -10,14 +10,14 @@
       
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav" ng-show="isLogged">
-          <li ng-class="{active: routerState.current.name=='workplace'}"><a ui-sref="workplace" >Workplace</a></li>
-          <li ng-class="{active: routerState.current.name=='projects'}"><a ui-sref="projects" >Projects</a></li>
+          <li ng-class="{active: routerState.current.name=='workplace'}"><a ui-sref="workplace">{{LNG.workplace | capitalize}}</a></li>
+          <li ng-class="{active: routerState.current.name=='projects'}"><a ui-sref="projects">{{LNG.projects | capitalize}}</a></li>
         </ul>
         <p class="navbar-text navbar-right" ng-show="isLogged">
-          <a ng-href="#" ng-click='logout()'>Sign out</a>
+          <a ng-href="#" ng-click='logout()'>{{LNG.sign_out | capitalize}}</a>
         </p>
-        <p class="navbar-text navbar-right" ng-show="isLogged && routerState.current.name!='profile'">
-          Welcome, <a ui-sref="profile" class="user_name">{{mail}}</a>
+        <p class="navbar-text navbar-right" ng-show="isLogged && routerState.current.name!='settings'">
+          {{LNG.welcome | capitalize}}, <a ui-sref="settings" class="user_name">{{mail}}</a>
         </p>
       </div>
       

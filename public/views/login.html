@@ -3,43 +3,43 @@
     <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" ng-show="mode=='login'">    
       <div class="panel panel-info">
         <div class="panel-heading">
-          <div class="panel-title">{{LNG.sign_in}}</div>
+          <div class="panel-title">{{LNG.sign_in | capitalize}}</div>
           <div style="float:right; font-size: 80%; position: relative; top:-10px">
-            <a href="#" ng-click="mode='forgot'; error=''">{{LNG.forgot_password}}?</a>
+            <a href="#" ng-click="mode='forgot'; error=''">{{LNG.forgot_password | capitalize}}?</a>
           </div>
         </div>        
         <div style="padding-top:30px" class="panel-body">
           <div ng-show="error!=''" id="login-alert" class="alert alert-danger col-sm-12">
-            <b>{{LNG.error}}:</b> {{error}}
+            <b>{{LNG.error | capitalize}}:</b> {{error}}
           </div>
           <form id="loginform" class="form-horizontal" role="form">                      
             <div style="margin-bottom: 25px" class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <input type="text" class="form-control login-username" name="username" placeholder="{{LNG.email}}" ng-model="user.user.mail" ng-change="customFilters('email')">
+              <input type="text" class="form-control login-username" ng-class="{'warning': warn_mail}" name="email" placeholder="{{LNG.email}}" ng-model="user.user.mail" ng-change="customFilters('email')">
               <input-cleaner action="user.user.mail=''"></input-cleaner>
             </div>                  
             <div style="margin-bottom: 25px" class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-              <input type="password" class="form-control login-password" name="password" placeholder="{{LNG.password}}" ng-model="user.user.password" ng-enter="login()" ng-change="customFilters('password')">
+              <input type="password" class="form-control login-password" ng-class="{'warning': warn_password}" name="password" placeholder="{{LNG.password}}" ng-model="user.user.password" ng-enter="login()" ng-change="customFilters('password')">
               <input-cleaner action="user.user.password=''"></input-cleaner>
             </div>
             <div class="input-group">
               <div class="checkbox">
                 <label>
-                  <input id="login-remember" type="checkbox" name="remember" ng-model="remember"> {{LNG.remember}}
+                  <input id="login-remember" type="checkbox" name="remember" ng-model="remember"> {{LNG.remember | capitalize}}
                 </label>
               </div>
             </div>
             <div style="margin-top:10px" class="form-group">
               <div class="col-sm-12 controls">
-                <a id="btn-login" href="#" class="btn btn-success" ng-click="login()">{{LNG.sign_in}}</a>
+                <a id="btn-login" href="#" class="btn btn-success" ng-click="login()">{{LNG.sign_in | capitalize}}</a>
               </div>
             </div>
             <div class="form-group">
               <div class="col-md-12 control">
                 <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
-                  {{LNG.no_account}}?
-                  <a href="#" ng-click="mode='register'; error=''">{{LNG.sign_up}}</a>
+                  {{LNG.no_account | capitalize}}?
+                  <a href="#" ng-click="mode='register'; error=''">{{LNG.sign_up | capitalize}}</a>
                 </div>
               </div>
             </div>    
@@ -50,33 +50,33 @@
     <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" ng-show="mode=='register'">    
       <div class="panel panel-info">
         <div class="panel-heading">
-          <div class="panel-title">{{LNG.sign_up}}</div>
+          <div class="panel-title">{{LNG.sign_up | capitalize}}</div>
             <div style="float:right; font-size: 85%; position: relative; top:-10px">
-              <a id="signinlink" href="#" ng-click="mode='login'; error=''">{{LNG.sign_in}}</a>
+              <a id="signinlink" href="#" ng-click="mode='login'; error=''">{{LNG.sign_in | capitalize}}</a>
             </div>
           </div>
           <div class="panel-body" >
           <form id="signupform" class="form-horizontal" role="form">
             <div id="signupalert" ng-show="error!=''" class="alert alert-danger">
-              <b>{{LNG.error}}:</b> {{error}}
+              <b>{{LNG.error | capitalize}}:</b> {{error}}
             </div> 
             <div class="form-group">
               <label for="email" class="col-md-3 control-label">{{LNG.email | capitalize}}</label>
               <div class="col-md-9">
-                <input type="text" class="form-control login-username" name="email" placeholder="{{LNG.email}}" ng-model="user.user.mail" ng-change="customFilters('email')">
+                <input type="text" class="form-control login-username" ng-class="{'warning': warn_mail}" name="email" placeholder="{{LNG.email}}" ng-model="user.user.mail" ng-change="customFilters('email')">
                 <input-cleaner action="user.user.mail=''" style="margin-right:13px"></input-cleaner>
               </div>
             </div>                                
             <div class="form-group">
               <label for="password" class="col-md-3 control-label">{{LNG.password | capitalize}}</label>
               <div class="col-md-9">
-                <input type="password" class="form-control login-password" name="passwd" placeholder="{{LNG.password}}" ng-model="user.user.password" ng-enter="register()" ng-change="customFilters('password')">
+                <input type="password" class="form-control login-password" ng-class="{'warning': warn_password}" name="passwd" placeholder="{{LNG.password}}" ng-model="user.user.password" ng-enter="register()" ng-change="customFilters('password')">
                 <input-cleaner action="user.user.password=''" style="margin-right:13px"></input-cleaner>                
               </div>
             </div>
             <div class="form-group">                                      
               <div class="col-md-offset-3 col-md-9">
-                <button id="btn-signup" type="button" class="btn btn-info" ng-click="register()"><i class="icon-hand-right"></i> &nbsp {{LNG.sign_up}}</button>
+                <button id="btn-signup" type="button" class="btn btn-info" ng-click="register()"><i class="icon-hand-right"></i> &nbsp {{LNG.sign_up | capitalize}}</button>
               </div>
             </div>
           </form>
@@ -86,33 +86,33 @@
     <div id="forgotbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" ng-show="mode=='forgot'">
       <div class="panel panel-info">
         <div class="panel-heading">
-          <div class="panel-title">{{LNG.forgot_password}}?</div>
+          <div class="panel-title">{{LNG.forgot_password | capitalize}}?</div>
             <div style="float:right; font-size: 85%; position: relative; top:-10px">
-              <a id="signinlink" href="#" ng-click="mode='login'; error=''">{{LNG.sign_in}}</a>
+              <a id="signinlink" href="#" ng-click="mode='login'; error=''">{{LNG.sign_in | capitalize}}</a>
             </div>
           </div>
           <div class="panel-body" >
           <form id="forgotform" class="form-horizontal" role="form">
             <div id="forgotalert" ng-show="error!=''" class="alert alert-danger">
-              <b>{{LNG.error}}:</b> {{error}}
+              <b>{{LNG.error | capitalize}}:</b> {{error}}
             </div> 
             <div class="form-group">
               <label for="email" class="col-md-3 control-label">{{LNG.email | capitalize}}</label>
               <div class="col-md-9">
-                <input type="text" class="form-control login-username" name="email" placeholder="{{LNG.email}}" ng-model="user.user.mail" ng-enter="resetPass()" ng-change="customFilters('email')">
+                <input type="text" class="form-control login-username" ng-class="{'warning': warn_mail}" name="email" placeholder="{{LNG.email}}" ng-model="user.user.mail" ng-enter="resetPass()" ng-change="customFilters('email')">
                 <input-cleaner action="user.user.mail=''" style="margin-right:13px"></input-cleaner>
               </div>
             </div>                                
             <div class="form-group">                                      
               <div class="col-md-offset-3 col-md-9">
-                <button id="btn-signup" type="button" class="btn btn-info" ng-click="resetPass()"><i class="icon-hand-right"></i> &nbsp {{LNG.reset}}</button>
+                <button id="btn-signup" type="button" class="btn btn-info" ng-click="resetPass()"><i class="icon-hand-right"></i> &nbsp {{LNG.reset | capitalize}}</button>
               </div>
             </div>
             <div class="form-group">
               <div class="col-md-12 control">
                 <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
-                  {{LNG.no_account}}?
-                  <a href="#" ng-click="mode='register'; error=''">{{LNG.sign_up}}</a>
+                  {{LNG.no_account | capitalize}}?
+                  <a href="#" ng-click="mode='register'; error=''">{{LNG.sign_up | capitalize}}</a>
                 </div>
               </div>
             </div>                
