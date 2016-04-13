@@ -1,3 +1,87 @@
+<div class="container-fluid">
+  <div class="col-md-6 col-md-offset-3" style="margin-bottom:20px;">
+    <button type="button" class="btn btn-default">
+      <span class="glyphicon glyphicon-plus"></span>
+      <span class="">New</span>
+    </button>
+  </div>
+  
+  <div class="col-md-4">
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <div class="panel-title"><span class="custom-link">{{toEdit.name | capitalize}}</span></div>       
+        <div class="project-header-btns">   
+          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button>
+          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+        </div>
+        <span class="badge owner-badge">{{toEdit.shared ? LNG.shared : LNG.private}}</span>                         
+        <input class="project-header-btns" style="top:-22px; right:13px;" type="checkbox" ng-model="toEdit.shared"></input>        
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group" style="margin-bottom:2px;">
+            <label class="col-md-3 control-label custom-label">{{LNG.project_name | capitalize}}:</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" ng-class="{'warning': warn_name}" placeholder="{{LNG.project_name}}" ng-model="toEdit.name">
+              <input-cleaner action="toEdit.name=''" style="margin-right:13px"></input-cleaner>            
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group row col-md-9 col-md-offset-3">
+              <select class="form-control" ng-options="user as user for user in allUsers" ng-model="userToAdd" ng-disabled="!toEdit.shared"></select>
+              <span class="input-group-btn"><button class="btn btn-default" type = "button" ng-disabled="!toEdit.shared">Add</button></span>
+            </div>
+<!--            
+            <label class="col-md-3 control-label custom-label">{{LNG.shared | capitalize}}: <input type="checkbox" ng-model="toEdit.shared"></label>
+            <div class="col-md-9">
+              <select class="form-control" ng-options="user as user for user in allUsers" ng-model="userToAdd" ng-disabled="!toEdit.shared"></select>
+            </div>            
+-->            
+          </div>          
+        </form>
+      </div>
+    </div>
+  </div>  
+  
+  <div class="col-md-4" ng-repeat="project in projects">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title"><span class="custom-link" ng-click="goToProject(project)">{{project.name | capitalize}}</span></div>       
+        <div class="project-header-btns">        
+          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
+        </div>
+        <span class="badge owner-badge">{{project.shared ? LNG.shared : LNG.private}}</span>                         
+      </div>
+      <div class="panel-body">
+        <ul class="list-group">
+          <li class="list-group-item no-border">
+            <span class="desc-label">{{LNG.created | capitalize}}:</span>
+            {{project.creation_date}}
+          </li>      
+          <li class="list-group-item no-border">
+            <span class="desc-label">{{LNG.owners | capitalize}}:</span>       
+            {{project.owners | thru}}
+          </li>      
+          <li class="list-group-item no-border">
+            <span class="desc-label">{{LNG.currency | capitalize}}:</span>       
+            {{project.currency}}
+          </li>    
+          <li class="list-group-item no-border">
+            <span class="desc-label">{{LNG.exchange_rate | capitalize}}:</span>       
+            {{project.rate}}
+          </li> 
+          <li class="list-group-item no-border">
+            <span class="desc-label">{{LNG.description | capitalize}}:</span>       
+            {{project.description}}
+          </li>           
+        </ul>            
+      </div>      
+    </div>
+  </div>
+  
+</div>
+ 
 <div class="projects">
   <button ng-click="cancel()">
     <a ng-hide="newFormVisibility">New Project</a>
@@ -31,10 +115,7 @@
      </div>
      <b>Currency:</b> {{project.currency}}<br>
      <b>Exchange Rate:</b> {{project.rate}}<br>
-     <b>Description:</b> <span>{{project.description}}</span><br>
-  <!--   
-     <li ng-repeat="flat in project.flats">{{flat.address}} & {{flat.phone}} & {{flat.contact}}</li>
-  -->   
+     <b>Description:</b> <span>{{project.description}}</span><br>  
     <hr>
     </div>
   </div>

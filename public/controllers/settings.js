@@ -2,6 +2,7 @@ app.controller('settings', function($scope, $cookies, auth, userData, $state, la
   auth.checkSession();  
   
   if (jQuery.isEmptyObject(userData.getData())) {
+    fakeLoadOn();
     userData.reloadData().then(function(res) {
       if (res.data.hasOwnProperty('error')) {
         alert(res.data.error);
@@ -11,6 +12,7 @@ app.controller('settings', function($scope, $cookies, auth, userData, $state, la
         $scope.user.user.password = '';
         $scope.LNG = languages[languages.availableLng()];
       }
+      fakeLoadOff();      
     });
   }
   
@@ -31,7 +33,10 @@ app.controller('settings', function($scope, $cookies, auth, userData, $state, la
       if (($filter('password')($scope.user.user.password)) &&
           ($filter('year')($scope.user.user.birthYear)) &&
           ($filter('name')($scope.user.user.name)) &&
-          ($filter('phone')($scope.user.user.phone))) {      
+          ($filter('phone')($scope.user.user.phone)) &&
+          ($filter('geoName')($scope.user.user.country)) &&
+          ($filter('geoName')($scope.user.user.state)) &&
+          ($filter('geoName')($scope.user.user.city))) {      
         delete $scope.user.newPassword
         user = jQuery.extend(true,{}, $scope.user);
         user.user.token = $cookies.get('token');
@@ -111,7 +116,16 @@ app.controller('settings', function($scope, $cookies, auth, userData, $state, la
         break;
       case 'phone':
         $scope.warn_phone = !$filter('phone')($scope.user.user.phone);      
-        break;        
+        break;    
+      case 'country':
+        $scope.warn_country = !$filter('geoName')($scope.user.user.country);
+        break;       
+      case 'state':
+        $scope.warn_state = !$filter('geoName')($scope.user.user.state);
+        break;      
+      case 'city':
+        $scope.warn_city = !$filter('geoName')($scope.user.user.city);
+        break;         
     }
   }
 });

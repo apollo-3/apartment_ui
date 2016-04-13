@@ -31,7 +31,17 @@ app.factory('languages', function(values, $cookies) {
       'sign_out': 'sign out',
       'welcome': 'welcome',
       'projects': 'projects',
-      'workplace': 'workplace'
+      'workplace': 'workplace',
+      /* Projects page*/      
+      'private': 'private',
+      'shared': 'shared',
+      'type': 'type',
+      'created': 'created',
+      'owners': 'owners',
+      'currency': 'currency',
+      'exchange_rate': 'exchange rate',
+      'description': 'description',
+      'project_name': 'title'      
     },
     'ru': {
       /* Login page*/      
@@ -64,7 +74,17 @@ app.factory('languages', function(values, $cookies) {
       'sign_out': 'выйти',
       'welcome': 'привет',
       'projects': 'проекты',
-      'workplace': 'кабинет'     
+      'workplace': 'кабинет',
+      /* Projects page*/      
+      'private': 'приватный',
+      'shared': 'совместный',
+      'type': 'тип',
+      'created': 'создан',
+      'owners': 'владельцы',
+      'currency': 'валюта',
+      'exchange_rate': 'коэф. конвертации',
+      'description': 'описание',
+      'project_name': 'название'
     },
     availableLng: function() {
       lan = values.def_lang;

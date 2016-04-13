@@ -1,26 +1,24 @@
-<div class="top">
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+  
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="icon-bar" ng-repeat-start="i in [1,2,3]" ng-repeat-end=""></span>
+      </button>
+    </div>    
     
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="icon-bar" ng-repeat-start="i in [1,2,3]" ng-repeat-end=""></span>
-        </button>
-      </div>    
-      
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav" ng-show="isLogged">
-          <li ng-class="{active: routerState.current.name=='workplace'}"><a ui-sref="workplace">{{LNG.workplace | capitalize}}</a></li>
-          <li ng-class="{active: routerState.current.name=='projects'}"><a ui-sref="projects">{{LNG.projects | capitalize}}</a></li>
-        </ul>
-        <p class="navbar-text navbar-right" ng-show="isLogged">
-          <a ng-href="#" ng-click='logout()'>{{LNG.sign_out | capitalize}}</a>
-        </p>
-        <p class="navbar-text navbar-right" ng-show="isLogged && routerState.current.name!='settings'">
-          {{LNG.welcome | capitalize}}, <a ui-sref="settings" class="user_name">{{mail}}</a>
-        </p>
-      </div>
-      
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav" ng-show="isLogged">
+        <li ng-class="{active: routerState.current.name=='workplace'}"><a ui-sref="workplace">{{LNG.workplace | capitalize}}</a></li>
+        <li ng-class="{active: routerState.current.name=='projects'}"><a ui-sref="projects">{{LNG.projects | capitalize}}</a></li>
+      </ul>
+      <p class="navbar-text navbar-right" ng-show="isLogged">
+        <a ng-href="#" ng-click='logout()'>{{LNG.sign_out | capitalize}}</a>
+      </p>
+      <p class="navbar-text navbar-right" ng-show="isLogged && routerState.current.name!='settings'">
+        {{LNG.welcome | capitalize}}, <a ui-sref="settings" class="user_name">{{mail}}</a>
+      </p>
     </div>
-  </nav>
-</div>
+    
+  </div>
+</nav>

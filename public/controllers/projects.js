@@ -1,9 +1,11 @@
-app.controller('projects', function($scope, auth, project, $state, $cookies) {
+app.controller('projects', function($scope, auth, project, $state, $cookies, languages) {
   auth.checkSession();
   $scope.newProject = {flats:[], shared: false, currency: '$', rate: 1, owners:[$cookies.get('mail')]};
   $scope.newFormVisibility = false;
   $scope.mode = 'create';  
   $scope.currencies = ['$','€','₽','Br','£','₣','¥','₴'];
+  
+  $scope.LNG = languages[languages.availableLng()];
   
   $scope.checkIfEmpty = function() {
     if ($scope.projects.length === 0) {

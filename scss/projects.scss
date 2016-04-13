@@ -26,3 +26,48 @@ div.projects {
     }
   }
 }
+
+.desc-label {
+  color: #2A5BB7;
+  margin-right: 5px;
+}
+
+.owner-badge {
+  display: block;
+  width: 60px;
+  position: relative;
+  top: -20px;
+  float: right;
+  right: 10px;
+}
+
+.no-border {
+  border: 0px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+ul.list-group {
+  margin-bottom: 0px;
+}
+
+.custom-link {
+  color: $link_color;
+  font-weight: bold;
+}
+.custom-link:hover {
+  color: $hover_link_color;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.project-header-btns {
+  float: right;
+  position: relative;
+  top: -25px;
+}
+
+.custom-label {
+  font-weight: normal;
+  color: #2A5BB7;
+}

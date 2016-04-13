@@ -46,10 +46,34 @@ app.filter('year', function() {
   };
 });
 
-app.filter('capitalize', function() {
+app.filter('geoName', function(values) {
   return function(input) {
-    return input.replace(/(\s.{1})|(^.{1})/g, function(v) {
-      return v.toUpperCase();
-    });   
+    result = false;
+    if ((input.length >= values.min_geoname_length) &&
+        (input.length <= values.max_geoname_length)) { result = true; }
+    return result;
+  };
+});
+
+app.filter('capitalize', function() {  
+  return function(input) { 
+    if ((input !== undefined) && (input !== '')) {
+      input = input.replace(/(\s.{1})|(^.{1})/g, function(v) {
+        return v.toUpperCase();
+      });   
+    } else {
+      input = 'NA';
+    }
+    return input;
+  }
+});
+
+app.filter('thru', function() {
+  return function(input) {
+    out = '';
+    angular.forEach(input, function(val) {
+      out = out + val + ', ';
+    });    
+    return out.replace(/, $/,'');
   }
 });
