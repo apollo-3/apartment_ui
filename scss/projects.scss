@@ -34,7 +34,7 @@ div.projects {
 
 .owner-badge {
   display: block;
-  width: 60px;
+  width: 80px;
   position: relative;
   top: -20px;
   float: right;
@@ -47,8 +47,8 @@ div.projects {
   padding-bottom: 2px;
 }
 
-ul.list-group {
-  margin-bottom: 0px;
+.no-bottom {
+  margin-bottom: 5px;
 }
 
 .custom-link {
@@ -70,4 +70,34 @@ ul.list-group {
 .custom-label {
   font-weight: normal;
   color: #2A5BB7;
+}
+
+.custom-row {
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+.point-hand {
+  cursor: pointer;
+}
+
+.search-list {
+  position: absolute;
+  left: 77px;
+  top: 33px;
+  z-index: 2;
+}
+
+.users-list-block {
+  font-size: 12px;
+  margin-top: 5px; 
+  
+  span:hover {
+    background-color: #D9534F;
+  }
+  
+  span {
+    cursor: not-allowed;
+    margin-right: 5px;
+  }  
 }

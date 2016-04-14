@@ -13,7 +13,10 @@ app.factory('values', function() {
     min_phone_length: 6,
     max_phone_length: 16,
     min_geoname_length: 2,
-    max_geoname_length: 32
+    max_geoname_length: 32,
+    max_float_length: 8,
+    min_description_length: 5,
+    max_description_length: 256
   };
   return values;
 });

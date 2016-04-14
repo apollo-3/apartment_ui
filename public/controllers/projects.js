@@ -1,11 +1,31 @@
-app.controller('projects', function($scope, auth, project, $state, $cookies, languages) {
+app.controller('projects', function($scope, auth, project, $state, $cookies, languages, $filter) {
   auth.checkSession();
-  $scope.newProject = {flats:[], shared: false, currency: '$', rate: 1, owners:[$cookies.get('mail')]};
+  $scope.newProjectOrg = {flats:[], shared: false, currency: '$', rate: '1', owners:[$cookies.get('mail')]};
+  $scope.newProject = $.extend(true,{},$scope.newProjectOrg);
   $scope.newFormVisibility = false;
   $scope.mode = 'create';  
-  $scope.currencies = ['$','€','₽','Br','£','₣','¥','₴'];
+  $scope.currencies = ['$','€','₽','Br','£','₣','¥','₴'];  
   
   $scope.LNG = languages[languages.availableLng()];
+  
+  $scope.mode2 = 'off';
+  $scope.addUser2 = function(owner) {
+    console.log(owner + ' ' + $scope.newProject.owners.join());
+    if ($scope.newProject.owners.indexOf(owner) == -1) {    
+      $scope.newProject.owners.push(owner);
+    }
+  };
+  $scope.editorOn = function() {
+    if ($scope.mode2 = 'create') {
+      
+    } else {
+      
+    }
+  }
+  $scope.editorOff = function() {
+    $scope.mode2 = 'off';
+    $scope.newProject = $.extend(true,{},$scope.newProjectOrg);    
+  };
   
   $scope.checkIfEmpty = function() {
     if ($scope.projects.length === 0) {
@@ -144,5 +164,16 @@ app.controller('projects', function($scope, auth, project, $state, $cookies, lan
     project.setProjects(jQuery.extend(true,{},$scope.projects));
     $state.transitionTo('project');
   };
+  
+  $scope.customFilter = function(name) {
+    switch (name) {
+      case 'exchange-rate': $scope.warn_exchange_rate = !$filter('float')($scope.newProject.rate);
+        break
+      case 'project-name': $scope.warn_name = !$filter('name')($scope.newProject.name);
+        break   
+      case 'description': $scope.warn_description = !$filter('description')($scope.newProject.description);
+        break         
+    }
+  }
   
 });

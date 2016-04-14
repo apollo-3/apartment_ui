@@ -1,43 +1,65 @@
 <div class="container-fluid">
   <div class="col-md-6 col-md-offset-3" style="margin-bottom:20px;">
-    <button type="button" class="btn btn-default">
+    <button type="button" class="btn btn-default" ng-disabled="mode2!='off'" ng-click="mode2='create';editorOn();">
       <span class="glyphicon glyphicon-plus"></span>
       <span class="">New</span>
     </button>
   </div>
   
-  <div class="col-md-4">
+  <div class="col-md-4" ng-hide="mode2=='off'">
     <div class="panel panel-danger">
       <div class="panel-heading">
-        <div class="panel-title"><span class="custom-link">{{toEdit.name | capitalize}}</span></div>       
+        <div class="panel-title"><span class="custom-link">{{newProject.name | capitalize}}</span></div>       
         <div class="project-header-btns">   
-          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button>
+          <button type="button" class="btn btn-default" ng-click="editorOff()"><span class="glyphicon glyphicon-remove"></span></button>
           <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk"></span></button>
         </div>
-        <span class="badge owner-badge">{{toEdit.shared ? LNG.shared : LNG.private}}</span>                         
-        <input class="project-header-btns" style="top:-22px; right:13px;" type="checkbox" ng-model="toEdit.shared"></input>        
+        <span class="badge owner-badge">{{newProject.shared ? LNG.shared : LNG.private}}</span>                         
+        <input class="project-header-btns" style="top:-22px; right:13px;" type="checkbox" ng-model="newProject.shared" ng-click="sharingChanged()"></input>
       </div>
       <div class="panel-body">
         <form class="form-horizontal" role="form">
-          <div class="form-group" style="margin-bottom:2px;">
+          <div class="form-group no-bottom">
             <label class="col-md-3 control-label custom-label">{{LNG.project_name | capitalize}}:</label>
             <div class="col-md-9">
-              <input type="text" class="form-control" ng-class="{'warning': warn_name}" placeholder="{{LNG.project_name}}" ng-model="toEdit.name">
-              <input-cleaner action="toEdit.name=''" style="margin-right:13px"></input-cleaner>            
+              <input type="text" class="form-control" ng-class="{'warning': warn_name}" placeholder="{{LNG.project_name}}" ng-model="newProject.name" ng-change="customFilter('project-name')">
+              <input-cleaner action="newProject.name=''" style="margin-right:13px"></input-cleaner>            
             </div>
           </div>
-          <div class="form-group">
-            <div class="input-group row col-md-9 col-md-offset-3">
-              <select class="form-control" ng-options="user as user for user in allUsers" ng-model="userToAdd" ng-disabled="!toEdit.shared"></select>
-              <span class="input-group-btn"><button class="btn btn-default" type = "button" ng-disabled="!toEdit.shared">Add</button></span>
+          <div class="form-group no-bottom">
+            <label class="col-md-3 control-label custom-label">{{LNG.currency | capitalize}}:</label>
+            <div class="input-group col-md-9">
+              <div class="row custom-row">
+                <select class="form-control" ng-options="currency for currency in currencies" ng-model="newProject.currency"></select>
+              </div>
             </div>
-<!--            
-            <label class="col-md-3 control-label custom-label">{{LNG.shared | capitalize}}: <input type="checkbox" ng-model="toEdit.shared"></label>
-            <div class="col-md-9">
-              <select class="form-control" ng-options="user as user for user in allUsers" ng-model="userToAdd" ng-disabled="!toEdit.shared"></select>
-            </div>            
--->            
-          </div>          
+          </div>  
+          <div class="form-group no-bottom">
+            <label class="col-md-3 control-label custom-label">{{LNG.rate | capitalize}}:</label>
+            <div class="input-group col-md-9">
+              <div class="row custom-row">
+                <input type="text" class="form-control" ng-class="{'warning': warn_exchange_rate}" ng-model="newProject.rate" ng-change="customFilter('exchange-rate')" placeholder="{{LNG.exchange_rate}}">
+                <input-cleaner action="newProject.rate=''" style="margin-right:13px"></input-cleaner>                            
+              </div>
+            </div>
+          </div>    
+          <div class="form-group no-bottom">
+            <label class="col-md-3 control-label custom-label">{{LNG.description | capitalize}}:</label>
+            <div class="input-group col-md-9">
+              <div class="row custom-row">
+                <textarea class="form-control" style="resize:none;" ng-class="{'warning': warn_description}" ng-model="newProject.description" ng-change="customFilter('description')" placeholder="{{LNG.description}}"></textarea>
+              </div>
+            </div>
+          </div>           
+          <div class="form-group no-bottom" ng-show="newProject.shared">
+            <div class="row custom-row">
+              <label class="col-md-3 control-label custom-label">{{LNG.friend | capitalize}}:</label>
+              <div class="input-group col-md-9">
+                <autocomplete class="input-group" option="users" action="addUser2(arg)" placeholder="LNG.email"></autocomplete>                                  
+              </div>
+              <div class="users-list-block"><span ng-repeat="owner in newProject.owners" class="label label-primary" ng-click="delUser(owner)">{{owner}}</span></div>
+            </div>                       
+          </div>         
         </form>
       </div>
     </div>
@@ -54,7 +76,7 @@
         <span class="badge owner-badge">{{project.shared ? LNG.shared : LNG.private}}</span>                         
       </div>
       <div class="panel-body">
-        <ul class="list-group">
+        <ul class="list-group no-bottom">
           <li class="list-group-item no-border">
             <span class="desc-label">{{LNG.created | capitalize}}:</span>
             {{project.creation_date}}
@@ -96,7 +118,7 @@
       <b>Owners:</b> <span ng-repeat="owner in newProject.owners">{{owner}} <b ng-click="delUser(owner)">(X) </b></span>
     </div>
     Currency: <select ng-options="currency for currency in currencies" ng-model="newProject.currency"></select><br>    
-    Exchange Rate: <input type="number" step="0.00001" ng-model="newProject.rate"/><br>
+    Exchange Rate: <input type="number" step="0.00001" <!--ng-model="newProject.rate"-->/><br>
     Description:<br> <textarea ng-model="newProject.description"></textarea><br>
     <button ng-click="saveProject()">
       <a ng-show="mode=='create'">Save</a>

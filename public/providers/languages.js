@@ -41,7 +41,10 @@ app.factory('languages', function(values, $cookies) {
       'currency': 'currency',
       'exchange_rate': 'exchange rate',
       'description': 'description',
-      'project_name': 'title'      
+      'project_name': 'title',
+      'users': 'users',
+      'friend': 'friend',
+      'rate': 'rate'
     },
     'ru': {
       /* Login page*/      
@@ -77,14 +80,17 @@ app.factory('languages', function(values, $cookies) {
       'workplace': 'кабинет',
       /* Projects page*/      
       'private': 'приватный',
-      'shared': 'совместный',
+      'shared': 'общий',
       'type': 'тип',
       'created': 'создан',
       'owners': 'владельцы',
       'currency': 'валюта',
       'exchange_rate': 'коэф. конвертации',
       'description': 'описание',
-      'project_name': 'название'
+      'project_name': 'название',
+      'users': 'пользватели',
+      'friend': 'друг',
+      'rate': 'курс'
     },
     availableLng: function() {
       lan = values.def_lang;
