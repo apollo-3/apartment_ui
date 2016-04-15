@@ -44,7 +44,12 @@ app.factory('languages', function(values, $cookies) {
       'project_name': 'title',
       'users': 'users',
       'friend': 'friend',
-      'rate': 'rate'
+      'rate': 'rate',
+      'no_projects': 'You don\'t have any projects yet. Create one now!',
+      'warning': 'warning',
+      'are_you_sure_delete': 'Are you sure you wanna delete',
+      'sort': 'sort',
+      'new': 'new'
     },
     'ru': {
       /* Login page*/      
@@ -90,7 +95,12 @@ app.factory('languages', function(values, $cookies) {
       'project_name': 'название',
       'users': 'пользватели',
       'friend': 'друг',
-      'rate': 'курс'
+      'rate': 'курс',
+      'no_projects': 'У вас пока не ни одного проекта. Создайте первый сейчас!',
+      'warning': 'внимание',
+      'are_you_sure_delete': 'Вы уверены, что хотите удалить',
+      'sort': 'сортировать',
+      'new': 'новый'
     },
     availableLng: function() {
       lan = values.def_lang;

@@ -80,6 +80,14 @@ app.factory('project', function($http, $cookies, values) {
     });
   };
   
+  getAllUsersArray = function() {
+    out = [];
+    angular.forEach(allUsers, function(val, key) {
+      out.push(val);
+    });
+    return out;
+  };
+  
   return {
     getProjects: getProjects,
     setProjects: setProjects,
@@ -90,6 +98,7 @@ app.factory('project', function($http, $cookies, values) {
     syncProject: syncProject,
     getAllUsers: getAllUsers,
     setAllUsers: setAllUsers,
-    reloadAllUsers: reloadAllUsers
+    reloadAllUsers: reloadAllUsers,
+    getAllUsersArray: getAllUsersArray
   };
 });

@@ -97,3 +97,24 @@ app.filter('thru', function() {
     return out.replace(/, $/,'');
   }
 });
+
+app.filter('sort', function() {
+  return function(input, sortBy, type, order) {
+    if ((input !== undefined) && (input.length > 0)) {
+      ord = (order == 'asc' ? 1 : -1);
+      input.sort(function(a,b) {
+        switch (type) {
+          case 'string': return ((a[sortBy].toLowerCase()>b[sortBy].toLowerCase())? ord : -ord);
+            break;
+          case 'int': return (a[sortBy]>b[sortBy] ? ord : -ord);
+            break;
+          case 'date': return (moment(a[sortBy].replace(' UTC',''),'YYYY-MM-DD HH:mm:ss')>moment(b[sortBy].replace(' UTC',''),'YYYY-MM-DD HH:mm:ss') ? ord : -ord);
+            break;
+          case 'bool' : return (a[sortBy]===b[sortBy] ? 0 : a[sortBy]? ord : -ord);
+            break;
+        }
+      });
+    }
+    return input;
+  };
+});
