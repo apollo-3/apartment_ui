@@ -179,7 +179,6 @@ app.controller('projects', function($scope, auth, project, $state, $cookies, lan
   
   // Change sort type on projects list
   $scope.changeSort = function(op) {
-    console.log($scope.projects);
     $filter('sort')($scope.projects, op.field, op.type, op.order);
   };  
   
