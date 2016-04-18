@@ -1,4 +1,4 @@
-app.factory('auth', function($cookies, $http, $state, values, project) {
+app.factory('auth', function($cookies, $http, $state, values, projects) {
   
   cleanCookies = function() {
     $cookies.remove('mail');
@@ -29,8 +29,8 @@ app.factory('auth', function($cookies, $http, $state, values, project) {
         headers: {'Content-Type': 'application/json'}
       }).then(function(res) { 
           cleanCookies();        
-          project.setProjects([]);
-          project.setAllUsers([]);
+          projects.setProjects([]);
+          projects.setAllUsers([]);
           $state.transitionTo('login');
           fakeLoadOff();
       });

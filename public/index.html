@@ -23,7 +23,7 @@
   <script type="text/javascript" src="providers/values.js"></script>
   <script type="text/javascript" src="providers/languages.js"></script>  
   <script type="text/javascript" src="providers/userdata.js"></script>
-  <script type="text/javascript" src="providers/project.js"></script>
+  <script type="text/javascript" src="providers/projects.js"></script>
   <script type="text/javascript" src="providers/auth.js"></script>
   <script type="text/javascript" src="providers/images.js"></script>  
   <script type="text/javascript" src="providers/gMaps.js"></script>     
@@ -32,10 +32,13 @@
 </head>
 <body ng-app='apartments'>
   <div ui-view="top"></div>
+  <div id="draw_area"></div>
+<!--  
   <div id="map">
     <div id="dragger"></div>
     <div id="draw_area"></div>
   </div>
+-->  
   <div ui-view="main"></div>
   <div id="loading"><img src="images/loading.gif"></img></div>
 </body>

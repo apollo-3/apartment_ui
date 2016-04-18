@@ -7,6 +7,13 @@ body {
   background-color: $body_background; 
 }
 
+div#draw_area {
+  width: 90%;
+  margin: auto;
+  height: 400px;
+  margin-bottom: 20px;
+}
+
 div#map {
   position: absolute;
   right: 20px;

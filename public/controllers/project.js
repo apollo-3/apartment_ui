@@ -1,4 +1,4 @@
-app.controller('project', function($scope, auth, project, $state, userData, $cookies, values, FileUploader, images, gMaps, $window) {
+app.controller('project', function($scope, auth, projects, $state, userData, $cookies, values, FileUploader, images, gMaps, $window, languages) {
   auth.checkSession();
 
   $scope.defaultToEdit = {phones:[{phone:''}], modified:'update',
@@ -17,6 +17,11 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
   $scope.useConverter = false;
   $scope.exchangeRate = 1;
   $scope.inputCurrency = 0;  
+  
+  $scope.LNG = languages[languages.availableLng()];  
+  $scope.showProjectDescription = true;
+  $scope.showFilterPanel = false;
+  $scope.showEditor = false;
 
   $scope.uploader = new FileUploader({url: values.api_url + 'images/uploadImage',
                                       alias: 'image',
@@ -38,6 +43,15 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
   });
   $scope.uploader.onCompleteItem = function(item, res) {
     $scope.toEdit.images.push(res.image);
+  };
+ 
+  // Show editor panel 
+  $scope.editorOn = function() {
+    $scope.showEditor = true;
+  }
+  // Hide editor panel
+  $scope.editorOff = function() {
+    $scope.showEditor = false;
   };
 
   $scope.checkIfEmpty = function() {
@@ -66,11 +80,11 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
     }
   }; 
 
-  if (project.getProjects().length === 0) {
+  if (projects.getProjects().length === 0) {
     $state.transitionTo('projects');
   } else {
     ifActiveExist = false;
-    angular.forEach(project.getProjects(), function(item) {
+    angular.forEach(projects.getProjects(), function(item) {
       if (item.active === true) {
         ifActiveExist = true;
         $scope.project = jQuery.extend(true,{},item);
@@ -153,7 +167,7 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
       });
     }
 
-    project.saveProject($scope.project).then(function(res) {
+    projects.saveProject($scope.project).then(function(res) {
       if (res.data.hasOwnProperty('error')) {
         alert(res.data.error);
       } else {
@@ -162,7 +176,7 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
         $scope.tmpProject = jQuery.extend(true,{},$scope.project);
         $scope.toEdit = {phones: [{phone:''}], modified: 'update'};
         $scope.project = jQuery.extend(true,{},$scope.tmpProject);
-        project.syncProject($scope.project);
+        projects.syncProject($scope.project);
         $scope.isEditorOpen = !$scope.isEditorOpen;
         $scope.useConverter = false;
         $scope.mode = 'create';
@@ -192,9 +206,9 @@ app.controller('project', function($scope, auth, project, $state, userData, $coo
       $scope.toggleEditor();
     }
     $scope.project.flats.splice($scope.project.flats.indexOf(flat),1);
-    project.saveProject($scope.project).then(function(res) {
+    projects.saveProject($scope.project).then(function(res) {
       if (res.data.hasOwnProperty('success')) {
-        project.syncProject($scope.project);
+        projects.syncProject($scope.project);
         $scope.tmpProject = jQuery.extend(true,{},$scope.project);
       } else {
         alert(res.data.error);

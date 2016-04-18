@@ -51,7 +51,7 @@
               <textarea class="form-control" style="resize:none;" ng-class="{'warning': warn_description}" ng-model="newProject.description" ng-change="customFilter('description')" placeholder="{{LNG.description}}"></textarea>
               <input-cleaner action="newProject.description=''" style="margin-right:13px"></input-cleaner>                            
             </div>
-          </div>           
+          </div>               
           <div class="form-group no-bottom" ng-show="newProject.shared">
             <div class="row custom-row">
               <label class="col-md-3 control-label custom-label">{{LNG.friend | capitalize}}:</label>
@@ -94,6 +94,10 @@
             <span class="desc-label">{{LNG.exchange_rate | capitalize}}:</span>       
             {{project.rate}}
           </li> 
+          <li class="list-group-item no-border">
+            <span class="desc-label">{{LNG.added | capitalize}}:</span>       
+            {{project.flats.length}}
+          </li>            
           <li class="list-group-item no-border">
             <span class="desc-label">{{LNG.description | capitalize}}:</span>       
             {{project.description}}

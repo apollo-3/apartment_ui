@@ -1,5 +1,6 @@
-app.controller('projects', function($scope, auth, project, $state, $cookies, languages, $filter) {
+app.controller('projects', function($scope, auth, projects, $state, $cookies, languages, $filter) {
   auth.checkSession();
+  hideMap();
   
   $scope.newProjectOrg = {flats:[], shared: false, currency: '$', rate: '1', owners:[$cookies.get('mail')], description: '', name: ''};
   $scope.newProject = $.extend(true,{},$scope.newProjectOrg);
@@ -10,11 +11,12 @@ app.controller('projects', function($scope, auth, project, $state, $cookies, lan
   $scope.error = '';
   $scope.sortOptions = [{'type': 'string', 'value': $scope.LNG.project_name, 'field': 'name', order: 'asc'},
                         {'type': 'date', 'value': $scope.LNG.created, 'field': 'creation_date', order: 'asc'},
-                        {'type': 'bool', 'value': $scope.LNG.shared, 'field': 'shared', order: 'asc'}];
+                        {'type': 'bool', 'value': $scope.LNG.shared, 'field': 'shared', order: 'asc'},
+                        {'type': 'length', 'value': $scope.LNG.added, 'field': 'flats', order: 'asc'}];
     
   // Loading the list of projects
-  if (project.getProjects().length === 0) {
-    project.reloadProjects().then(function(res) {
+  if (projects.getProjects().length === 0) {
+    projects.reloadProjects().then(function(res) {
       if (res.data.hasOwnProperty('error')) {
         swal($filter('capitalize')($scope.LNG.error), res.data.error);
       } else {
@@ -23,28 +25,28 @@ app.controller('projects', function($scope, auth, project, $state, $cookies, lan
           item.was_shared = item.shared;
           item.active = false;
         });
-        project.setProjects(jQuery.extend(true, {}, $scope.projects));
+        projects.setProjects(jQuery.extend(true, {}, $scope.projects));
         $scope.checkIfEmpty();
       }
     });
   } else {
-    $scope.projects = jQuery.extend(true, [], project.getProjects());
+    $scope.projects = jQuery.extend(true, [], projects.getProjects());
   }    
 
   // Get the list of all users
-  if (project.getAllUsers().length === 0) {
-    project.reloadAllUsers().then(function(res) {      
+  if (projects.getAllUsers().length === 0) {
+    projects.reloadAllUsers().then(function(res) {      
         $scope.allUsers = res.data.users;
-        project.setAllUsers(jQuery.extend(true,{},$scope.allUsers));
+        projects.setAllUsers(jQuery.extend(true,{},$scope.allUsers));
     });  
   } else {
-    $scope.allUsers = project.getAllUsers();
+    $scope.allUsers = projects.getAllUsers();
   }    
   
   // Add a user to owners list
   $scope.addUser = function(owner) {
     if (($scope.newProject.owners.indexOf(owner) == -1) &&
-       ((project.getAllUsersArray()).indexOf(owner) != -1)) {    
+       ((projects.getAllUsersArray()).indexOf(owner) != -1)) {    
       $scope.newProject.owners.push(owner);
     }
   };
@@ -66,7 +68,7 @@ app.controller('projects', function($scope, auth, project, $state, $cookies, lan
   // Saving a new or existing project
   $scope.saveProject = function() {
     if ($scope.mode == 'edit') {
-      project.saveProject($scope.newProject).then(function(res) {
+      projects.saveProject($scope.newProject).then(function(res) {
         if (res.data.hasOwnProperty('error')) {
           $scope.error = res.data.error;
         } else {
@@ -77,12 +79,12 @@ app.controller('projects', function($scope, auth, project, $state, $cookies, lan
               item.owners = res.data.project.owners;
             }
           });
-          project.setProjects(jQuery.extend(true,{},$scope.projects));          
+          projects.setProjects(jQuery.extend(true,{},$scope.projects));          
           $scope.editorOff();
         }
       });
     } else {
-      project.createProject($scope.newProject).then(function(res) {
+      projects.createProject($scope.newProject).then(function(res) {
         if (res.data.hasOwnProperty('error')) {
           $scope.error = res.data.error;
         } else {
@@ -95,7 +97,7 @@ app.controller('projects', function($scope, auth, project, $state, $cookies, lan
           });
           newTmp.push($scope.newProject);
           $scope.projects = newTmp;
-          project.setProjects(jQuery.extend(true,{},$scope.projects));
+          projects.setProjects(jQuery.extend(true,{},$scope.projects));
           $scope.editorOff();        
         }    
       });
@@ -107,7 +109,7 @@ app.controller('projects', function($scope, auth, project, $state, $cookies, lan
     swal({title: $filter('capitalize')($scope.LNG.warning), 
           text: $scope.LNG.are_you_sure_delete + '?',
           type: "warning", showCancelButton: true}, function() {
-          project.delProject(prj.name, prj.shared).then(function(res) {
+          projects.delProject(prj.name, prj.shared).then(function(res) {
         if (res.data.hasOwnProperty('error')) {
           swal($filter('capitalize')($scope.LNG.error), res.data.error);
         } else {
@@ -118,7 +120,7 @@ app.controller('projects', function($scope, auth, project, $state, $cookies, lan
             }
           });
           $scope.projects = newTmp;
-          project.setProjects(jQuery.extend(true,{},$scope.projects));
+          projects.setProjects(jQuery.extend(true,{},$scope.projects));
           $scope.checkIfEmpty();
           $scope.editorOff();
         }      
@@ -132,7 +134,7 @@ app.controller('projects', function($scope, auth, project, $state, $cookies, lan
       item.active = false;
     });
     prj.active = true;
-    project.setProjects(jQuery.extend(true,{},$scope.projects));
+    projects.setProjects(jQuery.extend(true,{},$scope.projects));
     $state.transitionTo('project');
   };
   
@@ -148,7 +150,7 @@ app.controller('projects', function($scope, auth, project, $state, $cookies, lan
   // Close editor (for a new or existing project)
   $scope.editorOff = function() {
     if ($scope.mode == 'edit') {      
-      $scope.projects = jQuery.extend(true,{}, project.getProjects());
+      $scope.projects = jQuery.extend(true,{}, projects.getProjects());
     }
     $scope.newProject = $.extend(true,{}, $scope.newProjectOrg);     
     $scope.mode = 'off';   
@@ -173,7 +175,7 @@ app.controller('projects', function($scope, auth, project, $state, $cookies, lan
        ($filter('float')($scope.newProject.rate)) &&
        ($filter('description')($scope.newProject.description))) {
       result = true;
-    }
+    }       
     return result;
   };    
   

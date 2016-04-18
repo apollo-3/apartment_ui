@@ -1,5 +1,6 @@
 app.controller('settings', function($scope, $cookies, auth, userData, $state, languages, $filter) {
-  auth.checkSession();  
+  auth.checkSession(); 
+  hideMap();  
   
   if (jQuery.isEmptyObject(userData.getData())) {
     fakeLoadOn();

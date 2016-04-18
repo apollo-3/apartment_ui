@@ -1,4 +1,4 @@
-app.factory('project', function($http, $cookies, values) {
+app.factory('projects', function($http, $cookies, values) {
   allUsers = [];
   projects = [];
   

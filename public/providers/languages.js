@@ -49,7 +49,10 @@ app.factory('languages', function(values, $cookies) {
       'warning': 'warning',
       'are_you_sure_delete': 'Are you sure you wanna delete',
       'sort': 'sort',
-      'new': 'new'
+      'new': 'new',
+      'added': 'added',
+      /* Project Page */
+      'filters': 'filters'      
     },
     'ru': {
       /* Login page*/      
@@ -100,7 +103,10 @@ app.factory('languages', function(values, $cookies) {
       'warning': 'внимание',
       'are_you_sure_delete': 'Вы уверены, что хотите удалить',
       'sort': 'сортировать',
-      'new': 'новый'
+      'new': 'новый',
+      'added': 'добавлено',
+      /* Project Page */
+      'filters': 'фильтры'         
     },
     availableLng: function() {
       lan = values.def_lang;

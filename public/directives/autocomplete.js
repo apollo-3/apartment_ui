@@ -1,4 +1,4 @@
-app.directive('autocomplete', function($filter, project) {
+app.directive('autocomplete', function($filter, projects) {
   return {
     restrict: 'E',
     template: '<div class="input-group-btn"><button class="btn btn-default" ng-click="clean()"><span class="glyphicon glyphicon-erase"></span></button>' +
@@ -12,7 +12,7 @@ app.directive('autocomplete', function($filter, project) {
       scope.inn = '';
       
       switch (attrs.option) {
-        case 'users': project.reloadAllUsers().then(function(res) {scope.org = res.data.users});    
+        case 'users': projects.reloadAllUsers().then(function(res) {scope.org = res.data.users});    
           break;
       }
       

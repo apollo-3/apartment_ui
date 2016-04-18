@@ -1,5 +1,31 @@
+.panel-button {
+  position:relative;
+  float:right;
+  top: -29px;
+  right: -10px;
+  margin-left: 5px;
+}
+
+.new-button {
+  position: fixed;
+  left: 0px;
+  bottom: -15px;
+  z-index: 3; 
+  -webkit-transition: bottom ease-out 0.5s;
+  -moz-transition: bottom ease-out 0.5s;
+  -o-transition: bottom ease-out 0.5s;
+  transition: bottom ease-out 0.5s;  
+}
+.new-button:hover {
+  bottom: 0px;
+  -webkit-transition: bottom ease-out 0.5s;
+  -moz-transition: bottom ease-out 0.5s;
+  -o-transition: bottom ease-out 0.5s;
+  transition: bottom ease-out 0.5s;
+}
+
 div.specific_project {
-  margin: 10px;
+  margin: 10px;  
   
   div.project_description {
     background-color: lightgreen;

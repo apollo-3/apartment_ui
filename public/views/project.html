@@ -1,4 +1,78 @@
+<div class="new-button">
+  <button class="btn btn-success" ng-click="editorOn()">
+    <i class="glyphicon glyphicon-home"></i>&nbsp;{{LNG.new | capitalize}}
+  </button>
+</div>
+
+<div class="container-fluid">
+  <div class="col-md-4" ng-show="showEditor">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title">
+          {{toEdit.name | capitalize}}
+        </div>
+        <button class="btn btn-default panel-button"><i class="glyphicon glyphicon-floppy-disk"></i></button>                
+        <button class="btn btn-default panel-button" ng-click="editorOff()"><i class="glyphicon glyphicon-remove"></i></button>
+      </div>
+      <div class="panel-body">
+        Panel content
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title">
+          {{LNG.filters | capitalize}}
+        </div>
+        <button class="btn btn-default panel-button" ng-click="showFilterPanel=!showFilterPanel"><i class="glyphicon glyphicon-resize-small"></i></button>
+      </div>
+      <div class="panel-body" ng-show="showFilterPanel">
+        Set of filters
+      </div>
+    </div>
+  </div>  
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title">
+          {{project.name | capitalize}}
+        </div>
+        <button class="btn btn-default panel-button" ng-click="showProjectDescription=!showProjectDescription"><i class="glyphicon glyphicon-resize-small"></i></button>
+        <span class="badge owner-badge panel-button" style="right:-2px;top:-20px">{{newProject.shared ? LNG.shared : LNG.private}}</span>        
+      </div>
+      <div class="panel-body" ng-show="showProjectDescription">
+        <div class="container-fluid">
+          <span class="desc-label">{{LNG.owners | capitalize}}:</span>
+          <span>{{project.owners | thru}}</span>
+        </div>
+        <div class="container-fluid">
+          <span class="desc-label">{{LNG.created | capitalize}}:</span>
+          <span>{{project.creation_date}}</span>
+        </div>        
+        <div class="container-fluid">
+          <span class="desc-label">{{LNG.currency | capitalize}}:</span>
+          <span>{{project.currency}}</span>
+        </div>           
+        <div class="container-fluid">
+          <span class="desc-label">{{LNG.exchange_rate | capitalize}}:</span>
+          <span>{{project.rate}}</span>
+        </div>   
+        <div class="container-fluid">
+          <span class="desc-label">{{LNG.added | capitalize}}:</span>
+          <span>{{project.flats.length}}</span>
+        </div>          
+        <div class="container-fluid">
+          <span class="desc-label">{{LNG.description | capitalize}}:</span>
+          <span>{{project.description}}</span>
+        </div>          
+      </div>      
+    </div>
+  </div>
+</div>
+
 <div class="specific_project">
+<!--
   <div class="project_description">
     <b>Name:</b> {{project.name}} <span ng-show="project.shared">(shared)</span><span ng-hide="project.shared">(private)</span><br>
     <span ng-show="project.shared">
@@ -10,6 +84,7 @@
     <b>Exchange Rate:</b> {{project.rate}}<br>
     <b>Description:</b> {{project.description}}
   </div>
+-->  
   <div class="controls">
     <button ng-click="toggleEditor()"><span ng-hide="isEditorOpen">New</span><span ng-show="isEditorOpen">Cancel New</span></button>
   </div>
