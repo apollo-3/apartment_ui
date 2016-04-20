@@ -22,6 +22,7 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
   $scope.showProjectDescription = true;
   $scope.showFilterPanel = false;
   $scope.showEditor = false;
+  $scope.tmpPhone = '';
 
   $scope.uploader = new FileUploader({url: values.api_url + 'images/uploadImage',
                                       alias: 'image',
@@ -47,17 +48,45 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
  
   // Show editor panel 
   $scope.editorOn = function() {
-    $scope.showEditor = true;
-  }
+    $scope.showEditor = true;    
+    setTimeout(function() {
+      $('html,body').animate({scrollTop: $('div#editor').offset().top});
+    }, 100);
+  };
+  
+  // Move to map
+  $scope.moveToMap = function() {
+    $('html,body').animate({scrollTop: $('html').offset().top});
+  };  
+  
   // Hide editor panel
   $scope.editorOff = function() {
     $scope.showEditor = false;
   };
+  
+  // Delete phone from phones
+  $scope.removePhone = function(phone) {
+    $scope.toEdit.phones.splice($scope.toEdit.phones.indexOf(phone), 1)
+  };
 
+  // Add phone to phones 
+  $scope.pushPhone = function() {
+    flag = true;
+    angular.forEach($scope.toEdit.phones, function(phone) {
+      if (phone.phone == $scope.tmpPhone) {
+        flag = false;
+      }
+    });
+    if (flag) {
+      $scope.toEdit.phones.push({'phone': $scope.tmpPhone});
+      $scope.tmpPhone = '';
+    }
+  };
+
+  // Checking if the project is empty
   $scope.checkIfEmpty = function() {
     if ($scope.project.flats.length === 0) {
       swal($filter('capitalize')($scope.LNG.info), $scope.LNG.empty_project);
-      // alert('Current project is empty. Add some items into it.');
     }
   };
   

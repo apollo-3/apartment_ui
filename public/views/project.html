@@ -1,12 +1,15 @@
-<div class="new-button">
+<div class="control-buttons">
   <button class="btn btn-success" ng-click="editorOn()">
     <i class="glyphicon glyphicon-home"></i>&nbsp;{{LNG.new | capitalize}}
   </button>
+  <button class="btn btn-success" ng-click="moveToMap()">
+    <i class="glyphicon glyphicon-sunglasses"></i>&nbsp;{{LNG.map | capitalize}}
+  </button>  
 </div>
 
 <div class="container-fluid">
   <!-- Editor panel -->
-  <div class="col-md-4" ng-show="showEditor">
+  <div class="col-md-4" ng-show="showEditor" id="editor">
     <div class="panel panel-danger">
       <div class="panel-heading">
         <div class="panel-title">
@@ -16,7 +19,23 @@
         <button class="btn btn-default panel-button" ng-click="editorOff()"><i class="glyphicon glyphicon-remove"></i></button>
       </div>
       <div class="panel-body">
-        Panel content2
+        <form class="form-horizontal" role="form">
+          <div class="form-group no-bottom">
+            <div class="row custom-row">          
+              <span class="control-label custom-label col-md-2" style="margin-top:7px;">{{LNG.phone | capitalize}}:</span>
+              <div class="input-group col-md-10">
+                <div class="input-group-btn">
+                  <button class="btn btn-default" ng-click="tmpPhone=''"><i class="glyphicon glyphicon-erase"></i></button>
+                  <button class="btn btn-default" ng-click="pushPhone()"><i class="glyphicon glyphicon-plus"></i></button>
+                </div>
+                <input type="text" class="form-control" ng-model="tmpPhone">
+              </div>  
+              <div class="users-list-block">            
+                <span class="label label-primary" ng-repeat="phone in toEdit.phones" ng-click="removePhone(phone)">{{phone.phone}}</span>
+              </div>
+            </div>
+          </div>        
+        </form>
       </div>
     </div>
   </div>

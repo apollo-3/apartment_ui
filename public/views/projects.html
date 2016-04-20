@@ -26,7 +26,7 @@
         </div>      
         <form class="form-horizontal" role="form">
           <div class="form-group no-bottom">
-            <label class="col-md-3 control-label custom-label">{{LNG.project_name | capitalize}}:</label>
+            <label class="col-md-3 control-label custom-label" style="margin-top:7px;">{{LNG.project_name | capitalize}}:</label>
             <div class="col-md-9">
               <input type="text" class="form-control" ng-class="{'warning': warn_name}" placeholder="{{LNG.project_name}}" ng-model="newProject.name" ng-change="customFilter('project-name')" ng-disabled="mode=='edit'">
               <input-cleaner action="newProject.name=''" style="margin-right:13px" ng-hide="mode=='edit'"></input-cleaner>            

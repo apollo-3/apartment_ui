@@ -6,17 +6,19 @@
   margin-left: 5px;
 }
 
-.new-button {
+.control-buttons {
   position: fixed;
-  left: 0px;
+  left: 5px;
   bottom: -15px;
   z-index: 3; 
+  
   -webkit-transition: bottom ease-out 0.2s;
   -moz-transition: bottom ease-out 0.2s;
   -o-transition: bottom ease-out 0.2s;
-  transition: bottom ease-out 0.2s;  
+  transition: bottom ease-out 0.2s;    
 }
-.new-button:hover {
+
+.control-buttons:hover {
   bottom: 0px;
   -webkit-transition: bottom ease-out 0.2s;
   -moz-transition: bottom ease-out 0.2s;
