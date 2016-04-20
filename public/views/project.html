@@ -5,8 +5,9 @@
 </div>
 
 <div class="container-fluid">
+  <!-- Editor panel -->
   <div class="col-md-4" ng-show="showEditor">
-    <div class="panel panel-default">
+    <div class="panel panel-danger">
       <div class="panel-heading">
         <div class="panel-title">
           {{toEdit.name | capitalize}}
@@ -19,6 +20,8 @@
       </div>
     </div>
   </div>
+  
+  <!-- Filter panel -->  
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -32,6 +35,8 @@
       </div>
     </div>
   </div>  
+  
+  <!-- Project description panel -->    
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading">

@@ -52,7 +52,9 @@ app.factory('languages', function(values, $cookies) {
       'new': 'new',
       'added': 'added',
       /* Project Page */
-      'filters': 'filters'      
+      'filters': 'filters',
+      'info': 'information',      
+      'empty_project': 'This project is empty. Add something into it!'
     },
     'ru': {
       /* Login page*/      
@@ -106,7 +108,9 @@ app.factory('languages', function(values, $cookies) {
       'new': 'новый',
       'added': 'добавлено',
       /* Project Page */
-      'filters': 'фильтры'         
+      'filters': 'фильтры',
+      'info': 'информация',
+      'empty_project': 'Этот проект пока пустой. Начни добавлять сюда варианты!'
     },
     availableLng: function() {
       lan = values.def_lang;

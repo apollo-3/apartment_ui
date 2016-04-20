@@ -1,4 +1,4 @@
-app.controller('project', function($scope, auth, projects, $state, userData, $cookies, values, FileUploader, images, gMaps, $window, languages) {
+app.controller('project', function($scope, auth, projects, $state, userData, $cookies, values, FileUploader, images, gMaps, $window, languages, $filter) {
   auth.checkSession();
 
   $scope.defaultToEdit = {phones:[{phone:''}], modified:'update',
@@ -56,7 +56,8 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
 
   $scope.checkIfEmpty = function() {
     if ($scope.project.flats.length === 0) {
-      alert('Current project is empty. Add some items into it.');
+      swal($filter('capitalize')($scope.LNG.info), $scope.LNG.empty_project);
+      // alert('Current project is empty. Add some items into it.');
     }
   };
   
