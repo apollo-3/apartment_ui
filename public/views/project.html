@@ -1,3 +1,5 @@
+<div id="map-scroller" class="map-controls">{{LNG.scrolling | capitalize}}</div>
+
 <div class="control-buttons">
   <button class="btn btn-success" ng-click="editorOn()">
     <i class="glyphicon glyphicon-home"></i>&nbsp;{{LNG.new | capitalize}}
@@ -17,24 +19,83 @@
         </div>
         <button class="btn btn-default panel-button"><i class="glyphicon glyphicon-floppy-disk"></i></button>                
         <button class="btn btn-default panel-button" ng-click="editorOff()"><i class="glyphicon glyphicon-remove"></i></button>
+        <span class="badge owner-badge" style="margin-right:-13px;">{{toEdit.display ? LNG.display : LNG.hide}}</span>                         
+        <input class="project-header-btns" style="top:-22px; right:13px;" type="checkbox" ng-model="toEdit.display"></input>        
       </div>
       <div class="panel-body">
+        <div ng-show="error!=''" class="alert alert-danger col-md-12">
+          <b>{{LNG.error | capitalize}}:</b> {{error}}
+        </div>      
         <form class="form-horizontal" role="form">
+        <!-- Address -->
+          <div class="form-group no-bottom">
+            <div class="row custom-row">              
+              <span class="control-label custom-label col-md-3" style="margin-top:7px;">{{LNG.address | capitalize}}:</span>            
+              <div class="input-group col-md-9"> 
+                <input type="text" class="form-control" ng-class="{'warning': warn_address}" ng-model="toEdit.address" ng-change="customFilter('address')" placeholder="{{LNG.address}}">
+              </div>          
+            </div>
+          </div>
+          <!-- Phones -->
           <div class="form-group no-bottom">
             <div class="row custom-row">          
-              <span class="control-label custom-label col-md-2" style="margin-top:7px;">{{LNG.phone | capitalize}}:</span>
-              <div class="input-group col-md-10">
+              <span class="control-label custom-label col-md-3" style="">{{LNG.phone | capitalize}}:</span>
+              <div class="input-group col-md-9">
                 <div class="input-group-btn">
                   <button class="btn btn-default" ng-click="tmpPhone=''"><i class="glyphicon glyphicon-erase"></i></button>
                   <button class="btn btn-default" ng-click="pushPhone()"><i class="glyphicon glyphicon-plus"></i></button>
                 </div>
-                <input type="text" class="form-control" ng-model="tmpPhone">
+                <input type="text" class="form-control" ng-class="{'warning': warn_phone}" ng-model="tmpPhone" ng-change="customFilter('phone')" ng-enter="pushPhone()" placeholder="{{LNG.phone}}">
               </div>  
               <div class="users-list-block">            
                 <span class="label label-primary" ng-repeat="phone in toEdit.phones" ng-click="removePhone(phone)">{{phone.phone}}</span>
               </div>
             </div>
-          </div>        
+          </div> 
+          <!-- Link -->
+          <div class="form-group no-bottom">
+            <div class="row custom-row">              
+              <span class="control-label custom-label col-md-3">{{LNG.link | capitalize}}:</span>            
+              <div class="input-group col-md-9"> 
+                <input type="text" class="form-control" ng-class="{'warning': warn_link}" ng-model="toEdit.link" ng-change="customFilter('link')" placeholder="http://">
+                <input-cleaner action="toEdit.link=''"></input-cleaner>
+                </input>
+              </div>          
+            </div>
+          </div>  
+          <!-- Contact -->
+          <div class="form-group no-bottom">
+            <div class="row custom-row">              
+              <span class="control-label custom-label col-md-3">{{LNG.contact | capitalize}}:</span>            
+              <div class="input-group col-md-9"> 
+                <input type="text" class="form-control" ng-class="{'warning': warn_contact}" ng-model="toEdit.contact" ng-change="customFilter('contact')" placeholder="{{LNG.contact}}">
+                <input-cleaner action="toEdit.contact=''"></input-cleaner>
+                </input>
+              </div>          
+            </div>            
+          </div>
+          <!-- Floor -->
+          <div class="form-group no-bottom">
+            <div class="row custom-row">              
+              <span class="control-label custom-label col-md-3">{{LNG.floor | capitalize}}:</span>            
+              <div class="input-group col-md-9"> 
+                <input type="text" class="form-control" ng-class="{'warning': warn_floor}" ng-model="toEdit.floor" ng-change="customFilter('floor')" placeholder="{{LNG.floor}}">
+                <input-cleaner action="toEdit.floor=''"></input-cleaner>
+                </input>
+              </div>          
+            </div>            
+          </div>  
+          <!-- Build Year -->
+          <div class="form-group no-bottom">
+            <div class="row custom-row">              
+              <span class="control-label custom-label col-md-3">{{LNG.year | capitalize}}:</span>            
+              <div class="input-group col-md-9"> 
+                <input type="text" class="form-control" ng-class="{'warning': warn_year}" ng-model="toEdit.buildYear" ng-change="customFilter('buildYear')" placeholder="{{LNG.year}}">
+                <input-cleaner action="toEdit.buildYear=''"></input-cleaner>
+                </input>
+              </div>          
+            </div>            
+          </div>                    
         </form>
       </div>
     </div>
@@ -121,14 +182,15 @@
     Link: <input type="text" ng-model="toEdit.link"></input><br>
     Show on map: <input type="checkbox" ng-model="toEdit.display"></input><br>
     Contact: <input type="text" ng-model="toEdit.contact"></input><br>
-    Floor: <input type="number" ng-model="toEdit.floor"></input><br>
+<!-- ATTENTION TEMP FORMAT CHANGE FLOOR, BUILDYEAR-->    
+    Floor: <input type="text" ng-model="toEdit.floor"></input><br>
     Price: <input type="number" ng-model="toEdit.price" ng-disabled="useConverter"></input>
     <input type="checkbox" ng-model="useConverter" ng-change="converterClick()"/>Use converter<br>
     <div class="converter" ng-show="useConverter">
       Exchange Rate: <input type="number" step="0.00001" ng-model="exchangeRate" ng-change="convertPrice()"/><br>
       Input Price: <input type="number" ng-model="inputCurrency" ng-change="convertPrice()"/>
     </div>
-    Build Year: <input type="number" min="1700" max="2200" ng-model="toEdit.buildYear"/><br>    
+    Build Year: <input type="text" ng-model="toEdit.buildYear"/><br>    
     Call History: <select ng-options="callHist for callHist in callHistoryOptions" ng-model="toEdit.callHistory" ng-change="callHistoryChanged()"></select><br>
     Stars: <select ng-options="star for star in stars" ng-model="toEdit.stars"></select><br>
     Owner: <input type="checkbox" ng-model="toEdit.owner"/><br>    

@@ -81,11 +81,23 @@ app.factory('gMaps', function($window, $q, values) {
     }
     // map.setZoom(map.getZoom()-1);    
   };
+  
+  setOptions = function(options) {
+    map.setOptions(options);
+  };
+  
+  attachButton = function(button, callBack) {
+    button.addEventListener('click', function() {
+      callBack();
+    });
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(button);
+  };
 
   aSyncLoad(function() {
       map = new google.maps.Map(document.getElementById('draw_area'), {
         center: values.map_center,
-        zoom: values.map_zoom
+        zoom: values.map_zoom,
+        scrollwheel: false
       });             
       return map;
     }
@@ -140,6 +152,8 @@ app.factory('gMaps', function($window, $q, values) {
     bestView: bestView,
     getCalledPromise: getCalledPromise,
     setCalledPromise: setCalledPromise,
-    changeMarkerColor: changeMarkerColor
+    changeMarkerColor: changeMarkerColor,
+    setOptions: setOptions,
+    attachButton: attachButton
   };
 });

@@ -23,6 +23,10 @@ app.factory('projects', function($http, $cookies, values) {
     prj.mail = $cookies.get('mail');
     prj.token = $cookies.get('token');
     prj.defLang = values.def_lang; 
+    angular.forEach(prj.flats, function(flat) {
+      flat.buildYear = parseInt(flat.buildYear);
+      flat.floor = parseInt(flat.floor);      
+    });
     delete prj.active;    
     prj = {project: prj};
     return $http({
@@ -37,6 +41,10 @@ app.factory('projects', function($http, $cookies, values) {
     prj.mail = $cookies.get('mail');
     prj.token = $cookies.get('token');
     prj.defLang = values.def_lang;
+    angular.forEach(prj.flats, function(flat) {
+      flat.buildYear = parseInt(flat.buildYear);
+      flat.floor = parseInt(flat.floor);
+    });    
     prj = {project: prj};
     return $http({
       url: values.api_url + 'projects/createProject',

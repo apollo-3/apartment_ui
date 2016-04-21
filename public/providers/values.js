@@ -11,12 +11,17 @@ app.factory('values', function() {
     min_name_length: 2,
     max_name_length: 32,
     min_phone_length: 6,
-    max_phone_length: 16,
+    max_phone_length: 24,
     min_geoname_length: 2,
     max_geoname_length: 32,
     max_float_length: 10,
     min_description_length: 5,
-    max_description_length: 256
+    max_description_length: 256,
+    min_address_length: 2,
+    max_address_length: 64,
+    max_link_length: 256,
+    min_floor_length: 1,
+    max_floor_length: 3
   };
   return values;
 });

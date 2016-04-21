@@ -39,7 +39,7 @@ app.filter('phone', function(values) {
     result = false;
     if ((input.length >= values.min_phone_length) && 
       (input.length <= values.max_phone_length) &&
-      (input.match(/^\d+$/))) { result = true; }
+      (input.match(/^\+?\d[\d\.-\s]+$/))) { result = true; }
     return result;
   };
 });
@@ -69,6 +69,42 @@ app.filter('float', function(values) {
     result = false;
     if ((input.length <= values.max_float_length) &&
         (input.match(/^(0|([1-9]{1}\d*))(\.\d+)?$/))) {
+      result = true;
+    }
+    return result;
+  };
+});
+
+app.filter('address', function(values) {
+  return function(input) {
+    result = false;
+    if ((input.length >= values.min_address_length) && (input.length <= max_address_length)) {
+      result = true;
+    }
+    return result;
+  };
+});
+
+app.filter('link', function(values) {
+  return function(input) {
+    result = false;
+    if ((input.length <= values.max_link_length) &&
+      (input.match(/^(http:\/\/.+)?$/))) {
+      result = true;
+    }
+    return result;
+  };
+});
+
+app.filter('floor', function(values) {
+  return function(input) {
+    result = false;
+    if (typeof input === 'number') {
+      input = input.toString();
+    }
+    if ((input.length >= values.min_floor_length) &&
+        (input.length <= values.max_floor_length) &&
+        (input.match(/^\d+$/))) {
       result = true;
     }
     return result;

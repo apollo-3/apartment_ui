@@ -4,7 +4,8 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
   $scope.defaultToEdit = {phones:[{phone:''}], modified:'update',
                           price: 0, owner: false, callHistory: 'toCall',
                           stars: 0, position: {}, images: [],
-                          display: true, link:''};
+                          display: true, link:'', buildYear: '',
+                          contact: '', address: '', floor: ''};
   $scope.toEdit = jQuery.extend(true,{},$scope.defaultToEdit);
   $scope.mode = 'create';
   $scope.isEditorOpen = false;
@@ -23,6 +24,8 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
   $scope.showFilterPanel = false;
   $scope.showEditor = false;
   $scope.tmpPhone = '';
+  $scope.error = '';
+  $scope.scrollOnMap = false;
 
   $scope.uploader = new FileUploader({url: values.api_url + 'images/uploadImage',
                                       alias: 'image',
@@ -77,7 +80,7 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
         flag = false;
       }
     });
-    if (flag) {
+    if ((flag) && ($filter('phone')($scope.tmpPhone))) {
       $scope.toEdit.phones.push({'phone': $scope.tmpPhone});
       $scope.tmpPhone = '';
     }
@@ -90,7 +93,30 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
     }
   };
   
+  // Setting warning classes using filters
+  $scope.customFilter = function(name) {
+    switch (name) {
+      case 'phone': $scope.warn_phone = !$filter('phone')($scope.tmpPhone);
+        break;
+      case 'link': $scope.warn_link = !$filter('link')($scope.toEdit.link);
+        break;   
+      case 'contact': $scope.warn_contact = !$filter('name')($scope.toEdit.contact);
+        break;    
+      case 'floor': $scope.warn_floor = !$filter('floor')($scope.toEdit.floor);
+        break;   
+      case 'buildYear': $scope.warn_year = !$filter('year')($scope.toEdit.buildYear);
+        break;         
+    }
+  };
+    
   messWithMapAllHelper = function() {
+    
+    // Toggle scrolling on map
+    gMaps.attachButton(document.getElementById('map-scroller'), function() {
+      $scope.scrollOnMap = !$scope.scrollOnMap;
+      gMaps.setOptions({'scrollwheel': $scope.scrollOnMap});
+    });
+    
     gMaps.delAllMarkers();
     angular.forEach($scope.project.flats, function(flat) {
       if (flat.display) {
@@ -292,7 +318,7 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
     }
   }; 
     
-  messWithMapHelper = function() {
+  messWithMapHelper = function() {    
     dragCallBack = function(event) {
       $scope.toEdit.position.lat = event.latLng.lat();
       $scope.toEdit.position.lng = event.latLng.lng();
