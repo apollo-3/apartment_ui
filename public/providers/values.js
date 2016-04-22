@@ -21,7 +21,8 @@ app.factory('values', function() {
     max_address_length: 64,
     max_link_length: 256,
     min_floor_length: 1,
-    max_floor_length: 3
+    max_floor_length: 3,
+    max_price_length: 16
   };
   return values;
 });

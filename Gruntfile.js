@@ -19,6 +19,12 @@ module.exports = function(grunt) {
         cwd: 'bower_components/bootstrap/dist/fonts/',
         src: '*',
         dest: 'public/fonts/'
+      },
+      main2: {
+        expand: true,
+        cwd: 'bower_components/font-awesome/fonts/',
+        src: '*',
+        dest: 'public/fonts'
       }
     },
     uglify: {
@@ -48,7 +54,8 @@ module.exports = function(grunt) {
         },
         mainFiles: {
           'cryptojslib' : 'rollups/md5.js',
-          'bootstrap' : ['dist/css/bootstrap.css', 'dist/js/bootstrap.js']
+          'bootstrap' : ['dist/css/bootstrap.css', 'dist/js/bootstrap.js'],
+          'font-awesome': ['css/font-awesome.css']
         }
       }
     }
@@ -61,7 +68,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-copy');
 
-  grunt.registerTask('default', ['bower_concat','concat','copy:main']);
+  grunt.registerTask('default', ['bower_concat','concat','copy:main','copy::main2']);
   grunt.registerTask('hint', ['jshint']);
   grunt.registerTask('standby',['watch:dev']);
 };

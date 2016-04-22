@@ -75,6 +75,33 @@ app.filter('float', function(values) {
   };
 });
 
+app.filter('int', function(values) {
+  return function(input) {    
+    result = false;
+    if (typeof input == 'number') {
+      input = input.toString();
+    }
+    if (input.match(/^\d+$/)) {
+      result = true;
+    }
+    return result;
+  };
+});
+
+app.filter('price', function(values) {
+  return function(input) {    
+    result = false;
+    if (typeof input === 'number') {
+      input = input.toString();
+    }
+    if ((input.length <= values.max_price_length) &&
+        (input.match(/^\d+$/))) {
+      result = true;
+    }
+    return result;
+  };
+});
+
 app.filter('address', function(values) {
   return function(input) {
     result = false;

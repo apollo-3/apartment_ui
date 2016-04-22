@@ -95,7 +95,51 @@
                 </input>
               </div>          
             </div>            
-          </div>                    
+          </div>  
+          <!-- Price -->
+          <div class="form-group no-bottom">
+            <div class="row custom-row">              
+              <span class="control-label custom-label col-md-3">{{LNG.price | capitalize}}:</span>            
+              <div class="input-group col-md-9"> 
+                <span class="input-group-addon">
+                  <i class="fa fa-calculator" style="display:inline-block;position:relative;top:-2px;"></i>
+                  <input type="checkbox" ng-model="coverterUsage">
+                </span>              
+                <input type="text" class="form-control" ng-class="{'warning': warn_price}" ng-model="toEdit.price" ng-change="customFilter('price')" placeholder="{{LNG.price}}" ng-disabled="coverterUsage">
+                <input-cleaner action="toEdit.price=''" ng-hide="coverterUsage"></input-cleaner>
+                </input>
+              </div>          
+            </div>            
+          </div>  
+          <!-- Converter -->
+          <div class="form-group no-bottom" ng-show="coverterUsage">
+            <div class="row custom-row">              
+              <div class="panel panel-success">
+                <div class="panel-heading"><div class="panel-title">{{LNG.converter | capitalize}}</div></div>
+                <div class="panel-body">
+                  <converter lbl1="LNG.rate | capitalize" lbl2="LNG.price | capitalize" lbl2change="converterPriceChanged(price)" rate="exchangeRate"></converter>
+                </div>
+              </div>
+            </div>            
+          </div>
+          <!-- Call History -->
+          <div class="form-group no-bottom">
+            <div class="row custom-row">              
+              <span class="control-label custom-label col-md-3">{{LNG.call | capitalize}}:</span>            
+              <div class="input-group col-md-9"> 
+                <select class="form-control" ng-options="callHist.name as callHist.value for callHist in callHistoryOptions" ng-model="toEdit.callHistory"></select>
+              </div>          
+            </div>            
+          </div>  
+          <!-- Rating -->
+          <div class="form-group no-bottom">
+            <div class="row custom-row">
+              <span class="control-label custom-label col-md-3">{{LNG.stars | capitalize}}:</span>
+              <div class="input-group col-md-9" style="margin-top:8px;">
+                <rating ratechange="rateChangeAction(rate)"></rating>
+              </div>
+            </div>            
+          </div>          
         </form>
       </div>
     </div>
@@ -182,16 +226,16 @@
     Link: <input type="text" ng-model="toEdit.link"></input><br>
     Show on map: <input type="checkbox" ng-model="toEdit.display"></input><br>
     Contact: <input type="text" ng-model="toEdit.contact"></input><br>
-<!-- ATTENTION TEMP FORMAT CHANGE FLOOR, BUILDYEAR-->    
+<!-- ATTENTION TEMP FORMAT CHANGE FLOOR, BUILDYEAR, PRICE, EXCHANGE_RATE -->    
     Floor: <input type="text" ng-model="toEdit.floor"></input><br>
-    Price: <input type="number" ng-model="toEdit.price" ng-disabled="useConverter"></input>
+    Price: <input type="text" ng-model="toEdit.price" ng-disabled="useConverter"></input>
     <input type="checkbox" ng-model="useConverter" ng-change="converterClick()"/>Use converter<br>
     <div class="converter" ng-show="useConverter">
-      Exchange Rate: <input type="number" step="0.00001" ng-model="exchangeRate" ng-change="convertPrice()"/><br>
+      Exchange Rate: <input type="text" step="0.00001" ng-model="exchangeRate" ng-change="convertPrice()"/><br>
       Input Price: <input type="number" ng-model="inputCurrency" ng-change="convertPrice()"/>
     </div>
     Build Year: <input type="text" ng-model="toEdit.buildYear"/><br>    
-    Call History: <select ng-options="callHist for callHist in callHistoryOptions" ng-model="toEdit.callHistory" ng-change="callHistoryChanged()"></select><br>
+    Call History: <select ng-options="callHist.name as callHist.value for callHist in callHistoryOptions" ng-model="toEdit.callHistory" ng-change="callHistoryChanged()"></select><br>
     Stars: <select ng-options="star for star in stars" ng-model="toEdit.stars"></select><br>
     Owner: <input type="checkbox" ng-model="toEdit.owner"/><br>    
     Subway: <input type="checkbox" ng-model="toEdit.subway"/><br>

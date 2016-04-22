@@ -1,8 +1,9 @@
 app.controller('project', function($scope, auth, projects, $state, userData, $cookies, values, FileUploader, images, gMaps, $window, languages, $filter) {
   auth.checkSession();
 
+  $scope.LNG = languages[languages.availableLng()]; 
   $scope.defaultToEdit = {phones:[{phone:''}], modified:'update',
-                          price: 0, owner: false, callHistory: 'toCall',
+                          price: '', owner: false, callHistory: 'toCall',
                           stars: 0, position: {}, images: [],
                           display: true, link:'', buildYear: '',
                           contact: '', address: '', floor: ''};
@@ -11,7 +12,9 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
   $scope.isEditorOpen = false;
   $scope.tmpProject = {};
   $scope.currency = userData.getData().currency;
-  $scope.callHistoryOptions = ['called', 'callBack', 'toCall'];
+  $scope.callHistoryOptions = [{'name': 'called', 'value': $scope.LNG.called}, 
+                               {'name': 'callBack', 'value': $scope.LNG.call_back},
+                               {'name': 'toCall', 'value': $scope.LNG.to_call}];
   $scope.stars = [0, 1, 2, 3, 4, 5];
   $scope.max_images = values.max_images;
 
@@ -19,13 +22,13 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
   $scope.exchangeRate = 1;
   $scope.inputCurrency = 0;  
   
-  $scope.LNG = languages[languages.availableLng()];  
   $scope.showProjectDescription = true;
   $scope.showFilterPanel = false;
   $scope.showEditor = false;
   $scope.tmpPhone = '';
   $scope.error = '';
   $scope.scrollOnMap = false;
+  $scope.converterUsage = false;
 
   $scope.uploader = new FileUploader({url: values.api_url + 'images/uploadImage',
                                       alias: 'image',
@@ -105,8 +108,19 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
       case 'floor': $scope.warn_floor = !$filter('floor')($scope.toEdit.floor);
         break;   
       case 'buildYear': $scope.warn_year = !$filter('year')($scope.toEdit.buildYear);
+        break; 
+      case 'price': $scope.warn_price = !$filter('price')($scope.toEdit.price);
         break;         
     }
+  };
+  
+  // Converter price changed
+  $scope.converterPriceChanged = function(price) {
+    $scope.toEdit.price = price;
+  };
+  
+  // Rating changed
+  $scope.rateChangeAction = function(rate) {
   };
     
   messWithMapAllHelper = function() {

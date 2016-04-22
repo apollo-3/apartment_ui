@@ -64,7 +64,14 @@ app.factory('languages', function(values, $cookies) {
       'hide': 'hide',
       'contact': 'contact',
       'floor': 'floor',
-      'year': 'year'
+      'year': 'year',
+      'price': 'price',
+      'converter': 'converter',
+      'call': 'call',
+      'to_call': 'to call',
+      'called': 'called',
+      'call_back': 'call back',
+      'stars': 'rating'      
     },
     'ru': {
       /* Login page*/      
@@ -130,7 +137,14 @@ app.factory('languages', function(values, $cookies) {
       'hide': 'прятать',
       'contact': 'контакт',
       'floor': 'этаж',
-      'year': 'год'      
+      'year': 'год',
+      'price': 'цена',
+      'converter': 'конвертер',
+      'call': 'звонок',
+      'to_call': 'позвонить',
+      'called': 'звонил',
+      'call_back': 'перезвонить',
+      'stars': 'рейтинг'
     },
     availableLng: function() {
       lan = values.def_lang;
