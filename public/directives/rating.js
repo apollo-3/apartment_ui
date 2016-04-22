@@ -2,7 +2,7 @@ app.directive('rating', function() {
   return {
     restrict: 'E',
     scope: {
-      'ratechange': '&'
+      'original': '=rate'
     },    
     template: '<div>' +
                 '<span ng-repeat="star in stars">' +
@@ -17,15 +17,19 @@ app.directive('rating', function() {
       }
       
       scope.clicked = function(star) {
+        scope.original = star.num + 1;
+      };
+      
+      scope.$watch('original', function() {
         for (i=0;i<scope.count;i++) {
-          if (i <= star.num) {
+          if (i < scope.original) {
             scope.stars[i].active = true;
           } else {
             scope.stars[i].active = false;            
           }
         }
-        scope.ratechange({'rate': star.num + 1});
-      };
+      });
+      
     }
   }
 });

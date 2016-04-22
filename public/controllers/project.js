@@ -54,7 +54,8 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
  
   // Show editor panel 
   $scope.editorOn = function() {
-    $scope.showEditor = true;    
+    $scope.showEditor = true;   
+    $scope.exchangeRate = $scope.project.rate;    
     setTimeout(function() {
       $('html,body').animate({scrollTop: $('div#editor').offset().top});
     }, 100);
@@ -119,10 +120,6 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
     $scope.toEdit.price = price;
   };
   
-  // Rating changed
-  $scope.rateChangeAction = function(rate) {
-  };
-    
   messWithMapAllHelper = function() {
     
     // Toggle scrolling on map
