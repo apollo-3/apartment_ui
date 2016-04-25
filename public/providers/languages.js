@@ -71,7 +71,17 @@ app.factory('languages', function(values, $cookies) {
       'to_call': 'to call',
       'called': 'called',
       'call_back': 'call back',
-      'stars': 'rating'      
+      'stars': 'rating',
+      'owner': 'owner',
+      'subway': 'subway',
+      'shop': 'shop',
+      'park': 'park',
+      'school': 'school',
+      'day_care': 'day care',
+      'last_floor': 'last floor',
+      'other': 'other',
+      'photos': 'photos',
+      'upload': ' upload'      
     },
     'ru': {
       /* Login page*/      
@@ -144,7 +154,17 @@ app.factory('languages', function(values, $cookies) {
       'to_call': 'позвонить',
       'called': 'звонил',
       'call_back': 'перезвонить',
-      'stars': 'рейтинг'
+      'stars': 'рейтинг',
+      'owner': 'владелец',
+      'subway': 'метро',
+      'shop': 'магазин',
+      'park': 'парк',
+      'school': 'школа',
+      'day_care': 'детский сад',
+      'last_floor': 'верхний этаж',
+      'other': 'другое',
+      'photos': 'фото',
+      'upload': ' звгрузить'
     },
     availableLng: function() {
       lan = values.def_lang;

@@ -53,9 +53,22 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
   };
  
   // Show editor panel 
-  $scope.editorOn = function() {
-    $scope.showEditor = true;   
-    $scope.exchangeRate = $scope.project.rate;    
+  $scope.editorOn = function(flat) {  
+    // Check if editor is already open
+    if ($scope.showEditor == true) {$scope.editorOff()};
+    // Check whether it's editing or creation mode
+    if (typeof flat === 'object') {$scope.mode = 'edit'};
+    
+    $scope.exchangeRate = $scope.project.rate;  
+    if ($scope.mode == 'create') {
+      $scope.toEdit = $.extend(true,{}, $scope.defaultToEdit);
+      $scope.project.flats.unshift($scope.toEdit);
+    } else {
+      $scope.toEdit = flat;      
+      $scope.toEdit.modified = 'update';
+    }    
+    $scope.showEditor = true;
+    messWithMap();
     setTimeout(function() {
       $('html,body').animate({scrollTop: $('div#editor').offset().top});
     }, 100);
@@ -68,7 +81,26 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
   
   // Hide editor panel
   $scope.editorOff = function() {
-    $scope.showEditor = false;
+    $scope.showEditor = false;    
+    $scope.converterUsage = false;  
+    $scope.tmpPhone = '';    
+    if ($scope.mode == 'create') {
+      $scope.project.flats.splice(0,1);
+    } else {
+      tmpIdx = $scope.project.flats.indexOf($scope.toEdit);
+      tmpImgs = jQuery.extend(true,{},$scope.toEdit.images);
+      $scope.project = jQuery.extend(true,{},$scope.tmpProject);
+      angular.forEach(tmpImgs, function(img) {
+        angular.forEach($scope.project.flats[tmpIdx].images, function(oldImg)  {
+          if (oldImg.img != img.img) {
+              images.delImage(img.img);
+          }
+        });
+      });      
+      $scope.mode = 'create';
+    }
+    $scope.toEdit = $.extend(true,{},$scope.defaultToEdit);     
+    messWithMapAll();    
   };
   
   // Delete phone from phones
@@ -114,6 +146,57 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
         break;         
     }
   };
+  
+  // Save changes or new flat
+  $scope.save = function() {  
+    newPhones = [];
+    angular.forEach($scope.toEdit.phones, function(phone) {
+      flag = true;
+      angular.forEach(newPhones, function(phone2) {
+        if (phone2.phone == phone.phone) {
+          flag = false;
+        }
+      });
+      if (flag) {
+        newPhones.push(phone);
+      }
+    });
+    $scope.toEdit.phones = newPhones;
+
+    if ($scope.mode == 'edit') {
+      tmpIdx = $scope.project.flats.indexOf($scope.toEdit);
+      angular.forEach($scope.tmpProject.flats[tmpIdx].images, function(oldImg) {
+        flag = true;
+        angular.forEach($scope.toEdit.images, function(img)  {
+          if (img.img == oldImg.img) {
+              flag = false;
+          }
+        });
+        if (flag) {
+          images.delImage(oldImg.img);
+        }
+      });
+    }
+
+    projects.saveProject($scope.project).then(function(res) {
+      if (res.data.hasOwnProperty('error')) {
+        alert(res.data.error);
+      } else {
+        $scope.project = res.data.project;
+        $scope.project.was_shared = $scope.project.shared;
+        $scope.tmpProject = jQuery.extend(true,{},$scope.project);
+        $scope.toEdit = $.extend(true,{}, $scope.defaultToEdit);
+        $scope.project = $.extend(true,{},$scope.tmpProject);
+        projects.syncProject($scope.project);
+        
+        $scope.converterUsage = false;
+        $scope.showEditor = false;
+        $scope.tmpPhone = '';
+        messWithMapAll();        
+        $scope.mode = 'create';
+      }
+    });
+  }
   
   // Converter price changed
   $scope.converterPriceChanged = function(price) {
