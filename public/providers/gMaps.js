@@ -122,6 +122,9 @@ app.factory('gMaps', function($window, $q, values) {
     });    
   };
   
+  getMarkers = function() {
+    return markers;
+  };
   
   getIcon = function(phoneHistory) {
     icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
@@ -144,7 +147,7 @@ app.factory('gMaps', function($window, $q, values) {
     getMap: getMap,
     delAllMarkers: delAllMarkers,
     addMarker: addMarker,
-    markers: markers,
+    getMarkers: getMarkers,
     aSyncLoad: aSyncLoad,
     isEnabled: isEnabled,
     setDisabled: setDisabled,
@@ -154,6 +157,6 @@ app.factory('gMaps', function($window, $q, values) {
     setCalledPromise: setCalledPromise,
     changeMarkerColor: changeMarkerColor,
     setOptions: setOptions,
-    attachButton: attachButton
+    attachButton: attachButton    
   };
 });

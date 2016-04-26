@@ -81,7 +81,10 @@ app.factory('languages', function(values, $cookies) {
       'last_floor': 'last floor',
       'other': 'other',
       'photos': 'photos',
-      'upload': ' upload'      
+      'upload': ' upload',
+      'table': 'table',
+      'no_location_set': 'no location set on map!',
+      'address_repeat': 'this address already exist in your project!'
     },
     'ru': {
       /* Login page*/      
@@ -164,7 +167,10 @@ app.factory('languages', function(values, $cookies) {
       'last_floor': 'верхний этаж',
       'other': 'другое',
       'photos': 'фото',
-      'upload': ' звгрузить'
+      'upload': ' звгрузить',
+      'table': 'таблица',
+      'no_location_set': 'не выбрано место на карте!',
+      'address_repeat': 'этот адрес уже существует в вашем проекте!'      
     },
     availableLng: function() {
       lan = values.def_lang;

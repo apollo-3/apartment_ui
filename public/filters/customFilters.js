@@ -50,7 +50,7 @@ app.filter('year', function() {
     if (typeof input === 'number') {
       input = input.toString();
     }
-    if (input.match(/^\d{4}$/)) { result = true; }
+    if (input.match(/^(0|\d{4})?$/)) { result = true; }
     return result;
   };
 });
@@ -95,7 +95,7 @@ app.filter('price', function(values) {
       input = input.toString();
     }
     if ((input.length <= values.max_price_length) &&
-        (input.match(/^\d+$/))) {
+        (input.match(/^(\d+)?$/))) {
       result = true;
     }
     return result;
@@ -105,7 +105,7 @@ app.filter('price', function(values) {
 app.filter('address', function(values) {
   return function(input) {
     result = false;
-    if ((input.length >= values.min_address_length) && (input.length <= max_address_length)) {
+    if ((input.length >= values.min_address_length) && (input.length <= values.max_address_length)) {
       result = true;
     }
     return result;
@@ -129,9 +129,8 @@ app.filter('floor', function(values) {
     if (typeof input === 'number') {
       input = input.toString();
     }
-    if ((input.length >= values.min_floor_length) &&
-        (input.length <= values.max_floor_length) &&
-        (input.match(/^\d+$/))) {
+    if ((input.length <= values.max_floor_length) &&
+        (input.match(/^(\d+)?$/))) {
       result = true;
     }
     return result;

@@ -29,15 +29,15 @@ app.directive('converter', function($filter) {
       scope.price = '';      
       
       scope.$watch('price', function(o,n) {        
-        scope.warn_price = !$filter('int')(scope.price);
-        if (!scope.warn_price) {
+        scope.warn_price = !$filter('price')(scope.price);
+        if ((!scope.warn_price) && (scope.price != '')) {
           scope.calc();
         }
       });
       
       scope.$watch('oldrate', function(o,n) {
         scope.warn_rate = !$filter('float')(scope.oldrate);
-        if (!scope.warn_rate) {
+        if ((!scope.warn_rate) && (scope.price != '')) {
           scope.calc();
         }
       });      

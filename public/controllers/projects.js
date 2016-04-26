@@ -107,7 +107,7 @@ app.controller('projects', function($scope, auth, projects, $state, $cookies, la
   // Project deletion
   $scope.delProject = function(prj) {
     swal({title: $filter('capitalize')($scope.LNG.warning), 
-          text: $scope.LNG.are_you_sure_delete + '?',
+          text: $scope.LNG.are_you_sure_delete + '?',              
           type: "warning", showCancelButton: true}, function() {
           projects.delProject(prj.name, prj.shared).then(function(res) {
         if (res.data.hasOwnProperty('error')) {

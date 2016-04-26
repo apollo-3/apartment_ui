@@ -23,10 +23,7 @@ app.factory('projects', function($http, $cookies, values) {
     prj.mail = $cookies.get('mail');
     prj.token = $cookies.get('token');
     prj.defLang = values.def_lang; 
-    angular.forEach(prj.flats, function(flat) {
-      flat.buildYear = parseInt(flat.buildYear);
-      flat.floor = parseInt(flat.floor);      
-    });
+    prj.flats = flatChecker(prj.flats);
     delete prj.active;    
     prj = {project: prj};
     return $http({
@@ -41,10 +38,7 @@ app.factory('projects', function($http, $cookies, values) {
     prj.mail = $cookies.get('mail');
     prj.token = $cookies.get('token');
     prj.defLang = values.def_lang;
-    angular.forEach(prj.flats, function(flat) {
-      flat.buildYear = parseInt(flat.buildYear);
-      flat.floor = parseInt(flat.floor);
-    });    
+    prj.flats = flatChecker(prj.flats);   
     prj = {project: prj};
     return $http({
       url: values.api_url + 'projects/createProject',
@@ -94,6 +88,27 @@ app.factory('projects', function($http, $cookies, values) {
       out.push(val);
     });
     return out;
+  };
+  
+  flatChecker = function(flats) {
+    angular.forEach(flats, function(flat) {
+      if (flat.price != '') {
+        flat.price = parseInt(flat.price); 
+      } else {
+        flat.price = 0;
+      }
+      if (flat.buildYear != '') {
+        flat.buildYear = parseInt(flat.buildYear); 
+      } else {
+        flat.buildYear = 0;
+      }
+      if (flat.floor != '') {      
+        flat.floor = parseInt(flat.floor);
+      } else {
+        flat.floor = 0;
+      }
+    });     
+    return flats;
   };
   
   return {

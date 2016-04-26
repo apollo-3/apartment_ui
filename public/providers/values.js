@@ -20,9 +20,10 @@ app.factory('values', function() {
     min_address_length: 2,
     max_address_length: 64,
     max_link_length: 256,
-    min_floor_length: 1,
     max_floor_length: 3,
-    max_price_length: 16
+    max_price_length: 16,
+    max_image_size: 5,
+    max_images_allowed: 4
   };
   return values;
 });

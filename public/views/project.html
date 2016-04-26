@@ -5,8 +5,11 @@
     <i class="glyphicon glyphicon-home"></i>&nbsp;{{LNG.new | capitalize}}
   </button>
   <button class="btn btn-success" ng-click="moveToMap()">
-    <i class="glyphicon glyphicon-sunglasses"></i>&nbsp;{{LNG.map | capitalize}}
+    <i class="fa fa-map-o"></i>&nbsp;{{LNG.map | capitalize}}
   </button>  
+  <button class="btn btn-success" ng-click="moveToTable()">
+    <i class="fa fa-table"></i>&nbsp;{{LNG.table | capitalize}}
+  </button>      
 </div>
 
 <div class="container-fluid">
@@ -17,8 +20,8 @@
         <div class="panel-title">
           {{toEdit.name | capitalize}}
         </div>
-        <button class="btn btn-default panel-button" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i></button>                
-        <button class="btn btn-default panel-button" ng-click="editorOff()"><i class="glyphicon glyphicon-remove"></i></button>
+        <button class="btn btn-default panel-button" ng-click="save()"><i class="fa fa-floppy-o"></i></button>                
+        <button class="btn btn-default panel-button" ng-click="editorOff()"><i class="fa fa-remove"></i></button>
         <span class="badge owner-badge" style="margin-right:-13px;">{{toEdit.display ? LNG.display : LNG.hide}}</span>                         
         <input class="project-header-btns" style="top:-22px; right:13px;" type="checkbox" ng-model="toEdit.display"></input>        
       </div>
@@ -30,7 +33,7 @@
           <!-- Address -->
           <div class="form-group no-bottom">
             <div class="row custom-row">              
-              <span class="control-label custom-label col-md-3" style="margin-top:7px;">{{LNG.address | capitalize}}:</span>            
+              <span class="control-label custom-label col-md-3" style="margin-top:7px;">{{LNG.address | capitalize}}*:</span>            
               <div class="input-group col-md-9"> 
                 <input id="address" type="text" class="form-control" ng-class="{'warning': warn_address}" ng-model="toEdit.address" ng-change="customFilter('address')" placeholder="{{LNG.address}}">
               </div>          
@@ -103,16 +106,16 @@
               <div class="input-group col-md-9"> 
                 <span class="input-group-addon">
                   <i class="fa fa-calculator" style="display:inline-block;position:relative;top:-2px;"></i>
-                  <input type="checkbox" ng-model="coverterUsage">
+                  <input type="checkbox" ng-model="converterUsage">
                 </span>              
-                <input type="text" class="form-control" ng-class="{'warning': warn_price}" ng-model="toEdit.price" ng-change="customFilter('price')" placeholder="{{LNG.price}}" ng-disabled="coverterUsage">
-                <input-cleaner action="toEdit.price=''" ng-hide="coverterUsage"></input-cleaner>
+                <input type="text" class="form-control" ng-class="{'warning': warn_price}" ng-model="toEdit.price" ng-change="customFilter('price')" placeholder="{{LNG.price}}" ng-disabled="converterUsage">
+                <input-cleaner action="toEdit.price=''" ng-hide="converterUsage"></input-cleaner>
                 </input>
               </div>          
             </div>            
-          </div>  
+          </div>
           <!-- Converter -->
-          <div class="form-group no-bottom" ng-show="coverterUsage">
+          <div class="form-group no-bottom" ng-show="converterUsage">
             <div class="row custom-row">              
               <div class="panel panel-success">
                 <div class="panel-heading"><div class="panel-title">{{LNG.converter | capitalize}}</div></div>
@@ -127,7 +130,7 @@
             <div class="row custom-row">              
               <span class="control-label custom-label col-md-3">{{LNG.call | capitalize}}:</span>            
               <div class="input-group col-md-9"> 
-                <select class="form-control" ng-options="callHist.name as callHist.value for callHist in callHistoryOptions" ng-model="toEdit.callHistory"></select>
+                <select class="form-control" ng-options="callHist.name as callHist.value for callHist in callHistoryOptions" ng-model="toEdit.callHistory" ng-change="callHistoryChanged()"></select>
               </div>          
             </div>            
           </div>  
@@ -206,7 +209,16 @@
                 </div>              
               </div>
             </div>
-          </div>                       
+          </div>  
+          <!-- Save, Cancel buttons -->
+          <div class="form-group no-bottom">
+            <div class="row custom-row">
+              <div class="input-group col-md-11 col-md-offset-1" style="margin-top:8px;">
+                <button class="btn btn-warning" ng-click="editorOff()"><i class="fa fa-remove"></i>&nbsp;{{LNG.cancel | capitalize}}</button>                              
+                <button class="btn btn-success" ng-click="save()"><i class="fa fa-floppy-o"></i>&nbsp;{{LNG.confirm | capitalize}}</button>
+              </div>
+            </div>            
+          </div>           
         </form>
       </div>
     </div>
@@ -268,63 +280,6 @@
 </div>
 
 <div class="specific_project">
-<!--
-  <div class="project_description">
-    <b>Name:</b> {{project.name}} <span ng-show="project.shared">(shared)</span><span ng-hide="project.shared">(private)</span><br>
-    <span ng-show="project.shared">
-      <b>Owners:</b>
-      <span ng-repeat="owner in project.owners">{{owner}} </span><br>
-    </span>
-    <b>Creation Date:</b> {{project.creation_date}}<br>    
-    <b>Currency:</b> {{project.currency}}<br>
-    <b>Exchange Rate:</b> {{project.rate}}<br>
-    <b>Description:</b> {{project.description}}
-  </div>
--->  
-  <div class="controls">
-    <button ng-click="toggleEditor()"><span ng-hide="isEditorOpen">New</span><span ng-show="isEditorOpen">Cancel New</span></button>
-  </div>
-  <div class="editor" ng-show="isEditorOpen">
-    <div ng-repeat="phone in toEdit.phones">
-      Phone {{$index + 1}}: <input type="text" ng-model="phone.phone"></input> <button ng-click="delPhone(phone)">del</button>
-    </div>
-   <button ng-click="addPhone()">More phones</button><br><br>
-    Address: <input type="text" ng-model="toEdit.address"></input><br>
-    Link: <input type="text" ng-model="toEdit.link"></input><br>
-    Show on map: <input type="checkbox" ng-model="toEdit.display"></input><br>
-    Contact: <input type="text" ng-model="toEdit.contact"></input><br>
-<!-- ATTENTION TEMP FORMAT CHANGE FLOOR, BUILDYEAR, PRICE, EXCHANGE_RATE -->    
-    Floor: <input type="text" ng-model="toEdit.floor"></input><br>
-    Price: <input type="text" ng-model="toEdit.price" ng-disabled="useConverter"></input>
-    <input type="checkbox" ng-model="useConverter" ng-change="converterClick()"/>Use converter<br>
-    <div class="converter" ng-show="useConverter">
-      Exchange Rate: <input type="text" step="0.00001" ng-model="exchangeRate" ng-change="convertPrice()"/><br>
-      Input Price: <input type="number" ng-model="inputCurrency" ng-change="convertPrice()"/>
-    </div>
-    Build Year: <input type="text" ng-model="toEdit.buildYear"/><br>    
-    Call History: <select ng-options="callHist.name as callHist.value for callHist in callHistoryOptions" ng-model="toEdit.callHistory" ng-change="callHistoryChanged()"></select><br>
-    Stars: <select ng-options="star for star in stars" ng-model="toEdit.stars"></select><br>
-    Owner: <input type="checkbox" ng-model="toEdit.owner"/><br>    
-    Subway: <input type="checkbox" ng-model="toEdit.subway"/><br>
-    Shop: <input type="checkbox" ng-model="toEdit.shop"/><br>    
-    Park: <input type="checkbox" ng-model="toEdit.park"/><br>    
-    School: <input type="checkbox" ng-model="toEdit.school"/><br>
-    
-    Photos: <input type="file" nv-file-select="" uploader="uploader" ng-show="toEdit.images.length<max_images"/>
-    <span ng-repeat="image in toEdit.images"><img ng-src="images/{{image.img}}" height="100" ng-click="removeImage(image)"></img><span ng-click="makeCover(image)">Cover</span></span>
-    <ul>
-      <li ng-repeat="item in uploader.queue">
-          Name: <span ng-bind="item.file.name"></span><br/>
-          <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
-          <button ng-click="item.upload()">upload</button>
-          <button ng-click="item.remove()">remove</button>
-      </li>
-    </ul>
-    <button ng-click="uploader.uploadAll()" ng-hide="!uploader.getNotUploadedItems().length">Upload All</button>
-    <button ng-click="uploader.clearQueue()" ng-hide="!uploader.getNotUploadedItems().length">Remove All</button>    
-    <br> 
-    <input type="button" value="Confirm" ng-click="confirm()"/>
-  </div>
   <div class="flats">
     <div ng-repeat="flat in project.flats">
       {{flat.address}} |   
@@ -345,8 +300,8 @@
       
       | <span ng-show="flat.subway">Subway, </span><span ng-show="flat.shop">Shop, </span><span ng-show="flat.park">Park, </span><span ng-show="flat.school">School</span>
       <span ng-show="flat.modified!='update'"> | {{flat.modified}}</span><span ng-show="flat.modified=='update'"> | beeing edited</span> |
-      <button ng-click="editorOn(flat);">edit</button>
-      <button ng-click="del(flat)">del</button>
+      <button ng-click="editorOn(flat);" ng-hide="toEdit==flat">edit</button>
+      <button ng-click="del(flat)" ng-hide="toEdit==flat">del</button>
     </div>
   </div>
 </div>

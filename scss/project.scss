@@ -8,22 +8,28 @@
 
 .control-buttons {
   position: fixed;
-  left: 5px;
-  bottom: -15px;
+  width: 75px;
+  right: -30px;
+  top: 25%;
   z-index: 3; 
   
-  -webkit-transition: bottom ease-out 0.2s;
-  -moz-transition: bottom ease-out 0.2s;
-  -o-transition: bottom ease-out 0.2s;
-  transition: bottom ease-out 0.2s;    
+  -webkit-transition: right ease-out 0.2s;
+  -moz-transition: right ease-out 0.2s;
+  -o-transition: right ease-out 0.2s;
+  transition: right ease-out 0.2s;    
+  
+  button {
+    margin: 2px;
+    width: 75px;
+  }
 }
 
 .control-buttons:hover {
-  bottom: 0px;
-  -webkit-transition: bottom ease-out 0.2s;
-  -moz-transition: bottom ease-out 0.2s;
-  -o-transition: bottom ease-out 0.2s;
-  transition: bottom ease-out 0.2s;
+  right: 0px;
+  -webkit-transition: right ease-out 0.2s;
+  -moz-transition: right ease-out 0.2s;
+  -o-transition: right ease-out 0.2s;
+  transition: right ease-out 0.2s;
 }
 
 .rate-star {
