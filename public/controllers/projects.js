@@ -1,4 +1,4 @@
-app.controller('projects', function($scope, auth, projects, $state, $cookies, languages, $filter) {
+app.controller('projects', function($scope, auth, projects, $state, $cookies, languages, $filter, images, userData, values) {
   auth.checkSession();
   hideMap();
   
@@ -9,11 +9,12 @@ app.controller('projects', function($scope, auth, projects, $state, $cookies, la
   $scope.LNG = languages[languages.availableLng()];  
   $scope.mode = 'off';
   $scope.error = '';
-  $scope.sortOptions = [{'type': 'string', 'value': $scope.LNG.project_name, 'field': 'name', order: 'asc'},
-                        {'type': 'date', 'value': $scope.LNG.created, 'field': 'creation_date', order: 'asc'},
+  $scope.sortOptions = [{'type': 'date', 'value': $scope.LNG.created, 'field': 'creation_date', order: 'desc'},
+                        {'type': 'string', 'value': $scope.LNG.project_name, 'field': 'name', order: 'asc'},
                         {'type': 'bool', 'value': $scope.LNG.shared, 'field': 'shared', order: 'asc'},
                         {'type': 'length', 'value': $scope.LNG.added, 'field': 'flats', order: 'asc'}];
-    
+  $scope.currentSort = {};  
+                            
   // Loading the list of projects
   if (projects.getProjects().length === 0) {
     projects.reloadProjects().then(function(res) {
@@ -28,25 +29,17 @@ app.controller('projects', function($scope, auth, projects, $state, $cookies, la
         projects.setProjects(jQuery.extend(true, {}, $scope.projects));
         $scope.checkIfEmpty();
       }
+      fakeLoadOff();
     });
   } else {
     $scope.projects = jQuery.extend(true, [], projects.getProjects());
-  }    
-
-  // Get the list of all users
-  if (projects.getAllUsers().length === 0) {
-    projects.reloadAllUsers().then(function(res) {      
-        $scope.allUsers = res.data.users;
-        projects.setAllUsers(jQuery.extend(true,{},$scope.allUsers));
-    });  
-  } else {
-    $scope.allUsers = projects.getAllUsers();
-  }    
+    fakeLoadOff();
+  };   
   
   // Add a user to owners list
   $scope.addUser = function(owner) {
     if (($scope.newProject.owners.indexOf(owner) == -1) &&
-       ((projects.getAllUsersArray()).indexOf(owner) != -1)) {    
+       ((projects.getAllUsers()).indexOf(owner) != -1)) {    
       $scope.newProject.owners.push(owner);
     }
   };
@@ -67,6 +60,11 @@ app.controller('projects', function($scope, auth, projects, $state, $cookies, la
   
   // Saving a new or existing project
   $scope.saveProject = function() {
+    // Check user limits
+    if ($scope.projects.length >= values.accounts[userData.getData().account].projects) {
+      swal($filter('capitalize')($scope.LNG.warning), $scope.LNG.account_limit);
+      return
+    }    
     if ($scope.mode == 'edit') {
       projects.saveProject($scope.newProject).then(function(res) {
         if (res.data.hasOwnProperty('error')) {
@@ -105,14 +103,24 @@ app.controller('projects', function($scope, auth, projects, $state, $cookies, la
   };
   
   // Project deletion
-  $scope.delProject = function(prj) {
+  $scope.delProject = function(prj) {    
     swal({title: $filter('capitalize')($scope.LNG.warning), 
           text: $scope.LNG.are_you_sure_delete + '?',              
           type: "warning", showCancelButton: true}, function() {
-          projects.delProject(prj.name, prj.shared).then(function(res) {
+        // Saving images to delete after project removal
+        imgsFromProject = [];
+        angular.forEach(prj.flats, function(flat) {
+          angular.forEach(flat.images, function(img) {
+            imgsFromProject.push(img.img);
+          });
+        });            
+        projects.delProject(prj.name, prj.shared).then(function(res) {
         if (res.data.hasOwnProperty('error')) {
           swal($filter('capitalize')($scope.LNG.error), res.data.error);
         } else {
+          // Getting rid of unused photos from project
+          images.groupDelImage(imgsFromProject).then(function(res) {            
+          });
           newTmp = [];
           angular.forEach($scope.projects, function(item) {
             if (item.name != prj.name) {
@@ -150,7 +158,7 @@ app.controller('projects', function($scope, auth, projects, $state, $cookies, la
   // Close editor (for a new or existing project)
   $scope.editorOff = function() {
     if ($scope.mode == 'edit') {      
-      $scope.projects = jQuery.extend(true,{}, projects.getProjects());
+      $scope.projects = jQuery.extend(true,[], projects.getProjects());
     }
     $scope.newProject = $.extend(true,{}, $scope.newProjectOrg);     
     $scope.mode = 'off';   
@@ -180,8 +188,12 @@ app.controller('projects', function($scope, auth, projects, $state, $cookies, la
   };    
   
   // Change sort type on projects list
-  $scope.changeSort = function(op) {
-    $filter('sort')($scope.projects, op.field, op.type, op.order);
-  };  
+  $scope.changeSort = function() {
+    $filter('sort')($scope.projects, $scope.currentSort.field, $scope.currentSort.type, $scope.currentSort.order);
+  };   
   
+  // Watch for projects change and apply sort
+  $scope.$watch('projects', function(o,n) {
+    $scope.changeSort($scope.currentSort);
+  });
 });

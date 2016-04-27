@@ -3,7 +3,6 @@ app.controller('settings', function($scope, $cookies, auth, userData, $state, la
   hideMap();  
   
   if (jQuery.isEmptyObject(userData.getData())) {
-    fakeLoadOn();
     userData.reloadData().then(function(res) {
       if (res.data.hasOwnProperty('error')) {
         alert(res.data.error);
@@ -15,6 +14,8 @@ app.controller('settings', function($scope, $cookies, auth, userData, $state, la
       }
       fakeLoadOff();      
     });
+  } else {
+    fakeLoadOff(); 
   }
   
   $scope.user = {user: jQuery.extend(true, {}, userData.getData())};

@@ -13,7 +13,7 @@
 	      return results[1] || 0;
       }
       $.ajax({
-        url: 'http://192.168.33.11:3000/api/users/verify',
+        url: 'http://192.168.33.123:3000/api/users/verify',
         data: 'mail=' + $.params('mail') + '&token=' + $.params('token') + '&action=' + $.params('action') + '&defLang=' + def_lang,
         dataType: 'json',
         method: 'get',

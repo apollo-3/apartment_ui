@@ -4,7 +4,8 @@ app.directive('sortField', function() {
     scope: {
       'options': '=',
       'action': '&action',
-      'lang': '='
+      'lang': '=',
+      'option': '=currentsort'
     },
     template: '<div class="input-group-btn">' +
                 '<button class="btn btn-default" ng-click="changeSort()">' +
@@ -18,11 +19,11 @@ app.directive('sortField', function() {
       
       scope.changeSort = function() {
         scope.option.order = (scope.option.order == 'asc' ? 'desc':'asc');
-        scope.action({arg: scope.option});
+        scope.action();
       };
       
       scope.$watch('option', function(oV, nV) {
-        scope.action({arg: scope.option});
+        scope.action();
       });
     }    
   };

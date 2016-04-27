@@ -12,11 +12,19 @@ app.directive('autocomplete', function($filter, projects) {
       scope.inn = '';
       
       switch (attrs.option) {
-        case 'users': projects.reloadAllUsers().then(function(res) {scope.org = res.data.users});    
+        case 'users': 
+          if (projects.getAllUsers().length === 0) {
+            projects.reloadAllUsers().then(function(res) {
+              scope.org = res.data.users;
+              projects.setAllUsers(res.data.users);
+            });
+          } else {
+            scope.org = projects.getAllUsers();
+          }      
           break;
       }
       
-      scope.opts = $.extend(true,[],$filter('limitTo')(scope.org, MAX_DISPLAY_LENGTH));
+      scope.opts = [];
       
       scope.find = function() {
         out = [];
@@ -26,7 +34,7 @@ app.directive('autocomplete', function($filter, projects) {
               out.push(i);
             }          
           });
-        }
+        }        
         return out;
       };
       
@@ -48,7 +56,8 @@ app.directive('autocomplete', function($filter, projects) {
       };
       
       $(elem).bind('keyup', function(event) {
-        scope.opts = scope.find()
+        scope.opts = scope.find();
+        scope.opts = $filter('limitTo')(scope.opts, MAX_DISPLAY_LENGTH);
         scope.$apply();
       });
     }

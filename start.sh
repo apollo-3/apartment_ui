@@ -3,6 +3,7 @@ cd $HOME_DIR
 
 mkdir -p logs
 mkdir -p build
+mkdir -p photos
 mkdir -p public/css
 mkdir -p public/fonts
 ./stop.sh > /dev/null 2>&1

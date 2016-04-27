@@ -6,7 +6,7 @@ app.controller('top', function($scope, $state, auth, $cookies, languages) {
 
   $scope.logout = function() {
     auth.logout();
-  };
+  };  
   
   $scope.mail = $cookies.get('mail');
 });

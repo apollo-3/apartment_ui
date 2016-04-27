@@ -170,7 +170,7 @@ app.filter('sort', function() {
             break;
           case 'int': return (a[sortBy]>b[sortBy] ? ord : -ord);
             break;
-          case 'date': return (moment(a[sortBy].replace(' UTC',''),'YYYY-MM-DD HH:mm:ss')>moment(b[sortBy].replace(' UTC',''),'YYYY-MM-DD HH:mm:ss') ? ord : -ord);
+          case 'date': return (moment(a[sortBy].replace(' UTC',''),'YYYY-MM-DD HH:mm:ss')>moment(b[sortBy].replace(' UTC',''),'YYYY-MM-DD HH:mm:ss') ? ord : -ord);            
             break;
           case 'bool': return (a[sortBy]===b[sortBy] ? 0 : a[sortBy]? ord : -ord);
             break;

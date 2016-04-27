@@ -1,5 +1,3 @@
-<div id="map-scroller" class="map-controls">{{LNG.scrolling | capitalize}}</div>
-
 <div class="control-buttons">
   <button class="btn btn-success" ng-click="editorOn()">
     <i class="glyphicon glyphicon-home"></i>&nbsp;{{LNG.new | capitalize}}
@@ -180,6 +178,7 @@
             </div>            
           </div> 
           <!-- Photos -->
+          <!-- Upload button -->
           <div class="form-group no-bottom">
             <div class="row custom-row">
               <span class="control-label custom-label col-md-3">{{LNG.photos | capitalize}}:</span>
@@ -187,16 +186,18 @@
                 <input type="file" nv-file-select="" uploader="uploader" ng-show="toEdit.images.length < max_images"/>
               </div>
             </div>
+            <!-- List of uploaded photos -->
             <div class="row custom-row" ng-show="toEdit.images.length>0">
               <div class="panel panel-default" style="margin-top:10px;padding:0px 5px 5px 5px;">
                 <div ng-repeat="image in toEdit.images" style="float:left;position:relative;margin: 5px 5px 0px 0px;">
-                  <img ng-src="images/{{image.img}}" height="100"></img>
+                  <img ng-src="{{image.img}}" height="100"></img>
                   <button class="btn btn-danger btn-xs" style="width:22px;position:absolute;right:0px;top:0px;" ng-click="removeImage(image)"><i class="fa fa-remove" ng-click=""></i></button>
                   <button class="btn btn-success btn-xs" style="width:22px;position:absolute;right:0px;top:22px;" ng-click="makeCover(image)"><i class="fa fa-star" ng-click=""></i></button>
                 </div>
                 <div style="clear:both;"></div>
               </div>
             </div>
+            <!-- Queue of photos to upload -->
             <div class="row custom-row" ng-show="uploader.queue.length>0" style="clear:both;">
               <div class="panel panel-default" style="margin-top:10px;">
                 <div class="container-fluid" ng-repeat="item in uploader.queue" style="margin-top:10px;">

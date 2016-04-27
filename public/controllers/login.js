@@ -1,6 +1,7 @@
 app.controller('login', function($scope, auth, userData, $state, $filter, values, languages) {
   auth.checkSession();
   hideMap();
+  fakeLoadOff();
   
   $scope.mode = 'login';
   $scope.remember = true;

@@ -7,8 +7,18 @@ app.factory('images', function($http, $cookies, values) {
       headers: {'Content-Type':'application/x-www-form-urlencoded'}
     });
   };
+  groupDelImage = function(imgArr) {
+    return $http({
+      url: values.api_url + 'images/groupDelImage',
+      method: 'post',
+      data: {'data': {'mail': $cookies.get('mail'), 'token': $cookies.get('token'),
+      'defLang': values.def_lang, 'imgArr': imgArr}},
+      headers: {'Content-Type':'application/json'}      
+    });
+  };
   
   return {
-    delImage : delImage    
+    delImage: delImage,
+    groupDelImage: groupDelImage
   };
 });

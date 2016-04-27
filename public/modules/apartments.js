@@ -69,3 +69,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
       }
     });
 });
+
+// Open up loading screen on state change
+app.run(function($rootScope) {
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+    $("#loading").css('display','block');
+  });  
+});

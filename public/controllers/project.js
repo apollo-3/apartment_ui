@@ -1,4 +1,4 @@
-app.controller('project', function($scope, auth, projects, $state, userData, $cookies, values, FileUploader, images, gMaps, $window, languages, $filter) {
+app.controller('project', function($scope, auth, projects, $state, $cookies, values, FileUploader, images, gMaps, $window, languages, $filter) {
   auth.checkSession();
 
   $scope.LNG = languages[languages.availableLng()]; 
@@ -10,7 +10,6 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
   $scope.toEdit = jQuery.extend(true,{},$scope.defaultToEdit);
   $scope.mode = 'create';
   $scope.tmpProject = {};
-  $scope.currency = userData.getData().currency;
   $scope.callHistoryOptions = [{'name': 'called', 'value': $scope.LNG.called}, 
                                {'name': 'callBack', 'value': $scope.LNG.call_back},
                                {'name': 'toCall', 'value': $scope.LNG.to_call}];
@@ -62,7 +61,7 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
       $scope.toEdit.modified = 'update';
     }    
     $scope.showEditor = true;
-    initMapOneFlat();
+    $scope.initMapOneFlat();
     setTimeout(function() {
       $('html,body').animate({scrollTop: $('div#editor').offset().top});
     }, 100);
@@ -91,16 +90,20 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
       tmpImgs = jQuery.extend(true,{},$scope.toEdit.images);
       $scope.project = jQuery.extend(true,{},$scope.tmpProject);
       angular.forEach(tmpImgs, function(img) {
+        flag = true;
         angular.forEach($scope.project.flats[tmpIdx].images, function(oldImg)  {
-          if (oldImg.img != img.img) {
-              images.delImage(img.img);
+          if (oldImg.img == img.img) {
+            flag = false;
           }
         });
+        if (flag) {
+          images.delImage(img.img);            
+        }        
       });      
       $scope.mode = 'create';
     }
     $scope.toEdit = $.extend(true,{},$scope.defaultToEdit);     
-    initMapAllFlats();    
+    $scope.initMapAllFlats();    
   };
   
   // Delete phone from phones
@@ -187,7 +190,7 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
           $scope.showEditor = false;
           $scope.tmpPhone = '';
           $scope.mode = 'create';        
-          initMapAllFlats();        
+          $scope.initMapAllFlats();        
         }
       });
     } else {
@@ -199,25 +202,6 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
   $scope.converterPriceChanged = function(price) {
     $scope.toEdit.price = price;
   };  
-
-  if (projects.getProjects().length === 0) {
-    $state.transitionTo('projects');
-  } else {
-    ifActiveExist = false;
-    angular.forEach(projects.getProjects(), function(item) {
-      if (item.active === true) {
-        ifActiveExist = true;
-        $scope.project = jQuery.extend(true,{},item);
-        $scope.tmpProject = jQuery.extend(true,{},item);
-        $scope.checkIfEmpty();
-        showMap();
-        initMapAllFlats();        
-      }
-    });
-    if (!ifActiveExist) {
-      $state.transitionTo('projects');
-    }
-  }
   
   // When callHistory changed change marker color on the map
   $scope.callHistoryChanged = function() {
@@ -235,10 +219,19 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
       if ($scope.showEditor) {
         $scope.editorOff();
       }          
+      // Saving images to delete after project removal
+      imgsFromFlat = [];
+      angular.forEach(flat.images, function(img) {
+        imgsFromFlat.push(img.img);
+      });
       $scope.project.flats.splice($scope.project.flats.indexOf(flat),1);  
       projects.saveProject($scope.project).then(function(res) {
         if (res.data.hasOwnProperty('success')) {
           projects.syncProject($scope.project);
+          // Getting rid of not used images
+          images.groupDelImage(imgsFromFlat).then(function(res) {
+          });
+          $scope.tmpProject = jQuery.extend(true,{},$scope.project);
           $scope.tmpProject = jQuery.extend(true,{},$scope.project);
         } else {
           swal($filter('capitalize')($scope.LNG.error), res.data.error);
@@ -267,15 +260,20 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
   }; 
   
   // Attach buttons to map
-  attachButtonsToMap = function() {
-    gMaps.attachButton(document.getElementById('map-scroller'), function() {
-      $scope.scrollOnMap = !$scope.scrollOnMap;
-      gMaps.setOptions({'scrollwheel': $scope.scrollOnMap});
-    });     
+  attachButtonsToMap = function() {    
+    if (!gMaps.isBtnAttached()) {
+      // Adding scroll button
+      $('body').append('<div id="map-scroller" class="map-controls">' + $filter('capitalize')($scope.LNG.scrolling) + '</div>');
+      // Attaching scroll button to map
+      gMaps.attachButton(document.getElementById('map-scroller'), function() {
+        $scope.scrollOnMap = !$scope.scrollOnMap;
+        gMaps.setOptions({'scrollwheel': $scope.scrollOnMap});
+      });     
+    }
   };
   
   // Initialize the map with all flats on it
-  initMapAllFlatsHelper = function() {    
+  $scope.initMapAllFlatsHelper = function() {    
     // Deleting all markers on the map
     gMaps.delAllMarkers();
     // Show only those flats that have display options equal to true
@@ -285,22 +283,23 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
       }
     });      
     // Set the best view
-    gMaps.bestView();    
+    gMaps.bestView(); 
+    fakeLoadOff();
   };
-  initMapAllFlats = function() {
+  $scope.initMapAllFlats = function() {
     if (!gMaps.getCalledPromise()) {
       gMaps.getPromise().then(function() {
-        gMaps.setCalledPromise();
-        attachButtonsToMap();        
-        initMapAllFlatsHelper();
+        gMaps.setCalledPromise();       
+        $scope.initMapAllFlatsHelper();
+        attachButtonsToMap();         
       });      
     } else {
-      initMapAllFlatsHelper();
+      $scope.initMapAllFlatsHelper();
     }
   };   
 
   // Initialize the map for editor
-  initMapOneFlatHelper = function() {    
+  $scope.initMapOneFlatHelper = function() {    
     // Callback for dragging marker
     dragCallBack = function(event) {
       $scope.toEdit.position.lat = event.latLng.lat();
@@ -350,14 +349,14 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
     // Find the best view
     gMaps.bestView();
   };  
-  initMapOneFlat = function() { 
+  $scope.initMapOneFlat = function() { 
     gMaps.delAllMarkers();
     if (!gMaps.getCalledPromise()) {
       gMaps.setCalledPromise();
       attachButtonsToMap();
-      initMapOneFlatHelper();
+      $scope.initMapOneFlatHelper();
     } else {
-     initMapOneFlatHelper();
+     $scope.initMapOneFlatHelper();
     }    
   };
   
@@ -380,5 +379,25 @@ app.controller('project', function($scope, auth, projects, $state, userData, $co
         break;         
     }
   };  
+  
+  // Loading current project
+  if (projects.getProjects().length === 0) {
+    $state.transitionTo('projects');
+  } else {
+    ifActiveExist = false;
+    angular.forEach(projects.getProjects(), function(item) {
+      if (item.active === true) {
+        ifActiveExist = true;
+        $scope.project = jQuery.extend(true,{},item);
+        $scope.tmpProject = jQuery.extend(true,{},item);
+        $scope.checkIfEmpty();
+        showMap();
+        $scope.initMapAllFlats();        
+      }
+    });
+    if (!ifActiveExist) {
+      $state.transitionTo('projects');
+    }
+  }  
   
 });

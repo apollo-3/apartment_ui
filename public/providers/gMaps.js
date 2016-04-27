@@ -4,6 +4,7 @@ app.factory('gMaps', function($window, $q, values) {
   markers = [];
   enabled = false;
   calledPromise = false;
+  btnsAttached = false;
   
   aSyncLoad = function(myCallBack) {      
     $window.editorMap = function() {
@@ -67,30 +68,39 @@ app.factory('gMaps', function($window, $q, values) {
     markers.push(marker);
   };
   bestView = function() {
-    var bounds = new google.maps.LatLngBounds();
-    angular.forEach(markers, function(marker) {
-      bounds.extend(marker.getPosition());
-    });
-    map.fitBounds(bounds);
-    map.setCenter(bounds.getCenter());
     if (markers.length === 0) {
       map.setCenter(values.map_center);
       map.setZoom(values.map_zoom);      
-    } else if (markers.length == 1) {
-      map.setZoom(values.map_zoom);      
-    }
-    // map.setZoom(map.getZoom()-1);    
+    } else {
+      var bounds = new google.maps.LatLngBounds();
+      angular.forEach(markers, function(marker) {
+        bounds.extend(marker.getPosition());
+      });
+      map.fitBounds(bounds);
+      map.setCenter(bounds.getCenter());      
+      if (markers.length == 1) {
+        map.setZoom(values.map_zoom);
+      }
+    }  
   };
   
+  // Sets Map options
   setOptions = function(options) {
     map.setOptions(options);
   };
   
+  // Attach button to map
   attachButton = function(button, callBack) {
+    btnsAttached = true;    
     button.addEventListener('click', function() {
       callBack();
     });
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(button);
+  };
+  
+  // Check if button attached
+  isBtnAttached = function() {
+    return btnsAttached;
   };
 
   aSyncLoad(function() {
@@ -157,6 +167,7 @@ app.factory('gMaps', function($window, $q, values) {
     setCalledPromise: setCalledPromise,
     changeMarkerColor: changeMarkerColor,
     setOptions: setOptions,
-    attachButton: attachButton    
+    attachButton: attachButton,
+    isBtnAttached: isBtnAttached
   };
 });

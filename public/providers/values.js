@@ -23,7 +23,24 @@ app.factory('values', function() {
     max_floor_length: 3,
     max_price_length: 16,
     max_image_size: 5,
-    max_images_allowed: 4
+    max_images_allowed: 4,
+    accounts: {
+      standard: {
+        projects: 2,
+        flats: 2,
+        photos: 2
+      },
+      advanced: {
+        projects: 5,
+        flats: 10,
+        photos: 4
+      },
+      premium: {
+        projects: 30,
+        flats: 30,
+        photos: 10
+      }
+    }
   };
   return values;
 });

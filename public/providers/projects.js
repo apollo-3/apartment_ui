@@ -4,7 +4,7 @@ app.factory('projects', function($http, $cookies, values) {
   
   getProjects = function() {
     return projects;
-  };
+  };  
   
   setProjects = function(newProjects) {
     projects = newProjects;
@@ -80,15 +80,7 @@ app.factory('projects', function($http, $cookies, values) {
       method: 'post',
       data: 'mail=' + $cookies.get('mail') + '&token=' + $cookies.get('token') + '&defLang=' + values.def_lang
     });
-  };
-  
-  getAllUsersArray = function() {
-    out = [];
-    angular.forEach(allUsers, function(val, key) {
-      out.push(val);
-    });
-    return out;
-  };
+  };  
   
   flatChecker = function(flats) {
     angular.forEach(flats, function(flat) {
@@ -121,7 +113,6 @@ app.factory('projects', function($http, $cookies, values) {
     syncProject: syncProject,
     getAllUsers: getAllUsers,
     setAllUsers: setAllUsers,
-    reloadAllUsers: reloadAllUsers,
-    getAllUsersArray: getAllUsersArray
+    reloadAllUsers: reloadAllUsers
   };
 });
