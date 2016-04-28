@@ -67,6 +67,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
           controller: "top"
         }
       }
+    })
+    .state('utils', {
+      url: "/utils",
+      views: {
+        "main": {
+          controller: "utils"
+        }
+      }
     });
 });
 

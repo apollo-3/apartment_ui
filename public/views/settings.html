@@ -6,9 +6,11 @@
       </div>   
       <div style="padding-top:30px" class="panel-body">
         <form class="form-horizontal" role="form">
+        <!-- Error area -->
           <div ng-show="error!=''" class="alert alert-danger">
             <b>{{LNG.error | capitalize}}:</b> {{error}}
           </div>          
+          <!-- Action type area -->
           <div class="form-group radio">
             <div class="col-md-11 col-md-offset-1" style="margin-bottom: 15px;">
               <label>
@@ -25,12 +27,21 @@
               </label>              
             </div>
           </div>
+          <!-- Email field -->
           <div class="form-group">
             <label class="control-label col-md-3">{{LNG.email | capitalize}}:</label>
             <div class="col-md-9">
               <input type="text" class="form-control" ng-model="user.user.mail" placeholder="{{LNG.email}}" disabled></input>              
             </div>                         
           </div>
+          <!-- Accout level field -->
+          <div class="form-group">
+            <label class="control-label col-md-3">{{LNG.level | capitalize}}:</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" ng-model="user.user.account" placeholder="{{LNG.level}}" disabled></input>              
+            </div>                         
+          </div>        
+          <!-- Name field -->          
           <div ng-show="mode=='change'">
             <div class="form-group" ng-show="mode=='change'">
               <label class="control-label col-md-3">{{LNG.name | capitalize}}:</label>
@@ -39,6 +50,7 @@
                 <input-cleaner action="user.user.name=''" style="margin-right:13px;"></input-cleaner>
               </div>           
             </div> 
+            <!-- Birth Year field --> 
             <div class="form-group">
               <label class="control-label col-md-3">{{LNG.birth_year | capitalize}}:</label>
               <div class="col-md-9">
@@ -46,6 +58,7 @@
                 <input-cleaner action="user.user.birthYear=''" style="margin-right:13px;"></input-cleaner>
               </div>           
             </div>
+            <!-- Phone field --> 
             <div class="form-group">
               <label class="control-label col-md-3">{{LNG.phone | capitalize}}:</label>
               <div class="col-md-9">
@@ -53,6 +66,7 @@
                 <input-cleaner action="user.user.phone=''" style="margin-right:13px;"></input-cleaner>
               </div>           
             </div>
+            <!-- Country field --> 
             <div class="form-group">
               <label class="control-label col-md-3">{{LNG.country | capitalize}}:</label>
               <div class="col-md-9">
@@ -60,6 +74,7 @@
                 <input-cleaner action="user.user.country=''" style="margin-right:13px;"></input-cleaner>
               </div>           
             </div>
+            <!-- State field -->
             <div class="form-group">
               <label class="control-label col-md-3">{{LNG.state | capitalize}}:</label>
               <div class="col-md-9">
@@ -67,13 +82,15 @@
                 <input-cleaner action="user.user.state=''" style="margin-right:13px;"></input-cleaner>
               </div>           
             </div>  
+            <!-- City field -->
             <div class="form-group">
               <label class="control-label col-md-3">{{LNG.city | capitalize}}:</label>
               <div class="col-md-9">
                 <input type="text" class="form-control" ng-class="{'warning':warn_city}" ng-model="user.user.city" placeholder="{{LNG.city}}" ng-change="customFilter('city')"></input>              
                 <input-cleaner action="user.user.city=''" style="margin-right:13px;"></input-cleaner>
               </div>           
-            </div>       
+            </div>
+            <!-- Language field -->             
             <div class="form-group">
               <label class="control-label col-md-3">{{LNG.language | capitalize}}:</label>
               <div class="col-md-9">
@@ -81,6 +98,7 @@
               </div>           
             </div>
           </div>
+          <!-- Password field --> 
           <div class="form-group">
             <label class="control-label col-md-3">{{LNG.password | capitalize}}:</label>
             <div class="col-md-9">
@@ -88,13 +106,15 @@
               <input-cleaner action="user.user.password=''" style="margin-right:13px;"></input-cleaner>
             </div>           
           </div> 
+          <!-- New password field -->
           <div class="form-group" ng-show="mode=='password'">
             <label class="control-label col-md-3">{{LNG.new_password | capitalize}}:</label>
             <div class="col-md-9">
               <input type="password" class="form-control" ng-class="{'warning': warn_new_password}" ng-model="user.user.newPassword" placeholder="{{LNG.new_password}}" ng-change="customFilter('new_password')"></input>              
               <input-cleaner action="user.user.newPassword=''" style="margin-right:13px;"></input-cleaner>
             </div>           
-          </div>     
+          </div>   
+          <!-- Save and Cancel buttons -->           
           <div class="form-group">  
             <div class="col-md-6 col-md-offset-3" style="margin-top:10px;">
               <button type="button" class="btn btn-danger" style="margin-right:6px;" ng-click="confirm()">{{LNG.confirm | capitalize}}</button>            

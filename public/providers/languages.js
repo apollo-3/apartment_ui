@@ -27,6 +27,7 @@ app.factory('languages', function(values, $cookies) {
       'confirm': 'confirm',
       'cancel': 'cancel',
       'wrong_fields_value': 'some input values are incorrect',
+      'level': 'level',
       /* Top page */
       'sign_out': 'sign out',
       'welcome': 'welcome',
@@ -85,7 +86,7 @@ app.factory('languages', function(values, $cookies) {
       'table': 'table',
       'no_location_set': 'no location set on map!',
       'address_repeat': 'this address already exist in your project!',
-      'account_limit': 'Change your account status. You reached the limit.'
+      'account_limit': 'Change your account level. You reached the limit for '
     },
     'ru': {
       /* Login page*/      
@@ -114,6 +115,7 @@ app.factory('languages', function(values, $cookies) {
       'confirm': 'подтвердить',
       'cancel': 'отмена',
       'wrong_fields_value': 'не все поля заполнены верно',      
+      'level': 'уровень',     
       /* Top page */
       'sign_out': 'выйти',
       'welcome': 'привет',
@@ -172,7 +174,7 @@ app.factory('languages', function(values, $cookies) {
       'table': 'таблица',
       'no_location_set': 'не выбрано место на карте!',
       'address_repeat': 'этот адрес уже существует в вашем проекте!',
-      'account_limit': 'Измените статус аккаунта. Вы достигли лимита.'
+      'account_limit': 'Измените уровень аккаунта. Вы достигли лимита для '
     },
     availableLng: function() {
       lan = values.def_lang;

@@ -56,15 +56,10 @@ app.controller('projects', function($scope, auth, projects, $state, $cookies, la
     if ($scope.projects.length === 0) {
       swal($filter('capitalize')($scope.LNG.welcome), $scope.LNG.no_projects);
     }
-  };    
+  };  
   
   // Saving a new or existing project
   $scope.saveProject = function() {
-    // Check user limits
-    if ($scope.projects.length >= values.accounts[userData.getData().account].projects) {
-      swal($filter('capitalize')($scope.LNG.warning), $scope.LNG.account_limit);
-      return
-    }    
     if ($scope.mode == 'edit') {
       projects.saveProject($scope.newProject).then(function(res) {
         if (res.data.hasOwnProperty('error')) {
@@ -82,6 +77,11 @@ app.controller('projects', function($scope, auth, projects, $state, $cookies, la
         }
       });
     } else {
+      // Check user limits
+      if ($scope.projects.length >= values.accounts[userData.getData().account].projects) {
+        swal($filter('capitalize')($scope.LNG.warning), $scope.LNG.account_limit + '\"' + userData.getData().account + '\".');
+        return
+      }      
       projects.createProject($scope.newProject).then(function(res) {
         if (res.data.hasOwnProperty('error')) {
           $scope.error = res.data.error;

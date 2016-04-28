@@ -40,6 +40,13 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
       return flag;
     }
   });
+  // Watching for limits of uploaded photos  
+  $scope.uploader.onAfterAddingFile = function(item) {
+    if ($scope.toEdit.images.length >= values.accounts[userData.getData().account].photos) {
+      item.remove();
+      swal($filter('capitalize')($scope.LNG.warning), $scope.LNG.account_limit + '\"' +userData.getData().account + '\".');
+    }
+  };  
   // Uploader callBack after image uploaded
   $scope.uploader.onCompleteItem = function(item, res) {
     $scope.toEdit.images.push(res.image);
@@ -83,6 +90,7 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
     $scope.converterUsage = false;  
     $scope.tmpPhone = ''; 
     $scope.error = '';
+    $scope.uploader.clearQueue();
     if ($scope.mode == 'create') {
       $scope.project.flats.splice(0,1);
     } else {
@@ -176,6 +184,13 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
         });
       }
 
+      // Check user limits
+      if ($scope.mode == 'create') {
+        if ($scope.project.flats.length > values.accounts[userData.getData().account].flats) {
+          swal($filter('capitalize')($scope.LNG.warning), $scope.LNG.account_limit + '\"' +userData.getData().account + '\".');
+          return
+        }
+      }
       projects.saveProject($scope.project).then(function(res) {
         if (res.data.hasOwnProperty('error')) {
           swal($filter('capitalize')($scope.LNG.error), res.data.error);
@@ -189,6 +204,7 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
           $scope.converterUsage = false;
           $scope.showEditor = false;
           $scope.tmpPhone = '';
+          $scope.uploader.clearQueue();          
           $scope.mode = 'create';        
           $scope.initMapAllFlats();        
         }
@@ -358,7 +374,7 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
     } else {
      $scope.initMapOneFlatHelper();
     }    
-  };
+  };  
   
   // Setting warning classes using filters
   $scope.customFilter = function(name) {

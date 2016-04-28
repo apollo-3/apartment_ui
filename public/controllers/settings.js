@@ -72,6 +72,8 @@ app.controller('settings', function($scope, $cookies, auth, userData, $state, la
         user = {'user':{'mail': $cookies.get('mail'),
                         'password': $scope.user.user.password,
                         'newPassword': $scope.user.user.newPassword,
+                        'account': $scope.user.user.account,
+                        'projects': $scope.user.user.projects,
                         'token': $cookies.get('token')}};                
         updateUser(user);
       } else {
