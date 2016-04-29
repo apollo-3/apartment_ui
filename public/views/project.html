@@ -30,17 +30,16 @@
         <form class="form-horizontal" role="form">
           <!-- Address -->
           <div class="form-group no-bottom">
-            <div class="row custom-row">              
-              <span class="control-label custom-label col-md-3" style="margin-top:7px;">{{LNG.address | capitalize}}*:</span>            
-              <div class="input-group col-md-9"> 
-                <input id="address" type="text" class="form-control" ng-class="{'warning': warn_address}" ng-model="toEdit.address" ng-change="customFilter('address')" placeholder="{{LNG.address}}">
-              </div>          
-            </div>
+            <span class="control-label custom-label col-md-3" style="margin-top:7px;">{{LNG.address | capitalize}}*:</span>            
+            <div class="col-md-9"> 
+              <input id="address" type="text" class="form-control" ng-class="{'warning': warn_address}" ng-model="toEdit.address" ng-change="customFilter('address')" placeholder="{{LNG.address}}">
+              <input-cleaner action="toEdit.address=''" style="right:25px"></input-cleaner>              
+            </div>          
           </div>
           <!-- Phones -->
           <div class="form-group no-bottom">
-            <div class="row custom-row">          
-              <span class="control-label custom-label col-md-3" style="">{{LNG.phone | capitalize}}:</span>
+            <span class="control-label custom-label col-md-3" style="">{{LNG.phone | capitalize}}:</span>          
+            <div class="row custom-row-project">          
               <div class="input-group col-md-9">
                 <div class="input-group-btn">
                   <button class="btn btn-default" ng-click="tmpPhone=''"><i class="glyphicon glyphicon-erase"></i></button>
@@ -54,53 +53,45 @@
             </div>
           </div> 
           <!-- Link -->
-          <div class="form-group no-bottom">
-            <div class="row custom-row">              
-              <span class="control-label custom-label col-md-3">{{LNG.link | capitalize}}:</span>            
-              <div class="input-group col-md-9"> 
-                <input type="text" class="form-control" ng-class="{'warning': warn_link}" ng-model="toEdit.link" ng-change="customFilter('link')" placeholder="http://">
-                <input-cleaner action="toEdit.link=''"></input-cleaner>
-                </input>
-              </div>          
-            </div>
+          <div class="form-group no-bottom">             
+            <span class="control-label custom-label col-md-3">{{LNG.link | capitalize}}:</span>            
+            <div class="col-md-9">
+              <input type="text" class="form-control" ng-class="{'warning': warn_link}" ng-model="toEdit.link" ng-change="customFilter('link')" placeholder="http://">
+              <input-cleaner action="toEdit.link=''" style="right:25px"></input-cleaner>
+              </input>
+            </div>          
           </div>  
           <!-- Contact -->
-          <div class="form-group no-bottom">
-            <div class="row custom-row">              
-              <span class="control-label custom-label col-md-3">{{LNG.contact | capitalize}}:</span>            
-              <div class="input-group col-md-9"> 
-                <input type="text" class="form-control" ng-class="{'warning': warn_contact}" ng-model="toEdit.contact" ng-change="customFilter('contact')" placeholder="{{LNG.contact}}">
-                <input-cleaner action="toEdit.contact=''"></input-cleaner>
-                </input>
-              </div>          
-            </div>            
+          <div class="form-group no-bottom">              
+            <span class="control-label custom-label col-md-3">{{LNG.contact | capitalize}}:</span>            
+            <div class="col-md-9"> 
+              <input type="text" class="form-control" ng-class="{'warning': warn_contact}" ng-model="toEdit.contact" ng-change="customFilter('contact')" placeholder="{{LNG.contact}}">
+              <input-cleaner action="toEdit.contact=''" style="right:25px"></input-cleaner>
+              </input>
+            </div>                   
           </div>
           <!-- Floor -->
-          <div class="form-group no-bottom">
-            <div class="row custom-row">              
-              <span class="control-label custom-label col-md-3">{{LNG.floor | capitalize}}:</span>            
-              <div class="input-group col-md-9"> 
-                <input type="text" class="form-control" ng-class="{'warning': warn_floor}" ng-model="toEdit.floor" ng-change="customFilter('floor')" placeholder="{{LNG.floor}}">
-                <input-cleaner action="toEdit.floor=''"></input-cleaner>
-                </input>
-              </div>          
-            </div>            
+          <div class="form-group no-bottom">            
+            <span class="control-label custom-label col-md-3">{{LNG.floor | capitalize}}:</span>            
+            <div class="col-md-9"> 
+              <input type="text" class="form-control" ng-class="{'warning': warn_floor}" ng-model="toEdit.floor" ng-change="customFilter('floor')" placeholder="{{LNG.floor}}">
+              <input-cleaner action="toEdit.floor=''" style="right:25px"></input-cleaner>
+              </input>
+            </div>                    
           </div>  
           <!-- Build Year -->
-          <div class="form-group no-bottom">
-            <div class="row custom-row">              
-              <span class="control-label custom-label col-md-3">{{LNG.year | capitalize}}:</span>            
-              <div class="input-group col-md-9"> 
-                <input type="text" class="form-control" ng-class="{'warning': warn_year}" ng-model="toEdit.buildYear" ng-change="customFilter('buildYear')" placeholder="{{LNG.year}}">
-                <input-cleaner action="toEdit.buildYear=''"></input-cleaner>
-                </input>
-              </div>          
-            </div>            
+          <div class="form-group no-bottom">            
+            <span class="control-label custom-label col-md-3">{{LNG.year | capitalize}}:</span>            
+            <div class="col-md-9"> 
+              <input type="text" class="form-control" ng-class="{'warning': warn_year}" ng-model="toEdit.buildYear" ng-change="customFilter('buildYear')" placeholder="{{LNG.year}}">
+              <input-cleaner action="toEdit.buildYear=''" style="right:25px"></input-cleaner>
+              </input>
+            </div>          
           </div>  
           <!-- Price -->
           <div class="form-group no-bottom">
-            <div class="row custom-row">              
-              <span class="control-label custom-label col-md-3">{{LNG.price | capitalize}}:</span>            
+            <span class="control-label custom-label col-md-3">{{LNG.price | capitalize}}:</span>                      
+            <div class="row custom-row-project">              
               <div class="input-group col-md-9"> 
                 <span class="input-group-addon">
                   <i class="fa fa-calculator" style="display:inline-block;position:relative;top:-2px;"></i>
@@ -124,64 +115,58 @@
             </div>            
           </div>
           <!-- Call History -->
-          <div class="form-group no-bottom">
-            <div class="row custom-row">              
-              <span class="control-label custom-label col-md-3">{{LNG.call | capitalize}}:</span>            
-              <div class="input-group col-md-9"> 
-                <select class="form-control" ng-options="callHist.name as callHist.value for callHist in callHistoryOptions" ng-model="toEdit.callHistory" ng-change="callHistoryChanged()"></select>
-              </div>          
-            </div>            
+          <div class="form-group no-bottom">            
+            <span class="control-label custom-label col-md-3">{{LNG.call | capitalize}}:</span>            
+            <div class="col-md-9"> 
+              <select class="form-control" ng-options="callHist.name as callHist.value for callHist in callHistoryOptions" ng-model="toEdit.callHistory" ng-change="callHistoryChanged()"></select>
+            </div>                     
           </div>  
           <!-- Checkboxes -->
           <div class="form-group no-bottom">
-            <div class="row custom-row">
-              <span class="control-label custom-label col-md-3">{{LNG.other | capitalize}}:</span>            
-              <div class="input-group col-md-9" style="margin-top:8px;">
-                <!-- Owner -->
-                <div class="other-checkbox">
-                  <i class="fa fa-key" title="{{LNG.owner | capitalize}}"></i><input type="checkbox" ng-model="toEdit.owner">
-                </div>
-                <!-- Subway -->
-                <div class="other-checkbox">
-                  <i class="fa fa-subway" title="{{LNG.subway | capitalize}}"></i><input type="checkbox" ng-model="toEdit.subway">
-                </div>   
-                <!-- Shop -->
-                <div class="other-checkbox">
-                  <i class="fa fa-shopping-cart" title="{{LNG.shop | capitalize}}"></i><input type="checkbox" ng-model="toEdit.shop">
-                </div>   
-                <!-- Park -->
-                <div class="other-checkbox">
-                  <i class="fa fa-tree" title="{{LNG.park | capitalize}}"></i><input type="checkbox" ng-model="toEdit.park">
-                </div>   
-                <!-- School -->
-                <div class="other-checkbox">
-                  <i class="fa fa-graduation-cap" title="{{LNG.school | capitalize}}"></i><input type="checkbox" ng-model="toEdit.school">
-                </div>   
-                <!-- Day Care -->
-                <div class="other-checkbox">
-                  <i class="fa fa-child" title="{{LNG.day_care | capitalize}}"></i><input type="checkbox" ng-model="toEdit.daycare">
-                </div>  
-                <!-- Last Floor -->
-                <div class="other-checkbox">
-                  <i class="fa fa-building" title="{{LNG.last_floor | capitalize}}"></i><input type="checkbox" ng-model="toEdit.lastfloor">
-                </div>                 
+            <span class="control-label custom-label col-md-3">{{LNG.other | capitalize}}:</span>            
+            <div class="col-md-9" style="margin-top:8px;">
+              <!-- Owner -->
+              <div class="other-checkbox">
+                <i class="fa fa-key" title="{{LNG.owner | capitalize}}"></i><input type="checkbox" ng-model="toEdit.owner">
               </div>
-            </div>            
+              <!-- Subway -->
+              <div class="other-checkbox">
+                <i class="fa fa-subway" title="{{LNG.subway | capitalize}}"></i><input type="checkbox" ng-model="toEdit.subway">
+              </div>   
+              <!-- Shop -->
+              <div class="other-checkbox">
+                <i class="fa fa-shopping-cart" title="{{LNG.shop | capitalize}}"></i><input type="checkbox" ng-model="toEdit.shop">
+              </div>   
+              <!-- Park -->
+              <div class="other-checkbox">
+                <i class="fa fa-tree" title="{{LNG.park | capitalize}}"></i><input type="checkbox" ng-model="toEdit.park">
+              </div>   
+              <!-- School -->
+              <div class="other-checkbox">
+                <i class="fa fa-graduation-cap" title="{{LNG.school | capitalize}}"></i><input type="checkbox" ng-model="toEdit.school">
+              </div>   
+              <!-- Day Care -->
+              <div class="other-checkbox">
+                <i class="fa fa-child" title="{{LNG.day_care | capitalize}}"></i><input type="checkbox" ng-model="toEdit.daycare">
+              </div>  
+              <!-- Last Floor -->
+              <div class="other-checkbox">
+                <i class="fa fa-building" title="{{LNG.last_floor | capitalize}}"></i><input type="checkbox" ng-model="toEdit.lastfloor">
+              </div>                 
+            </div>           
           </div>          
           <!-- Rating -->
           <div class="form-group no-bottom">
-            <div class="row custom-row">
-              <span class="control-label custom-label col-md-3">{{LNG.stars | capitalize}}:</span>
-              <div class="input-group col-md-9" style="margin-top:8px;">
-                <rating rate="toEdit.stars"></rating>
-              </div>
-            </div>            
+            <span class="control-label custom-label col-md-3">{{LNG.stars | capitalize}}:</span>
+            <div class="col-md-9" style="margin-top:8px;">
+              <rating rate="toEdit.stars"></rating>
+            </div>          
           </div> 
           <!-- Photos -->
           <!-- Upload button -->
           <div class="form-group no-bottom">
-            <div class="row custom-row">
-              <span class="control-label custom-label col-md-3">{{LNG.photos | capitalize}}:</span>
+            <span class="control-label custom-label col-md-3">{{LNG.photos | capitalize}}:</span>          
+            <div class="row custom-row-project">
               <div class="input-group col-md-9" style="margin-top:4px;">
                 <input type="file" nv-file-select="" uploader="uploader" ng-show="toEdit.images.length < max_images"/>
               </div>
