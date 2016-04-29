@@ -27,18 +27,18 @@ app.factory('values', function() {
     accounts: {
       standard: {
         projects: 2,
-        flats: 2,
-        photos: 2
+        flats: 10,
+        photos: 4
       },
       advanced: {
         projects: 5,
-        flats: 10,
-        photos: 4
+        flats: 20,
+        photos: 5
       },
       premium: {
         projects: 30,
         flats: 30,
-        photos: 10
+        photos: 8
       }
     }
   };

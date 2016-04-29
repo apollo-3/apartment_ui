@@ -240,7 +240,8 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
       angular.forEach(flat.images, function(img) {
         imgsFromFlat.push(img.img);
       });
-      $scope.project.flats.splice($scope.project.flats.indexOf(flat),1);  
+      $scope.project.flats.splice($scope.project.flats.indexOf(flat),1); 
+      $scope.initMapAllFlatsHelper();
       projects.saveProject($scope.project).then(function(res) {
         if (res.data.hasOwnProperty('success')) {
           projects.syncProject($scope.project);
