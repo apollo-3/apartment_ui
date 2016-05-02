@@ -50,7 +50,7 @@ app.filter('year', function() {
     if (typeof input === 'number') {
       input = input.toString();
     }
-    if (input.match(/^(0|\d{4})?$/)) { result = true; }
+    if ((input != undefined) && (input.match(/^(0|\d{4})?$/))) { result = true; }
     return result;
   };
 });
@@ -157,6 +157,38 @@ app.filter('thru', function() {
       out = out + val + ', ';
     });    
     return out.replace(/, $/,'');
+  }
+});
+
+app.filter('phones', function() {
+  return function(input) {
+    out = '';
+    angular.forEach(input, function(phone) {
+      out = out + phone.phone + ', ';
+    });
+    return out.replace(/, $/,'');
+  }
+});
+
+app.filter('call', function() {
+  out = '';
+  return function(input, options) {
+    angular.forEach(options, function(opt) {
+      if (opt.name === input) {
+        out = opt.value;
+      }
+    });
+    return out;
+  }
+});
+
+app.filter('shortText', function() {
+  return function(input, len) {
+    out = input;
+    if ((input != '') && (input != undefined) && (input.length>len)) {
+      out = input.substr(0, len) + '...';
+    }
+    return out;
   }
 });
 

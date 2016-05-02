@@ -265,30 +265,55 @@
   </div>
 </div>
 
-<div class="specific_project">
-  <div class="flats">
-    <div ng-repeat="flat in project.flats">
-      {{flat.address}} |   
-      <a ng-href="{{flat.link}}">Link</a> | 
-      {{flat.display == true ? 'show':'hide'}}
-      {{flat.contact}} | 
-      {{flat.floor}} | 
-      {{flat.buildYear}} |
-      {{flat.price | currency:currency:0}} |       
-      <span ng-repeat="phone in flat.phones">
-        {{phone.phone}},
-      </span>
-      <span ng-show="flat.owner"> | Owner </span><span ng-hide="flat.owner"> | Agent </span>
-      <span ng-show="flat.callHistory=='toCall'"> | Call | </span><span ng-show="flat.callHistory=='called'"> | Called | </span><span ng-show="flat.callHistory=='callBack'"> | Call back | </span>
-      
-      <span ng-repeat="star in [1,2,3,4,5]"><span ng-show="star<=flat.stars">+</span></span>
-      <span ng-repeat="star in [1,2,3,4,5]"><span ng-show="star>flat.stars">-</span></span>      
-      
-      | <span ng-show="flat.subway">Subway, </span><span ng-show="flat.shop">Shop, </span><span ng-show="flat.park">Park, </span><span ng-show="flat.school">School</span>
-      <span ng-show="flat.modified!='update'"> | {{flat.modified}}</span><span ng-show="flat.modified=='update'"> | beeing edited</span> |
-      <button ng-click="editorOn(flat);" ng-hide="toEdit==flat">edit</button>
-      <button ng-click="del(flat)" ng-hide="toEdit==flat">del</button>
-    </div>
-  </div>
+<div class="table-responsive">  
+  <table class="table table-bordered table-hover">
+    <tr class="active"><th ng-repeat="(headK, headV) in tableHeads" ng-show="headV.display" style="text-align:center">{{headV.value | capitalize}}</th></tr>
+    <tr ng-repeat="flat in project.flats">
+      <!-- address -->
+      <th ng-show="tableHeads['address'].display" class="flat-cell">{{flat.address}}</th>
+      <!-- phones -->      
+      <th ng-show="tableHeads['phones'].display" class="flat-cell">{{flat.phones | phones}}</th>
+      <!-- price -->      
+      <th ng-show="tableHeads['price'].display" class="flat-cell">{{flat.price | currency : project.currency : 0}}</th> 
+      <!-- buildYear -->      
+      <th ng-show="tableHeads['buildYear'].display" class="flat-cell">{{flat.buildYear}}</th>
+      <!-- contact -->      
+      <th ng-show="tableHeads['contact'].display" class="flat-cell">{{flat.contact}}</th>  
+      <!-- floor -->      
+      <th ng-show="tableHeads['floor'].display" class="flat-cell">{{flat.floor}}</th>    
+      <!-- callHistory -->
+      <th ng-show="tableHeads['call'].display" class="flat-cell">{{flat.callHistory | call : callHistoryOptions}}</th> 
+      <!-- stars -->
+      <th ng-show="tableHeads['stars'].display" class="flat-cell">{{flat.stars}}</th>
+      <!-- link -->
+      <th ng-show="tableHeads['link'].display" class="flat-cell"><a ng-href="{{flat.link}}" target="_blank">{{flat.link | shortText : 20}}</a></th>
+      <!-- other -->
+      <th ng-show="tableHeads['other'].display" class="flat-cell">
+        <!-- owner -->
+        <i class="fa fa-key" style="cursor:pointer" title="{{LNG.owner | capitalize}}" ng-show="flat.owner"></i>      
+        <!-- subway -->
+        <i class="fa fa-subway" style="cursor:pointer" title="{{LNG.subway | capitalize}}" ng-show="flat.subway"></i>              
+        <!-- shop -->
+        <i class="fa fa-shopping-cart" style="cursor:pointer" title="{{LNG.shop | capitalize}}" ng-show="flat.shop"></i>              
+        <!-- park -->
+        <i class="fa fa-tree" style="cursor:pointer" title="{{LNG.park | capitalize}}" ng-show="flat.park"></i>                      
+        <!-- school -->
+        <i class="fa fa-graduation-cap" style="cursor:pointer" title="{{LNG.school | capitalize}}" ng-show="flat.school"></i>
+        <!-- day care -->
+        <i class="fa fa-child" style="cursor:pointer" title="{{LNG.day_care | capitalize}}" ng-show="flat.daycare"></i>
+        <!-- last floor -->        
+        <i class="fa fa-building" style="cursor:pointer" title="{{LNG.last_floor | capitalize}}" ng-show="flat.lastfloor"></i>
+      </th>      
+      <!-- display -->
+      <th class="flat-cell"><i class="fa" ng-class="{'fa-map-marker': flat.display}"></i></th>
+      <!-- photos -->
+      <th ng-show="tableHeads['photos'].display" class="flat-cell" style="text-align:center;"><minigallery images="flat.images"></minigallery></th>
+      <!-- actions -->
+      <th class="flat-cell">
+        <button class="btn btn-success" style="margin-bottom:5px;" ng-click="editorOn(flat);" ng-disabled="toEdit==flat"><i class="fa fa-pencil"></i></button>
+        <button class="btn btn-danger" style="margin-bottom:5px;" ng-click="del(flat)" ng-disabled="toEdit==flat"><i class="fa fa-trash"></i></button>
+      </th>      
+    </tr>
+  </table>
 </div>
 

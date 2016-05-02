@@ -8,6 +8,21 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
                           display: true, link:'', buildYear: '',
                           contact: '', address: '', floor: ''};
   $scope.toEdit = jQuery.extend(true,{},$scope.defaultToEdit);
+  $scope.tableHeads = {
+    'address': {'name': 'address', 'value': $scope.LNG['address'], display: true},
+    'phones': {'name': 'phones', 'value': $scope.LNG['phone'], display: true},
+    'price': {'name': 'price', 'value': $scope.LNG['price'], display: true},
+    'buildYear': {'name': 'buildYear', 'value': $scope.LNG['year'], display: true},
+    'contact': {'name': 'contact', 'value': $scope.LNG['contact'], display: true},
+    'floor': {'name': 'floor', 'value': $scope.LNG['floor'], display: true},
+    'call': {'name': 'call', 'value': $scope.LNG['call'], display: true},
+    'stars': {'name': 'stars', 'value': $scope.LNG['stars'], display: true},      
+    'link': {'name': 'link', 'value': $scope.LNG['link'], display: true},
+    'other': {'name': 'other', 'value': $scope.LNG['other'], display: true},
+    'display': {'name': 'display', 'value': $scope.LNG['display'], display: true},
+    'photos': {'name': 'photos', 'value': $scope.LNG['photos'], display: true},
+    'actions': {'name': 'actions', 'value': $scope.LNG['actions'], display: true} 
+  };
   $scope.mode = 'create';
   $scope.tmpProject = {};
   $scope.callHistoryOptions = [{'name': 'called', 'value': $scope.LNG.called}, 
