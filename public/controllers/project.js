@@ -6,31 +6,68 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
                           price: '', owner: false, callHistory: 'toCall',
                           stars: 0, position: {}, images: [],
                           display: true, link:'', buildYear: '',
-                          contact: '', address: '', floor: ''};
+                          contact: '', address: '', floor: '',
+                          owner: false, subway: false,
+                          shop: false, park: false,
+                          school: false, daycare: false,
+                          furniture: false, electronics: false,
+                          lastfloor: false                          
+                         };
   $scope.toEdit = jQuery.extend(true,{},$scope.defaultToEdit);
   $scope.tableHeads = {
-    'address': {'name': 'address', 'value': $scope.LNG['address'], display: true},
-    'phones': {'name': 'phones', 'value': $scope.LNG['phone'], display: true},
-    'price': {'name': 'price', 'value': $scope.LNG['price'], display: true},
-    'buildYear': {'name': 'buildYear', 'value': $scope.LNG['year'], display: true},
-    'contact': {'name': 'contact', 'value': $scope.LNG['contact'], display: true},
-    'floor': {'name': 'floor', 'value': $scope.LNG['floor'], display: true},
-    'call': {'name': 'call', 'value': $scope.LNG['call'], display: true},
-    'stars': {'name': 'stars', 'value': $scope.LNG['stars'], display: true},      
-    'link': {'name': 'link', 'value': $scope.LNG['link'], display: true},
-    'other': {'name': 'other', 'value': $scope.LNG['other'], display: true},
-    'display': {'name': 'display', 'value': $scope.LNG['display'], display: true},
-    'photos': {'name': 'photos', 'value': $scope.LNG['photos'], display: true},
+    'address': {'name': 'address', 'value': $scope.LNG['address'], display: true, order: 'asc', type: 'string'},
+    'phones': {'name': 'phones', 'value': $scope.LNG['phone'], display: true, order: 'asc', type: 'length'},
+    'price': {'name': 'price', 'value': $scope.LNG['price'], display: true, order: 'asc', type: 'int'},
+    'buildYear': {'name': 'buildYear', 'value': $scope.LNG['year'], display: true, order: 'asc', type: 'int'},
+    'contact': {'name': 'contact', 'value': $scope.LNG['contact'], display: true, order: 'asc', type: 'string'},
+    'floor': {'name': 'floor', 'value': $scope.LNG['floor'], display: true, order: 'asc', type: 'int'},
+    'callHistory': {'name': 'callHistory', 'value': $scope.LNG['call'], display: true, order: 'asc', type: 'string'},
+    'stars': {'name': 'stars', 'value': $scope.LNG['stars'], display: true, order: 'asc', type: 'int'},      
+    'link': {'name': 'link', 'value': $scope.LNG['link'], display: true, order: 'asc', type: 'string'},
+    'other': {'name': 'other', 'value': $scope.LNG['other'], display: true, order: 'asc', type: 'int'},
+    'modified': {'name': 'modified', 'value': $scope.LNG['modified'], display: true, order: 'asc', type: 'date'},
+    'display': {'name': 'display', 'value': $scope.LNG['display'], display: true, order: 'asc', type: 'bool'},
+    'images': {'name': 'images', 'value': $scope.LNG['photos'], display: true, order: 'asc', type: 'length'},
     'actions': {'name': 'actions', 'value': $scope.LNG['actions'], display: true} 
+  };
+  $scope.userFilter = {
+    'enabled': false,
+    'filters': {     
+      'address': '',
+      'link': '',
+      'contact': '',
+      'callHistory': '',      
+      'phones': '',
+      'images': false,
+/*      
+      'price': '',
+      'buildYear': '',
+      'floor': '',
+      'stars': '',
+      'other': '',
+      'modified': '',
+      'display': '',
+*/      
+      'owner': false,
+      'subway': false,
+      'shop': false,
+      'park': false,
+      'school': false,
+      'daycare': false,
+      'furniture': false,
+      'electronics': false,
+      'lastfloor': false
+    }
   };
   $scope.mode = 'create';
   $scope.tmpProject = {};
   $scope.callHistoryOptions = [{'name': 'called', 'value': $scope.LNG.called}, 
                                {'name': 'callBack', 'value': $scope.LNG.call_back},
                                {'name': 'toCall', 'value': $scope.LNG.to_call}];
+  $scope.filterHistoryOptions = $.extend(true,[],$scope.callHistoryOptions); $scope.filterHistoryOptions.push({'name':'', value: $scope.LNG.all});
   $scope.max_images = values.max_images;
   $scope.exchangeRate = 1;  
-  $scope.showProjectDescription = true;
+  $scope.showProjectDescription = false;
   $scope.showFilterPanel = false;
   $scope.showEditor = false;
   $scope.tmpPhone = '';
@@ -96,7 +133,7 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
   
   // Move to table
   $scope.moveToTable = function() {
-    
+    $('html,body').animate({scrollTop: $('div#flats-table').offset().top});
   };
   
   // Hide editor panel
@@ -213,6 +250,7 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
           $scope.project = res.data.project;
           $scope.project.was_shared = $scope.project.shared;
           $scope.tmpProject = jQuery.extend(true,{},$scope.project);
+          $scope.preSortProject = jQuery.extend(true,{},$scope.project);          
           $scope.toEdit = $.extend(true,{}, $scope.defaultToEdit);
           projects.syncProject($scope.project);
           
@@ -349,8 +387,8 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
       if (places.length === 0) {
         return;
       }
-      // Setting selected place name in address box
-      $scope.toEdit.address = places[0].name;
+      // Setting selected place name in address box   
+      $scope.toEdit.address = places[0].formatted_address;
       // Clear out the old markers.
       gMaps.delAllMarkers();
       // For each place, get the icon, name and location.
@@ -392,6 +430,40 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
     }    
   };  
   
+  // Sorting flats-table
+  $scope.sortFlats = function(head) {
+    if (head.order == 'asc') {
+      angular.forEach($scope.tableHeads, function(v,k) {
+        v.order = 'asc';
+      });
+      head.order = 'desc';
+    } else {
+      angular.forEach($scope.tableHeads, function(v,k) {
+        v.order = 'desc';
+      });      
+      head.order = 'asc';
+    }
+    // Special case when sort field is OTHER
+    if (head.name === 'other') {
+      whistles = ['owner','school','park','subway','shop','daycare','furniture','electronics','lastfloor']
+      angular.forEach($scope.project.flats, function(flat) {
+        flat.other = 0;
+        angular.forEach(whistles, function(whistle) {
+          if ((flat[whistle] != undefined) && (flat[whistle])) {
+            flat.other = parseInt(flat.other) + 1;
+          }
+        });
+      });     
+      $filter('sort')($scope.project.flats, head.name, head.type, head.order);        
+      angular.forEach($scope.project.flats, function(flat) {
+        delete flat.other
+      });
+    } else {
+      // Normal case
+      $filter('sort')($scope.project.flats, head.name, head.type, head.order);
+    }   
+  };
+  
   // Setting warning classes using filters
   $scope.customFilter = function(name) {
     switch (name) {
@@ -410,7 +482,7 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
       case 'price': $scope.warn_price = !$filter('price')($scope.toEdit.price);
         break;         
     }
-  };  
+  };   
   
   // Loading current project
   if (projects.getProjects().length === 0) {
@@ -431,5 +503,18 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
       $state.transitionTo('projects');
     }
   }  
+ 
+  // Watching User Filter Change
+  $scope.$watch('userFilter', function(n, o) {
+    if ($scope.project != undefined) {
+      if ($scope.preSortProject == undefined) {
+        $scope.preSortProject = $.extend(true,{}, $scope.project);
+      } else {
+        $scope.project = $.extend(true,{},$scope.preSortProject); 
+      }
+      $filter('userArrayFilter')($scope.project.flats, n);
+      $scope.initMapAllFlats();
+    }    
+  }, true);
   
 });

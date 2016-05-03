@@ -192,6 +192,49 @@ app.filter('shortText', function() {
   }
 });
 
+app.filter('userArrayFilter', function() {
+  return function(flats, userFilter) {    
+    out = flats;
+    if ((userFilter.enabled) && (flats != undefined)) {      
+      angular.forEach(userFilter.filters, function(val, key) {
+        i = 0;
+        count = out.length
+        while (i<count) {
+          if (val != '') {
+            if (key === 'phones') {
+              flag = true;
+              angular.forEach(out[i][key], function(phone) {
+                if (phone.phone.match(val)) {
+                  flag = false;
+                }
+              });
+              if (flag) {
+                out.splice(out.indexOf(out[i]), 1);
+                i = i - 1;
+                count = count - 1;                
+              }
+            } else if (key === 'images') {
+                if (out[i][key].length === 0) {
+                  out.splice(out.indexOf(out[i]), 1);
+                  i = i - 1;
+                  count = count - 1;                   
+                }
+              } else {
+                if (!out[i][key].toString().match(val)) {
+                  out.splice(out.indexOf(out[i]), 1);
+                  i = i - 1;
+                  count = count - 1;
+                }
+            }
+          }
+          i = i + 1;
+        }
+      });      
+    }
+    return out;
+  }
+});
+
 app.filter('sort', function() {
   return function(input, sortBy, type, order) {
     if ((input !== undefined) && (input.length > 0)) {
