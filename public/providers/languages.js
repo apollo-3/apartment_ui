@@ -93,7 +93,9 @@ app.factory('languages', function(values, $cookies) {
       'all': 'all',
       'enable': 'enbale',
       'disable': 'disable',
-      'modified': 'modified'
+      'modified': 'modified',
+      'from': 'from',
+      'to': 'to'
     },
     'ru': {
       /* Login page*/      
@@ -188,7 +190,9 @@ app.factory('languages', function(values, $cookies) {
       'all': 'все',
       'enable': 'включить',
       'disable': 'выключить',
-      'modified': 'изменен'      
+      'modified': 'изменен',
+      'from': 'с',
+      'to': 'по'  
     },
     availableLng: function() {
       lan = values.def_lang;

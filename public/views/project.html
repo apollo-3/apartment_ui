@@ -235,39 +235,81 @@
           <div class="form-group no-bottom">
             <span class="control-label custom-label col-md-3" style="margin-top:7px;">{{LNG.address | capitalize}}:</span>            
             <div class="col-md-9"> 
-              <input type="text" class="form-control" ng-model="userFilter.filters.address" placeholder="{{LNG.address}}">
-              <input-cleaner action="userFilter.filters.address=''" style="right:25px"></input-cleaner>              
+              <input type="text" class="form-control" ng-model="userFilter.filters.address.value" placeholder="{{LNG.address}}">
+              <input-cleaner action="userFilter.filters.address.value=''" style="right:25px"></input-cleaner>              
             </div>          
           </div> 
           <!-- Phone -->
           <div class="form-group no-bottom">
             <span class="control-label custom-label col-md-3">{{LNG.phone | capitalize}}:</span>            
             <div class="col-md-9"> 
-              <input type="text" class="form-control" ng-model="userFilter.filters.phones" placeholder="{{LNG.phone}}">
-              <input-cleaner action="userFilter.filters.phones=''" style="right:25px"></input-cleaner>              
+              <input type="text" class="form-control" ng-model="userFilter.filters.phones.value" placeholder="{{LNG.phone}}">
+              <input-cleaner action="userFilter.filters.phones.value=''" style="right:25px"></input-cleaner>              
             </div>          
-          </div>            
+          </div>      
           <!-- Link -->
           <div class="form-group no-bottom">
             <span class="control-label custom-label col-md-3">{{LNG.link | capitalize}}:</span>            
             <div class="col-md-9"> 
-              <input type="text" class="form-control" ng-model="userFilter.filters.link" placeholder="{{LNG.link}}">
-              <input-cleaner action="userFilter.filters.link=''" style="right:25px"></input-cleaner>              
+              <input type="text" class="form-control" ng-model="userFilter.filters.link.value" placeholder="{{LNG.link}}">
+              <input-cleaner action="userFilter.filters.link.value=''" style="right:25px"></input-cleaner>              
             </div>          
           </div>    
           <!-- Contact -->
           <div class="form-group no-bottom">
             <span class="control-label custom-label col-md-3">{{LNG.contact | capitalize}}:</span>            
             <div class="col-md-9"> 
-              <input type="text" class="form-control" ng-model="userFilter.filters.contact" placeholder="{{LNG.contact}}">
-              <input-cleaner action="userFilter.filters.contact=''" style="right:25px"></input-cleaner>              
+              <input type="text" class="form-control" ng-model="userFilter.filters.contact.value" placeholder="{{LNG.contact}}">
+              <input-cleaner action="userFilter.filters.contact.value=''" style="right:25px"></input-cleaner>              
             </div>          
           </div>  
+          <!-- Floor -->
+          <div class="form-group no-bottom">
+            <span class="control-label custom-label col-md-3">{{LNG.floor | capitalize}}:</span>            
+            <!-- From -->
+            <div class="col-md-4 from-to"> 
+              <input type="text" class="form-control" ng-model="userFilter.filters.floor.min_value" placeholder="{{LNG.from}}">
+              <input-cleaner action="userFilter.filters.floor.min_value=''" style="right:25px"></input-cleaner>              
+            </div>
+            <!-- To -->
+            <div class="col-md-4">
+              <input type="text" class="form-control" ng-model="userFilter.filters.floor.max_value" placeholder="{{LNG.to}}">
+              <input-cleaner action="userFilter.filters.floor.max_value=''" style="right:25px"></input-cleaner>                                        
+            </div>
+          </div>
+          <!-- buildYear -->
+          <div class="form-group no-bottom">
+            <span class="control-label custom-label col-md-3">{{LNG.year | capitalize}}:</span>            
+            <!-- From -->
+            <div class="col-md-4 from-to"> 
+              <input type="text" class="form-control" ng-model="userFilter.filters.buildYear.min_value" placeholder="{{LNG.from}}">
+              <input-cleaner action="userFilter.filters.buildYear.min_value=''" style="right:25px"></input-cleaner>              
+            </div>
+            <!-- To -->
+            <div class="col-md-4">
+              <input type="text" class="form-control" ng-model="userFilter.filters.buildYear.max_value" placeholder="{{LNG.to}}">
+              <input-cleaner action="userFilter.filters.buildYear.max_value=''" style="right:25px"></input-cleaner>                                        
+            </div>
+          </div>  
+          <!-- Price -->
+          <div class="form-group no-bottom">
+            <span class="control-label custom-label col-md-3">{{LNG.price | capitalize}}:</span>            
+            <!-- From -->
+            <div class="col-md-4 from-to"> 
+              <input type="text" class="form-control" ng-model="userFilter.filters.price.min_value" placeholder="{{LNG.from}}">
+              <input-cleaner action="userFilter.filters.price.min_value=''" style="right:25px"></input-cleaner>              
+            </div>
+            <!-- To -->
+            <div class="col-md-4">
+              <input type="text" class="form-control" ng-model="userFilter.filters.price.max_value" placeholder="{{LNG.to}}">
+              <input-cleaner action="userFilter.filters.price.max_value=''" style="right:25px"></input-cleaner>                                        
+            </div>
+          </div>            
           <!-- Call History -->
           <div class="form-group no-bottom">            
             <span class="control-label custom-label col-md-3">{{LNG.call | capitalize}}:</span>            
             <div class="col-md-9"> 
-              <select class="form-control" ng-options="callHist.name as callHist.value for callHist in filterHistoryOptions" ng-model="userFilter.filters.callHistory"></select>
+              <select class="form-control" ng-options="callHist.name as callHist.value for callHist in filterHistoryOptions" ng-model="userFilter.filters.callHistory.value"></select>
             </div>                     
           </div>          
           <!-- Checkboxes -->
@@ -276,49 +318,87 @@
             <div class="col-md-9" style="margin-top:8px;">
               <!-- Owner -->
               <div class="other-checkbox">
-                <i class="fa fa-key" title="{{LNG.owner | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.owner">
+                <i class="fa fa-key" title="{{LNG.owner | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.owner.value">
               </div>
               <!-- Subway -->
               <div class="other-checkbox">
-                <i class="fa fa-subway" title="{{LNG.subway | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.subway">
+                <i class="fa fa-subway" title="{{LNG.subway | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.subway.value">
               </div>   
               <!-- Shop -->
               <div class="other-checkbox">
-                <i class="fa fa-shopping-cart" title="{{LNG.shop | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.shop">
+                <i class="fa fa-shopping-cart" title="{{LNG.shop | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.shop.value">
               </div>   
               <!-- Park -->
               <div class="other-checkbox">
-                <i class="fa fa-tree" title="{{LNG.park | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.park">
+                <i class="fa fa-tree" title="{{LNG.park | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.park.value">
               </div>   
               <!-- School -->
               <div class="other-checkbox">
-                <i class="fa fa-graduation-cap" title="{{LNG.school | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.school">
+                <i class="fa fa-graduation-cap" title="{{LNG.school | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.school.value">
               </div>   
               <!-- Day Care -->
               <div class="other-checkbox">
-                <i class="fa fa-child" title="{{LNG.day_care | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.daycare">
+                <i class="fa fa-child" title="{{LNG.day_care | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.daycare.value">
               </div>  
               <!-- Furniture -->
               <div class="other-checkbox">
-                <i class="fa fa-hotel" title="{{LNG.furniture | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.furniture">
+                <i class="fa fa-hotel" title="{{LNG.furniture | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.furniture.value">
               </div>   
               <!-- Electronics -->
               <div class="other-checkbox">
-                <i class="fa fa-television" title="{{LNG.electronics | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.electronics">
+                <i class="fa fa-television" title="{{LNG.electronics | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.electronics.value">
               </div>               
               <!-- Last Floor -->
               <div class="other-checkbox">
-                <i class="fa fa-building" title="{{LNG.last_floor | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.lastfloor">
+                <i class="fa fa-building" title="{{LNG.last_floor | capitalize}}"></i><input type="checkbox" ng-model="userFilter.filters.lastfloor.value">
               </div>                 
             </div>           
           </div> 
+          <!-- Rating -->
+          <div class="form-group no-bottom">
+            <span class="control-label custom-label col-md-3">{{LNG.stars | capitalize}}:</span>            
+            <!-- From -->
+            <div class="col-md-4 from-to"> 
+              <input type="text" class="form-control" ng-model="userFilter.filters.stars.min_value" placeholder="{{LNG.from}}">
+              <input-cleaner action="userFilter.filters.stars.min_value=''" style="right:25px"></input-cleaner>              
+            </div>
+            <!-- To -->
+            <div class="col-md-4">
+              <input type="text" class="form-control" ng-model="userFilter.filters.stars.max_value" placeholder="{{LNG.to}}">
+              <input-cleaner action="userFilter.filters.stars.max_value=''" style="right:25px"></input-cleaner>                                        
+            </div>
+          </div>          
           <!-- Images -->
           <div class="form-group no-bottom">
             <span class="control-label custom-label col-md-3">{{LNG.photos | capitalize}}:</span>
             <div class="col-md-9"> 
-              <input type="checkbox" style="display:block;margin-top:10px;" ng-model="userFilter.filters.images" placeholder="{{LNG.photos}}">
+              <input type="checkbox" style="display:block;margin-top:10px;" ng-model="userFilter.filters.images.value" placeholder="{{LNG.photos}}">
             </div>          
-          </div>           
+          </div>
+          <!-- Display -->
+          <div class="form-group no-bottom">
+            <span class="control-label custom-label col-md-3">{{LNG.display | capitalize}}:</span>
+            <div class="col-md-9"> 
+              <input type="checkbox" style="display:block;margin-top:10px;" ng-model="userFilter.filters.display.value" placeholder="{{LNG.display}}">
+            </div>          
+          </div>   
+          <!-- Modified -->
+          <!-- From -->
+          <div class="form-group no-bottom">
+            <span class="control-label custom-label col-md-3">{{LNG.modified | capitalize}}:</span>            
+            <div class="col-md-9"> 
+              <input type="text" class="form-control" ng-model="userFilter.filters.modified.min_value" placeholder="YYYY-MM-DD HH:dd:ss">
+              <input-cleaner action="userFilter.filters.modified.min_value=''" style="right:25px"></input-cleaner>
+            </div>
+          </div>
+          <!-- To -->          
+          <div class="form-group no-bottom">
+            <span class="control-label custom-label col-md-3 visible-md visible-lg"></span>                      
+            <div class="col-md-9">
+              <input type="text" class="form-control" ng-model="userFilter.filters.modified.max_value" placeholder="YYYY-MM-DD HH:dd:ss">
+              <input-cleaner action="userFilter.filters.modified.max_value=''" style="right:25px"></input-cleaner>
+            </div>
+          </div>                    
         </form>
       </div>
     </div>
@@ -332,6 +412,7 @@
           {{project.name | capitalize}}
         </div>
         <button class="btn btn-default panel-button" ng-click="showProjectDescription=!showProjectDescription"><i class="glyphicon glyphicon-resize-small"></i></button>
+        <button class="btn btn-default panel-button" ng-click="downloadReport()" ng-disabled="project.flats.length==0 ? true: false"><i class="fa fa-file-excel-o"></i></button>        
         <span class="badge owner-badge panel-button" style="right:-2px;top:-20px">{{newProject.shared ? LNG.shared : LNG.private}}</span>        
       </div>
       <div class="panel-body" ng-show="showProjectDescription">
@@ -421,4 +502,3 @@
     </tr>
   </table>
 </div>
-

@@ -33,30 +33,27 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
   $scope.userFilter = {
     'enabled': false,
     'filters': {     
-      'address': '',
-      'link': '',
-      'contact': '',
-      'callHistory': '',      
-      'phones': '',
-      'images': false,
-/*      
-      'price': '',
-      'buildYear': '',
-      'floor': '',
-      'stars': '',
-      'other': '',
-      'modified': '',
-      'display': '',
-*/      
-      'owner': false,
-      'subway': false,
-      'shop': false,
-      'park': false,
-      'school': false,
-      'daycare': false,
-      'furniture': false,
-      'electronics': false,
-      'lastfloor': false
+      'address': {'value': '', type: 'string'},
+      'link': {'value': '', type: 'string'},
+      'contact': {'value': '', type: 'bool'},
+      'callHistory': {'value': '', type: 'string'}, 
+      'phones': {'value': '', type: 'phones'},
+      'images': {'value': false, type: 'array'},    
+      'price': {'min_value': '', 'max_value': '', type: 'int'},
+      'buildYear': {'min_value': '', 'max_value': '', type: 'int'},
+      'floor': {'min_value': '', 'max_value': '', type: 'int'},
+      'stars': {'min_value': '', 'max_value': '', type: 'int'},      
+      'modified': {'min_value': '', 'max_value': '', type: 'date'},
+      'display': {'value': false, type: 'bool'},      
+      'owner': {'value': false, type: 'bool'},
+      'subway': {'value': false, type: 'bool'},
+      'shop': {'value': false, type: 'bool'},
+      'park': {'value': false, type: 'bool'},
+      'school': {'value': false, type: 'bool'},
+      'daycare': {'value': false, type: 'bool'},
+      'furniture': {'value': false, type: 'bool'},
+      'electronics': {'value': false, type: 'bool'},
+      'lastfloor': {'value': false, type: 'bool'}
     }
   };
   $scope.mode = 'create';
@@ -73,7 +70,7 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
   $scope.tmpPhone = '';
   $scope.error = '';
   $scope.scrollOnMap = false;
-  $scope.converterUsage = false;
+  $scope.converterUsage = false;    
 
   // Uploader initialisation  
   $scope.uploader = new FileUploader({url: values.api_url + 'images/uploadImage',
@@ -107,7 +104,7 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
   // Show editor panel 
   $scope.editorOn = function(flat) {  
     // Check if editor is already open
-    if ($scope.showEditor == true) {$scope.editorOff()};
+    if ($scope.showEditor == true) {$scope.editorOff()};    
     // Check whether it's editing or creation mode
     if (typeof flat === 'object') {$scope.mode = 'edit'};
     
@@ -503,10 +500,18 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
       $state.transitionTo('projects');
     }
   }  
+  
+  // Download report 
+  $scope.downloadReport = function() {
+    
+  };
  
   // Watching User Filter Change
   $scope.$watch('userFilter', function(n, o) {
     if ($scope.project != undefined) {
+      // Check if editor is already open
+      if ((n.enabled === true) && ($scope.showEditor == true)) {$scope.editorOff();} 
+      
       if ($scope.preSortProject == undefined) {
         $scope.preSortProject = $.extend(true,{}, $scope.project);
       } else {
@@ -515,6 +520,6 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
       $filter('userArrayFilter')($scope.project.flats, n);
       $scope.initMapAllFlats();
     }    
-  }, true);
+  }, true);  
   
 });

@@ -193,46 +193,68 @@ app.filter('shortText', function() {
 });
 
 app.filter('userArrayFilter', function() {
-  return function(flats, userFilter) {    
-    out = flats;
-    if ((userFilter.enabled) && (flats != undefined)) {      
+  return function(flats, userFilter) {
+    if ((userFilter.enabled) && (flats != undefined)) {
       angular.forEach(userFilter.filters, function(val, key) {
+        // Run thru all flats
         i = 0;
-        count = out.length
-        while (i<count) {
-          if (val != '') {
-            if (key === 'phones') {
+        flats_count = flats.length;
+        while (i<flats_count) {
+          switch (val.type) {
+            case 'string':
+              if ((!flats[i][key].match(val.value)) && (val.value != '')) {
+                flats.splice(flats.indexOf(flats[i]), 1);
+                i = i - 1;
+              }
+              break;
+            case 'int':
+              if ((val.min_value != '') && (val.max_value != '') && 
+                ((parseInt(flats[i][key]) < parseInt(val.min_value)) || 
+                (parseInt(flats[i][key]) > parseInt(val.max_value)))) {
+                  flats.splice(flats.indexOf(flats[i]), 1);
+                  i = i - 1;
+              }
+              break;
+            case 'bool':
+              if ((flats[i][key] != true) && (val.value == true)) {
+                flats.splice(flats.indexOf(flats[i]), 1);
+                i = i - 1;
+              }
+              break;
+            case 'array':
+              if ((flats[i][key].length === 0) && (val.value == true)) {
+                flats.splice(flats.indexOf(flats[i], 1));
+                i = i - 1;
+              }
+              break;
+            case 'phones':
               flag = true;
-              angular.forEach(out[i][key], function(phone) {
-                if (phone.phone.match(val)) {
+              angular.forEach(flats[i].phones, function(phone) {
+                if (phone.phone.match(val.value)) {
                   flag = false;
                 }
               });
-              if (flag) {
-                out.splice(out.indexOf(out[i]), 1);
+              if ((flag) && (val.value != '')) {
+                flats.splice(flats.indexOf(flats[i], 1));
                 i = i - 1;
-                count = count - 1;                
               }
-            } else if (key === 'images') {
-                if (out[i][key].length === 0) {
-                  out.splice(out.indexOf(out[i]), 1);
+              break;
+            case 'date':
+              if ((val.min_value != '') && (val.max_value != '') && (
+                (moment(flats[i][key].replace(' UTC',''),'YYYY-MM-DD HH:mm:ss') < moment(val.min_value,'YYYY-MM-DD HH:mm:ss')) || 
+                (moment(flats[i][key].replace(' UTC',''),'YYYY-MM-DD HH:mm:ss') > moment(val.max_value,'YYYY-MM-DD HH:mm:ss')))) {
+                  flats.splice(flats.indexOf(flats[i]), 1);
                   i = i - 1;
-                  count = count - 1;                   
-                }
-              } else {
-                if (!out[i][key].toString().match(val)) {
-                  out.splice(out.indexOf(out[i]), 1);
-                  i = i - 1;
-                  count = count - 1;
-                }
-            }
+              }
+              break;
           }
           i = i + 1;
+          flats_count = flats.length;
         }
-      });      
+      });
     }
-    return out;
-  }
+    return flats;
+  };
 });
 
 app.filter('sort', function() {
