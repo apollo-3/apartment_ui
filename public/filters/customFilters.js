@@ -19,8 +19,9 @@ app.filter('password', function(values) {
 app.filter('name', function(values) {
   return function(input) {
     result = false;
-    if ((input.length >= values.min_name_length) && 
-      (input.length <= values.max_name_length)) { result = true; }
+    if (((input.length >= values.min_name_length) && 
+      (input.length <= values.max_name_length)) ||
+      (input.length === 0)) { result = true; }
     return result;
   };
 });
@@ -37,9 +38,10 @@ app.filter('description', function(values) {
 app.filter('phone', function(values) {
   return function(input) {
     result = false;
-    if ((input.length >= values.min_phone_length) && 
+    if (((input.length >= values.min_phone_length) && 
       (input.length <= values.max_phone_length) &&
-      (input.match(/^\+?\d[\d\.-\s]+$/))) { result = true; }
+      (input.match(/^\+?\d[\d\.-\s]+$/))) ||
+      (input.length === 0)) { result = true; }
     return result;
   };
 });
@@ -58,8 +60,9 @@ app.filter('year', function() {
 app.filter('geoName', function(values) {
   return function(input) {
     result = false;
-    if ((input.length >= values.min_geoname_length) &&
-        (input.length <= values.max_geoname_length)) { result = true; }
+    if (((input.length >= values.min_geoname_length) &&
+       (input.length <= values.max_geoname_length)) ||
+       (input.length === 0))        { result = true; }
     return result;
   };
 });

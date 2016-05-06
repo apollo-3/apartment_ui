@@ -1,4 +1,4 @@
-app.controller('project', function($scope, auth, projects, $state, $cookies, values, FileUploader, images, gMaps, $window, languages, $filter) {
+app.controller('project', function($scope, auth, projects, $state, $cookies, values, FileUploader, images, gMaps, $window, languages, $filter, $http) {
   auth.checkSession();
 
   $scope.LNG = languages[languages.availableLng()]; 
@@ -176,7 +176,7 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
         flag = false;
       }
     });
-    if ((flag) && ($filter('phone')($scope.tmpPhone))) {
+    if ((flag) && ($filter('phone')($scope.tmpPhone)) && ($scope.tmpPhone != '')) {
       $scope.toEdit.phones.push({'phone': $scope.tmpPhone});
       $scope.tmpPhone = '';
     }
@@ -503,7 +503,13 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
   
   // Download report 
   $scope.downloadReport = function() {
-    
+    projects.downloadReport($scope.project.name, $scope.project.shared).then(function(res) {
+      if (res.data.hasOwnProperty('success')) {
+        $window.location.href = '/' + $cookies.get('mail') + '.csv';
+      } else {
+        swal($filter('capitalize')($scope.LNG.warning), res.data.error);
+      }
+    });
   };
  
   // Watching User Filter Change

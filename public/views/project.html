@@ -413,7 +413,7 @@
         </div>
         <button class="btn btn-default panel-button" ng-click="showProjectDescription=!showProjectDescription"><i class="glyphicon glyphicon-resize-small"></i></button>
         <button class="btn btn-default panel-button" ng-click="downloadReport()" ng-disabled="project.flats.length==0 ? true: false"><i class="fa fa-file-excel-o"></i></button>        
-        <span class="badge owner-badge panel-button" style="right:-2px;top:-20px">{{newProject.shared ? LNG.shared : LNG.private}}</span>        
+        <span class="badge owner-badge panel-button" style="right:-2px;top:-20px">{{project.shared ? LNG.shared : LNG.private}}</span>        
       </div>
       <div class="panel-body" ng-show="showProjectDescription">
         <div class="container-fluid">

@@ -6,7 +6,9 @@ app.controller('login', function($scope, auth, userData, $state, $filter, values
   $scope.mode = 'login';
   $scope.remember = true;
   $scope.error = '';
-  $scope.user = {'user':{'mail':'','password':''}};
+  $scope.user = {'user':{'mail':'','password':'',
+                         'name':'', 'birthYear': 0, 'phone': '', 'country':'',
+                         'state':'', 'city':''}};
   
   $scope.LNG = languages[languages.availableLng()];
   

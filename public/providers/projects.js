@@ -103,6 +103,16 @@ app.factory('projects', function($http, $cookies, values) {
     return flats;
   };
   
+  downloadReport = function(name, shared) {
+    return $http({
+      url: values.api_url + 'projects/downloadReport',
+      method: 'post',
+      data: 'defLang=' + values.def_lang + '&mail=' + $cookies.get('mail') + 
+      '&token=' + $cookies.get('token') + '&name=' + name + '&shared=' + shared,
+      headers: {'Content-Type':'application/x-www-form-urlencoded'}
+    });
+  };
+  
   return {
     getProjects: getProjects,
     setProjects: setProjects,
@@ -113,6 +123,7 @@ app.factory('projects', function($http, $cookies, values) {
     syncProject: syncProject,
     getAllUsers: getAllUsers,
     setAllUsers: setAllUsers,
-    reloadAllUsers: reloadAllUsers
+    reloadAllUsers: reloadAllUsers,
+    downloadReport: downloadReport
   };
 });

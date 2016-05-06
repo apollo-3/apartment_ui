@@ -6,6 +6,7 @@ mkdir -p build
 mkdir -p photos
 mkdir -p public/css
 mkdir -p public/fonts
+mkdir -p reports
 ./stop.sh > /dev/null 2>&1
 grunt
 nohup node index.js > logs/node.log 2>&1 &
