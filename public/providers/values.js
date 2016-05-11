@@ -24,21 +24,25 @@ app.factory('values', function() {
     max_price_length: 16,
     max_image_size: 5,
     max_images_allowed: 4,
+    max_length_log: 256,
     accounts: {
       standard: {
         projects: 2,
         flats: 10,
-        photos: 4
+        photos: 4,
+        logs: 1
       },
       advanced: {
         projects: 5,
         flats: 20,
-        photos: 5
+        photos: 5,
+        logs: 5        
       },
       premium: {
         projects: 30,
         flats: 30,
-        photos: 8
+        photos: 8,
+        logs: 1        
       }
     }
   };

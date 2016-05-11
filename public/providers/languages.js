@@ -33,6 +33,8 @@ app.factory('languages', function(values, $cookies) {
       'welcome': 'welcome',
       'projects': 'projects',
       'workplace': 'workplace',
+      'about': 'about',
+      'contacts': 'contacts',
       /* Projects page*/      
       'private': 'private',
       'shared': 'shared',
@@ -95,7 +97,37 @@ app.factory('languages', function(values, $cookies) {
       'disable': 'disable',
       'modified': 'modified',
       'from': 'from',
-      'to': 'to'
+      'to': 'to',
+      'log': 'log',
+      'enter_comment': 'Enter your comment',
+      /* About Page */      
+      'whats_for': 'what\'s for',
+      'whats_for_description': 'The goal of this project is to provide an easy, convinient, portable service for end users to manage estate offers on the market.',
+      'future_tenants': 'future tenants',
+      'future_owners': 'future owners',
+      'realtors': 'real estate agents',
+      'targets': 'targets',
+      'apartments': 'apartments',
+      'houses': 'house',
+      'country_houses': 'country house',
+      'other_property': 'any other kind of property',
+      'advantages': 'advantages',
+      'display_on_map': 'display on map',
+      'group_editing': 'group editing',
+      'contact_log': 'contact log',
+      'money_converter': 'money converter',
+      'call_history_tracker': 'call history tracker',
+      'bunch_of_filters': 'bunch of filters',
+      'cvs_reports': 'cvs reports',
+      'free_account': 'free standard account',
+      /* Contacts Page */
+      'contacts_description': 'The project is under development, so we are glad to hear any ideas from you. Please feel free to contact us on different questions.',
+      'premium_features': 'premium features',      
+      'possible_questions': 'possible questions',
+      'improvements': 'improvements',
+      'bug_reports': 'bug reports',
+      'business_offers': 'business offers'
+      
     },
     'ru': {
       /* Login page*/      
@@ -130,6 +162,8 @@ app.factory('languages', function(values, $cookies) {
       'welcome': 'привет',
       'projects': 'проекты',
       'workplace': 'кабинет',
+      'about': 'о проекте',
+      'contacts': 'контакты', 
       /* Projects page*/      
       'private': 'приватный',
       'shared': 'общий',
@@ -192,13 +226,43 @@ app.factory('languages', function(values, $cookies) {
       'disable': 'выключить',
       'modified': 'изменен',
       'from': 'с',
-      'to': 'по'  
+      'to': 'по',
+      'log': 'журнал',
+      'enter_comment': 'Введите комментарий', 
+      /* About Page */      
+      'whats_for': 'для чего',
+      'whats_for_description': 'Цель проекта - предоставить легкий, удобный, мобильный сервис по управлению предложениями недвижимости на рынке для пользователей.',
+      'future_tenants': 'будущие арендаторы',
+      'future_owners': 'будущие владельцы',
+      'realtors': 'агенты по недвижимости',
+      'targets': 'цели',
+      'apartments': 'квартиры',
+      'houses': 'дома',
+      'country_houses': 'дачи',
+      'other_property': 'любая другая недвижимость',
+      'advantages': 'преимущества',
+      'display_on_map': 'отображение на карте',
+      'group_editing': 'групповое редактирование',
+      'contact_log': 'журнал переговоров',
+      'money_converter': 'конвертер валюты',
+      'call_history_tracker': 'отслеживание звонков',
+      'bunch_of_filters': 'набор фильтров',
+      'cvs_reports': 'cvs отчеты',
+      'free_account': 'бесплатный стандартный аккаунт',
+      /* Contacts Page */
+      'contacts_description': 'Проект находится в стадии разработки, поэтому мы рады узнать ваше мнение и идеи. Вы можете связаться с нами по разным вопросам.',
+      'possible_questions': 'возможные вопросы',
+      'premium_features': 'премиум возможности',
+      'improvements': 'улучшения',
+      'bug_reports': 'найденные ошибки',
+      'business_offers': 'бизнес предложения'
     },
     availableLng: function() {
       lan = values.def_lang;
       if ($cookies.get('lang') !== undefined) {
         lan = $cookies.get('lang');
       }
+      if (['en', 'ru'].indexOf(lan) === -1) {lan = 'en';}
       return lan;
     }
   }

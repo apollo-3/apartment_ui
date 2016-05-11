@@ -11,7 +11,7 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
                           shop: false, park: false,
                           school: false, daycare: false,
                           furniture: false, electronics: false,
-                          lastfloor: false                          
+                          lastfloor: false, logs: []                       
                          };
   $scope.toEdit = jQuery.extend(true,{},$scope.defaultToEdit);
   $scope.tableHeads = {
@@ -67,10 +67,12 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
   $scope.showProjectDescription = false;
   $scope.showFilterPanel = false;
   $scope.showEditor = false;
+  $scope.showLog = false;
   $scope.tmpPhone = '';
   $scope.error = '';
   $scope.scrollOnMap = false;
-  $scope.converterUsage = false;    
+  $scope.converterUsage = false;
+  $scope.commentFlat = {};
 
   // Uploader initialisation  
   $scope.uploader = new FileUploader({url: values.api_url + 'images/uploadImage',
@@ -500,6 +502,65 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
       $state.transitionTo('projects');
     }
   }  
+  
+  // Show logs
+  $scope.logsOn = function(flat) {
+    $scope.commentFlat = flat;
+    $scope.showLog = true;
+  };
+  
+  // Remove From Logs
+  $scope.delFromLog = function(comment) {
+    $scope.commentFlat.logs.splice($scope.commentFlat.logs.indexOf(comment), 1);
+    $scope.commentFlat.modified = 'update';
+    projects.saveProject($scope.project).then(function(res) {
+      if (res.data.hasOwnProperty('success')) {        
+        flatIndex = $scope.project.flats.indexOf($scope.commentFlat);
+        $scope.project = res.data.project;
+        $scope.project.was_shared = $scope.project.shared;
+        $scope.commentFlat = $scope.project.flats[flatIndex];
+        $scope.tmpProject = jQuery.extend(true,{},$scope.project);
+        $scope.preSortProject = jQuery.extend(true,{},$scope.project);
+        projects.syncProject($scope.project);        
+      }
+    });
+  };
+  
+  // Add To Log
+  $scope.addToLog = function() {
+    // User account level check    
+    if ($scope.commentFlat.logs.length >= values.accounts[userData.getData().account].logs) {
+        swal($filter('capitalize')($scope.LNG.warning), $scope.LNG.account_limit + '\"' +userData.getData().account + '\".');      
+      return
+    }
+    swal({
+      title: "",
+      text: $scope.LNG.enter_comment + ':',
+      type: "input",
+      showCancelButton: true,
+      closeOnConfirm: true,
+      animation: "slide-from-top"
+    },
+    function(inputValue) {
+      if ((inputValue === false) || (inputValue === "") || (inputValue.length > values.max_length_log)) { 
+        return false;
+      } else {
+        $scope.commentFlat.logs.push({'creationDate': new moment().format('YYYY-MM-D HH:mm:ss'), 'author': $cookies.get('mail'), 'comment': inputValue});
+        $scope.commentFlat.modified = 'update';        
+        projects.saveProject($scope.project).then(function(res) {
+          if (res.data.hasOwnProperty('success')) {
+            flatIndex = $scope.project.flats.indexOf($scope.commentFlat);            
+            $scope.project = res.data.project;
+            $scope.project.was_shared = $scope.project.shared;            
+            $scope.commentFlat = $scope.project.flats[flatIndex];            
+            $scope.tmpProject = jQuery.extend(true,{},$scope.project);
+            $scope.preSortProject = jQuery.extend(true,{},$scope.project);
+            projects.syncProject($scope.project);  
+          }
+        });
+      }
+    });  
+  };
   
   // Download report 
   $scope.downloadReport = function() {

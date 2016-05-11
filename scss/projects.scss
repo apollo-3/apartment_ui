@@ -1,32 +1,3 @@
-div.projects {
-  margin: 10px;
-  
-  div.new_project_form {
-    background-color: orange;
-    margin: 10px 0px 10px 0px;    
-    padding: 5px;
-    
-    div span b {
-      cursor: pointer;
-    }
-  }
-  
-  div.projects_form {
-    margin: 10px 0px 10px 0px;
-    padding: 5px;
-    background-color: lightgreen;
-    
-    div b.project_name {
-      color: blue;
-      cursor: pointer;
-    }
-    
-    button {
-      cursor: pointer;
-    }
-  }
-}
-
 .desc-label {
   color: #2A5BB7;
   margin-right: 5px;
@@ -64,7 +35,7 @@ div.projects {
 .project-header-btns {
   float: right;
   position: relative;
-  top: -25px;
+  top: -28px;
 }
 
 .custom-label {

@@ -29,6 +29,34 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
       }    
     })    
+    .state('about', {
+      url: "/about",
+      views: {
+        "main": {
+          templateUrl: "views/about.html",
+          controller: "about"
+        },
+        
+        "top": {
+          templateUrl: "views/top.html",
+          controller: "top"
+        }
+      }
+    })
+    .state('contacts', {
+      url: "/contacts",
+      views: {
+        "main": {
+          templateUrl: "views/contacts.html",
+          controller: "contacts"
+        },
+        
+        "top": {
+          templateUrl: "views/top.html",
+          controller: "top"
+        }
+      }
+    })    
     .state('projects', {
       url: "/projects",
       views: {

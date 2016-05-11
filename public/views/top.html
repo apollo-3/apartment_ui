@@ -9,8 +9,12 @@
     
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav" ng-show="isLogged">
+        <!--
         <li ng-class="{active: routerState.current.name=='workplace'}"><a ui-sref="workplace">{{LNG.workplace | capitalize}}</a></li>
+        -->
         <li ng-class="{active: routerState.current.name=='projects'}"><a ui-sref="projects">{{LNG.projects | capitalize}}</a></li>
+        <li ng-class="{active: routerState.current.name=='about'}"><a ui-sref="about">{{LNG.about | capitalize}}</a></li>
+        <li ng-class="{active: routerState.current.name=='contacts'}"><a ui-sref="contacts">{{LNG.contacts | capitalize}}</a></li>        
       </ul>
       <p class="navbar-text navbar-right" ng-show="isLogged">
         <a ng-href="#" ng-click='logout()'>{{LNG.sign_out | capitalize}}</a>

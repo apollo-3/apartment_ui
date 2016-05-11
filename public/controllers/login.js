@@ -20,7 +20,9 @@ app.controller('login', function($scope, auth, userData, $state, $filter, values
         if (res.data.hasOwnProperty('success')) {   
           userData.setData(res.data.user);
           auth.setCookies($scope.remember, $scope.user.user.mail, res.data.token, res.data.user.lang);
-          $state.transitionTo('workplace');
+          // Change to workplace when it is implemented
+          // $state.transitionTo('workplace');
+          $state.transitionTo('projects');
         } else {
           $scope.error = res.data.error;
         }
@@ -37,7 +39,7 @@ app.controller('login', function($scope, auth, userData, $state, $filter, values
           $scope.error = res.data.error;
         } else {
           alert(res.data.success + '\n' + res.data.verifing_url);
-          $state.transitionTo('workplace');
+          $state.transitionTo('login');
         }      
       });
     }

@@ -96,6 +96,14 @@
   cursor: pointer;
 }
 
+.logs {
+  position: fixed;
+  top: 60px;
+  z-index: 2;
+  width: 300px;
+  opacity: 0.9;
+}
+
 @media only screen and (max-width: 992px) {
   .from-to {
     margin-bottom: 10px;

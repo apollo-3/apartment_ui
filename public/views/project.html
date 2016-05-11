@@ -10,6 +10,24 @@
   </button>      
 </div>
 
+<!-- Logs Panel -->
+<div class="logs panel panel-default" ng-show="showLog">
+  <div class="panel-heading">{{LNG.log | capitalize}}
+    <button class="btn btn-default" style="position:absolute;top:3px;right:46px;" ng-click="addToLog()"><i class="fa fa-plus"></i></button>  
+    <button class="btn btn-default" style="position:absolute;top:3px;right:5px;" ng-click="showLog=false;"><i class="fa fa-close"></i></button>
+  </div>
+  <div class="panel-body" style="overflow-y:scroll;height:400px;">
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="log in commentFlat.logs">
+        <button class="btn btn-default btn-xs" style="position:absolute;top:5px;left:5px;font-size:11px;" ng-click="delFromLog(log)"><i class="fa fa-trash"></i></button>
+        <p style="font-size:11px;font-weight:bold;padding-left:20px;padding-top:5px;">{{log.author}}</p>
+        <span style="position:absolute;top:1px;right:5px;font-size:11px;">{{log.creationDate}}</span>
+        <span style="font-size:12px;5px;">{{log.comment}}</span>
+      </li> 
+    </ul>
+  </div>
+</div>
+
 <div class="container-fluid">
   <!-- Editor panel -->
   <div class="col-md-4" ng-show="showEditor" id="editor">
@@ -496,9 +514,10 @@
       <th ng-show="tableHeads['images'].display" class="flat-cell flat-cell-center"><minigallery images="flat.images"></minigallery></th>
       <!-- actions -->
       <th class="flat-cell flat-cell-center">
-        <button class="btn btn-success" style="margin-bottom:5px;" ng-click="editorOn(flat);" ng-disabled="toEdit==flat"><i class="fa fa-pencil"></i></button>
-        <button class="btn btn-danger" style="margin-bottom:5px;" ng-click="del(flat)" ng-disabled="toEdit==flat"><i class="fa fa-trash"></i></button>
-      </th>      
+        <button class="btn btn-success btn-sm" style="margin-bottom:5px;" ng-click="editorOn(flat);" ng-disabled="toEdit==flat"><i class="fa fa-pencil"></i></button>
+        <button class="btn btn-warning btn-sm" style="margin-bottom:5px;" ng-click="logsOn(flat)" ng-disabled="toEdit==flat"><i class="fa fa-comment"></i></button>        
+        <button class="btn btn-danger btn-sm" style="margin-bottom:5px;" ng-click="del(flat)" ng-disabled="toEdit==flat"><i class="fa fa-trash"></i></button>
+      </th>
     </tr>
-  </table>
+  </table>      
 </div>
