@@ -47,7 +47,7 @@ app.factory('auth', function($cookies, $http, $state, values, projects) {
       } else if ((mail !== undefined) || (token !== undefined)) {
         redirectPages = ['login'];
         if ((redirectPages.indexOf($state.current.name)!=-1)) {
-          // Change to workplace when it is implemented (another block is in "Login" controller)
+          // Change to workplace when it is implemented (another block is in "Login" and "Settings" controller)
           // $state.transitionTo('workplace');          
           $state.transitionTo('projects');
         }

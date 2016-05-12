@@ -36,13 +36,13 @@ app.factory('values', function() {
         projects: 5,
         flats: 20,
         photos: 5,
-        logs: 5        
+        logs: 10        
       },
       premium: {
         projects: 30,
         flats: 30,
         photos: 8,
-        logs: 1        
+        logs: 20   
       }
     }
   };

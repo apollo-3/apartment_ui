@@ -92,7 +92,9 @@ app.controller('settings', function($scope, $cookies, auth, userData, $state, la
         $cookies.put('lang', res.data.user.lang, {'expires': expires_in});
         
         userData.setData(res.data.user);
-        $state.transitionTo('workplace');
+        // Change to workplace when it is implemented        
+        // $state.transitionTo('workplace');        
+        $state.transitionTo('projects');
       } else {
         $scope.error = res.data.error;
       }
@@ -101,7 +103,9 @@ app.controller('settings', function($scope, $cookies, auth, userData, $state, la
   
   $scope.cancel = function() {
     $scope.user = {user: jQuery.extend(true,{},userData.getData())};
-    $state.transitionTo('workplace');
+    // Change to workplace when it is implemented    
+    // $state.transitionTo('workplace');   
+    $state.transitionTo('projects');    
   };
   
   $scope.customFilter = function(name) {
