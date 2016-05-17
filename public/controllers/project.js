@@ -348,7 +348,7 @@ app.controller('project', function($scope, auth, projects, $state, $cookies, val
     // Show only those flats that have display options equal to true
     angular.forEach($scope.project.flats, function(flat) {
       if (flat.display) {
-        gMaps.addSimpleMarker(flat.position, flat.callHistory, flat);  
+        gMaps.addSimpleMarker(flat.position, flat.callHistory, flat);          
       }
     });      
     // Set the best view

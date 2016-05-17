@@ -79,7 +79,10 @@ app.factory('gMaps', function($window, $q, values) {
       map.fitBounds(bounds);
       map.setCenter(bounds.getCenter());      
       if (markers.length == 1) {
-        map.setZoom(values.map_zoom);
+        // Workaround for incorrect zooming when you load the page in projects tab
+        setInterval(function() {
+          map.setZoom(values.map_zoom);
+        }, 100);
       }
     }  
   };
