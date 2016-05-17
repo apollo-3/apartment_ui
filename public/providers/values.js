@@ -1,6 +1,6 @@
 app.factory('values', function() {
   var values = {
-    api_url: 'http://192.168.33.123:3000/api/',
+    api_url: 'https://192.168.33.123/api/',
     def_lang : (navigator.language || navigator.userLanguage).split('-')[0],
     max_images: 4,
     map_zoom: 11,
