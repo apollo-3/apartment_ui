@@ -20,6 +20,7 @@ app.controller('projects', function($scope, auth, projects, $state, $cookies, la
     projects.reloadProjects().then(function(res) {
       if (res.data.hasOwnProperty('error')) {
         swal($filter('capitalize')($scope.LNG.error), res.data.error);
+        auth.logout();
       } else {
         $scope.projects = res.data;
         angular.forEach($scope.projects, function(item) {

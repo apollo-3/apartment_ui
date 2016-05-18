@@ -80,7 +80,7 @@ app.factory('gMaps', function($window, $q, values) {
       map.setCenter(bounds.getCenter());      
       if (markers.length == 1) {
         // Workaround for incorrect zooming when you load the page in projects tab
-        setInterval(function() {
+        setTimeout(function() {
           map.setZoom(values.map_zoom);
         }, 100);
       }
@@ -140,16 +140,16 @@ app.factory('gMaps', function($window, $q, values) {
   };
   
   getIcon = function(phoneHistory) {
-    icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+    icon = 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
     switch (phoneHistory) {
       case 'called':
-        icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+        icon = 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
         break;
       case 'callBack':
-        icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';      
+        icon = 'https://maps.google.com/mapfiles/ms/icons/green-dot.png';      
         break;
       case 'toCall':
-        icon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';      
+        icon = 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png';      
         break;
     }  
     return icon;

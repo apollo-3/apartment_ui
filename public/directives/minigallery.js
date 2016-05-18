@@ -6,7 +6,7 @@ app.directive('minigallery', function() {
     },
     template: '<div style="position:relative;">' +
                 '<div class="big-photo" ng-show="big">' +
-                  '<div style="position:absolute;right:5px;top:5px;">' +
+                  '<div style="position:absolute;right:40px;top:5px;">' +
                     '<span style="padding-right:10px;font-weight:bold;color:white;">{{current + 1}}/{{images.length}}</span>' + 
                     '<button class="btn btn-success" ng-click="prev()"><i class="fa fa-angle-left"></i></button>&nbsp;' +                  
                     '<button class="btn btn-success" ng-click="next()"><i class="fa fa-angle-right"></i></button>&nbsp;' +
