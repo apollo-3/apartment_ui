@@ -38,8 +38,10 @@ app.controller('login', function($scope, auth, userData, $state, $filter, values
         if (res.data.hasOwnProperty('error')) {
           $scope.error = res.data.error;
         } else {
-          alert(res.data.success + '\n' + res.data.verifing_url);
-          $state.transitionTo('login');
+          // Development part without sending an email
+          // alert(res.data.success + '\n' + res.data.verifing_url);
+          $scope.mode = 'login';          
+          swal($filter('capitalize')($scope.LNG.info), $scope.LNG.mail_confirmation);          
         }      
       });
     }

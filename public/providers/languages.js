@@ -10,6 +10,7 @@ app.factory('languages', function(values, $cookies) {
       'remember': 'remember',
       'sign_up': 'sign up',
       'reset': 'reset',
+      'mail_confirmation': 'Confirmation message has been sent to your email. Please follow instructuions in it',      
       'no_account': 'Don\'t have an account',
       /* Settings page*/
       'settings': 'settings',
@@ -140,6 +141,7 @@ app.factory('languages', function(values, $cookies) {
       'sign_up': 'зарегистрироваться',
       'reset': 'сбросить',
       'no_account': 'нету аккаунта',
+      'mail_confirmation': 'На вашу почту было отправлено сообщение с указаниями, как активировать ваш аккаунт',      
       /* Settings page*/      
       'settings': 'настройки',
       'del_account': 'удалить аккаунт',
