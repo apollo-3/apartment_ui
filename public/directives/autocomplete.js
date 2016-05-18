@@ -15,8 +15,10 @@ app.directive('autocomplete', function($filter, projects) {
         case 'users': 
           if (projects.getAllUsers().length === 0) {
             projects.reloadAllUsers().then(function(res) {
-              scope.org = res.data.users;
-              projects.setAllUsers(res.data.users);
+              if (res.hasOwnProperty('success')) {
+                scope.org = res.data.users;
+                projects.setAllUsers(res.data.users);
+              }
             });
           } else {
             scope.org = projects.getAllUsers();

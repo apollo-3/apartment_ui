@@ -1,9 +1,9 @@
 app.factory('auth', function($cookies, $http, $state, values, projects) {
   
   cleanCookies = function() {
-    $cookies.remove('mail');
-    $cookies.remove('token');     
-    $cookies.remove('lang');          
+    $cookies.put('mail', '');
+    $cookies.put('token', '');     
+    $cookies.put('lang', '');          
   }
 
   var session = {
@@ -39,7 +39,7 @@ app.factory('auth', function($cookies, $http, $state, values, projects) {
     checkSession: function() {
       mail = $cookies.get('mail');
       token = $cookies.get('token');   
-      if ((mail === undefined) || (token === undefined)) {
+      if ((mail === undefined) || (token === undefined) || (mail === '') || (token === '')) {
         exceptions = [];
         if (exceptions.indexOf($state.current.name)==-1) {
           $state.transitionTo('login');
@@ -56,7 +56,8 @@ app.factory('auth', function($cookies, $http, $state, values, projects) {
     // If user is logged in check
     isLogged: function() {
       ifLogged = false;
-      if (($cookies.get('mail') !== undefined) && ($cookies.get('token') !== undefined)) {
+      if (($cookies.get('mail') !== undefined) && ($cookies.get('token') !== undefined) &&
+      ($cookies.get('mail') !== '') && ($cookies.get('token') !== '')) {
         ifLogged = true;
       }
       return ifLogged;
