@@ -1,9 +1,9 @@
 app.factory('auth', function($cookies, $http, $state, values, projects) {
   
   cleanCookies = function() {
-    $cookies.put('mail', '');
-    $cookies.put('token', '');     
-    $cookies.put('lang', '');          
+    $cookies.remove('mail');
+    $cookies.remove('token');     
+    $cookies.remove('lang');          
   }
 
   var session = {
