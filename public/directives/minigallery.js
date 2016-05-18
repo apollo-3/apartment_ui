@@ -12,7 +12,7 @@ app.directive('minigallery', function() {
                     '<button class="btn btn-success" ng-click="next()"><i class="fa fa-angle-right"></i></button>&nbsp;' +
                     '<button class="btn btn-warning" ng-click="close()"><i class="fa fa-times"></i></button>' +
                   '</div>' +
-                  '<img ng-src="{{images[current].img}}" width="400px" height="400px"></img>' +
+                  '<img ng-src="{{images[current].img}}" width="100%" height="100%"></img>' +
                 '</div>' +
                 '<img ng-src="{{images[0].img}}" style="cursor:pointer;" width="100px" height="100px" ng-mouseover="hover()" ng-mouseleave="leave()" ng-click="open()"></img>' +                                
                 '<div style="position:absolute;left:-294px;top:0px;z-index:2;" ng-show="thumbs">' +
