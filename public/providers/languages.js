@@ -127,7 +127,8 @@ app.factory('languages', function(values, $cookies) {
       'possible_questions': 'possible questions',
       'improvements': 'improvements',
       'bug_reports': 'bug reports',
-      'business_offers': 'business offers'
+      'business_offers': 'business offers',
+      'we_have_users' : 'people use our service'      
       
     },
     'ru': {
@@ -257,7 +258,8 @@ app.factory('languages', function(values, $cookies) {
       'premium_features': 'премиум возможности',
       'improvements': 'улучшения',
       'bug_reports': 'найденные ошибки',
-      'business_offers': 'бизнес предложения'
+      'business_offers': 'бизнес предложения',
+      'we_have_users' : 'человек пользуется нашим сервисом'
     },
     availableLng: function() {
       lan = values.def_lang;
