@@ -1,6 +1,10 @@
 app.factory('languages', function(values, $cookies) {
   LNGS = {
     'en': {
+      /* Meta tags */
+      'meta_title': 'Estate search service',
+      "meta_keywords": 'search find buy rent estate apartments service',
+      'meta_description': 'Real estate offers management system. It eases routine work and helps to find the best option that fits your requirements on real estate market',
       /* Login page*/
       'sign_in': 'sign in',
       'forgot_password': 'forgot password',
@@ -132,6 +136,10 @@ app.factory('languages', function(values, $cookies) {
       
     },
     'ru': {
+      /* Meta tags */
+      'meta_title': 'Сервис поиска квартир и недвижимости',      
+      'meta_keywords': 'поиск аренда купить снять квартира недвижимость сервис',
+      'meta_description': 'Сервис для управления найденными на рынке предложениями о недвижимости. Он призван упростить рутинную работу и подобрать лучший вариант, подходящий именно вам',
       /* Login page*/      
       'sign_in': 'войти',
       'forgot_password': 'забыли пароль',
@@ -180,7 +188,7 @@ app.factory('languages', function(values, $cookies) {
       'users': 'пользватели',
       'friend': 'друг',
       'rate': 'курс',
-      'no_projects': 'У вас пока не ни одного проекта. Создайте первый сейчас!',
+      'no_projects': 'У вас пока нет ни одного проекта. Создайте первый сейчас!',
       'warning': 'внимание',
       'are_you_sure_delete': 'Вы уверены, что хотите удалить',
       'sort': 'сортировать',
