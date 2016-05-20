@@ -1,9 +1,9 @@
 app.factory('auth', function($cookies, $http, $state, values, projects) {
   
-  cleanCookies = function() {
-    $cookies.remove('mail');
-    $cookies.remove('token');     
-    $cookies.remove('lang');          
+  cleanCookies = function() {    
+    $cookies.remove('mail', {path:'/'});
+    $cookies.remove('token', {path:'/'});     
+    $cookies.remove('lang', {path:'/'});
   }
 
   var session = {
@@ -28,7 +28,7 @@ app.factory('auth', function($cookies, $http, $state, values, projects) {
         data: {'user':{'mail': $cookies.get('mail'), 'token': $cookies.get('token'), 'defLang' : values.def_lang}},
         headers: {'Content-Type': 'application/json'}
       }).then(function(res) { 
-          cleanCookies();        
+          cleanCookies();
           projects.setProjects([]);
           projects.setAllUsers([]);
           $state.transitionTo('login');
@@ -115,13 +115,13 @@ app.factory('auth', function($cookies, $http, $state, values, projects) {
       var expires_in = new Date();
       expires_in.setDate(expires_in.getDate() + 365);
       if (remember === true) {
-        $cookies.put('mail', mail, {'expires': expires_in});
-        $cookies.put('token', token, {'expires': expires_in});  
-        $cookies.put('lang', lang, {'expires': expires_in}); 
+        $cookies.put('mail', mail, {'expires': expires_in, path:'/'});
+        $cookies.put('token', token, {'expires': expires_in, path:'/'});  
+        $cookies.put('lang', lang, {'expires': expires_in, path:'/'}); 
       } else {
-        $cookies.put('mail', mail);
-        $cookies.put('token', token);    
-        $cookies.put('lang', lang);         
+        $cookies.put('mail', mail, {path:'/'});
+        $cookies.put('token', token, {path:'/'});    
+        $cookies.put('lang', lang, {path:'/'});         
       }      
     },
     // Clean Cookies

@@ -89,7 +89,7 @@ app.controller('settings', function($scope, $cookies, auth, userData, $state, la
       if (res.data.hasOwnProperty('success')) {       
         var expires_in = new Date();
         expires_in.setDate(expires_in.getDate() + 365);
-        $cookies.put('lang', res.data.user.lang, {'expires': expires_in});
+        $cookies.put('lang', res.data.user.lang, {'expires': expires_in, path: '/'});
         
         userData.setData(res.data.user);
         // Change to workplace when it is implemented        
