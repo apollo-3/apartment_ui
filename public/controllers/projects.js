@@ -19,7 +19,9 @@ app.controller('projects', function($scope, auth, projects, $state, $cookies, la
   if (projects.getProjects().length === 0) {
     projects.reloadProjects().then(function(res) {
       if (res.data.hasOwnProperty('error')) {
-        swal($filter('capitalize')($scope.LNG.error), res.data.error);
+        // Worth keeping commented for production 
+        // to prevent annoying messageing about expired token
+        // swal($filter('capitalize')($scope.LNG.error), res.data.error);
         auth.logout();
       } else {
         $scope.projects = res.data;
