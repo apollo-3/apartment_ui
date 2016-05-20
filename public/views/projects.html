@@ -75,6 +75,7 @@
         <div class="project-header-btns">        
           <button class="btn btn-default" ng-click="delProject(project)"><span class="glyphicon glyphicon-trash"></span></button>
           <button class="btn btn-default" ng-click="editProject(project)"><span class="glyphicon glyphicon-pencil"></span></button>
+          <button class="btn btn-default" ng-click="goToProject(project)"><span class="fa fa-folder-open-o"></span></button>          
         </div>
         <span class="badge owner-badge">{{project.shared ? LNG.shared : LNG.private}}</span>                         
       </div>

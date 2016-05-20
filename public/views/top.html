@@ -8,11 +8,12 @@
     </div>    
     
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav" ng-show="isLogged">
+      <ul class="nav navbar-nav">
         <!--
         <li ng-class="{active: routerState.current.name=='workplace'}"><a ui-sref="workplace">{{LNG.workplace | capitalize}}</a></li>
         -->
-        <li ng-class="{active: routerState.current.name=='projects'}"><a ui-sref="projects">{{LNG.projects | capitalize}}</a></li>
+        <li ng-class="{active: routerState.current.name=='login'}" ng-hide="isLogged"><a ui-sref="login">{{LNG.sign_in | capitalize}}</a></li>        
+        <li ng-class="{active: routerState.current.name=='projects'}" ng-show="isLogged"><a ui-sref="projects">{{LNG.projects | capitalize}}</a></li>
         <li ng-class="{active: routerState.current.name=='about'}"><a ui-sref="about">{{LNG.about | capitalize}}</a></li>
         <li ng-class="{active: routerState.current.name=='contacts'}"><a ui-sref="contacts">{{LNG.contacts | capitalize}}</a></li>        
       </ul>

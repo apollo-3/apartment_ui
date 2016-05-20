@@ -15,7 +15,7 @@ app.directive('autocomplete', function($filter, projects) {
         case 'users': 
           if (projects.getAllUsers().length === 0) {
             projects.reloadAllUsers().then(function(res) {
-              if (res.hasOwnProperty('success')) {
+              if (res.data.hasOwnProperty('success')) {
                 scope.org = res.data.users;
                 projects.setAllUsers(res.data.users);
               }

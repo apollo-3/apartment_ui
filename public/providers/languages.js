@@ -149,7 +149,7 @@ app.factory('languages', function(values, $cookies) {
       'remember': 'запомнить',
       'sign_up': 'зарегистрироваться',
       'reset': 'сбросить',
-      'no_account': 'нету аккаунта',
+      'no_account': 'Нет аккаунта',
       'mail_confirmation': 'На вашу почту было отправлено сообщение с указаниями, как активировать ваш аккаунт',      
       /* Settings page*/      
       'settings': 'настройки',

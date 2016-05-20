@@ -9,7 +9,10 @@
 .control-buttons {
   position: fixed;
   width: 75px;
-  right: -30px;
+  right: -30px;  
+  @media only screen and (max-width: 992px) {  
+    right: -10px;
+  }
   top: 25%;
   z-index: 3; 
   

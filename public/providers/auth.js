@@ -40,7 +40,7 @@ app.factory('auth', function($cookies, $http, $state, values, projects) {
       mail = $cookies.get('mail');
       token = $cookies.get('token');   
       if ((mail === undefined) || (token === undefined) || (mail === '') || (token === '')) {
-        exceptions = [];
+        exceptions = ['about', 'contacts'];
         if (exceptions.indexOf($state.current.name)==-1) {
           $state.transitionTo('login');
         }
