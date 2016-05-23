@@ -82,7 +82,7 @@ app.factory('gMaps', function($window, $q, values) {
         // Workaround for incorrect zooming when you load the page in projects tab
         setTimeout(function() {
           map.setZoom(values.map_zoom);
-        }, 200);
+        }, 500);
       }
     }  
   };
