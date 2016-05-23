@@ -54,7 +54,10 @@ app.controller('login', function($scope, auth, userData, $state, $filter, values
         if (res.data.hasOwnProperty('error')) {
           $scope.error = res.data.error;
         } else {
-          window.prompt(res.data.success, res.data.reset_url);
+          // Development part without sending an email          
+          //window.prompt(res.data.success, res.data.reset_url);
+          swal($filter('capitalize')($scope.LNG.info), $scope.LNG.after_reset_msg);
+          $scope.mode = 'login';
           $state.transitionTo('login');
         }        
       });
