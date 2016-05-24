@@ -29,6 +29,7 @@ app.factory('auth', function($cookies, $http, $state, values, projects) {
         headers: {'Content-Type': 'application/json'}
       }).then(function(res) { 
           cleanCookies();
+          userData.setData({});
           projects.setProjects([]);
           projects.setAllUsers([]);
           $state.transitionTo('login');

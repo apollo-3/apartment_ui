@@ -1,11 +1,13 @@
-app.controller('settings', function($scope, $cookies, auth, userData, $state, languages, $filter) {
+app.controller('settings', function($scope, $cookies, auth, userData, $state, languages, $filter, projects) {
   auth.checkSession(); 
   hideMap();  
   
   if (jQuery.isEmptyObject(userData.getData())) {
     userData.reloadData().then(function(res) {
       if (res.data.hasOwnProperty('error')) {
-        alert(res.data.error);
+        // Ignore annoying errors on expired token
+        // swal('Error', res.data.error);
+        $state.transitionTo('login');
       } else {
         userData.setData(res.data.user);
         $scope.user = {user: jQuery.extend(true, {}, res.data.user)};
@@ -59,6 +61,8 @@ app.controller('settings', function($scope, $cookies, auth, userData, $state, la
             $scope.error = res.data.error;
           } else {
             auth.cleanCookies();
+            userData.setData({});
+            projects.setProjects([]);            
             $state.transitionTo('login');
           }
         });

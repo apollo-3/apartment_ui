@@ -43,7 +43,13 @@ app.factory('values', function() {
         flats: 30,
         photos: 8,
         logs: 20   
-      }
+      },
+      promo: {
+        projects: 3,
+        flats: 15,
+        photos: 5,
+        logs: 5
+      }      
     }
   };
   return values;
