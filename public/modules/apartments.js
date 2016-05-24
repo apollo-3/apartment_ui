@@ -1,4 +1,4 @@
-var app = angular.module('apartments',['ui.router','ngCookies','angularFileUpload']);
+var app = angular.module('apartments',['ui.router','ngCookies','angularFileUpload','720kb.socialshare']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/login");
@@ -13,6 +13,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
         "top": {
           templateUrl: "views/top.html",
           controller: "top"
+        },
+        "social": {
+          templateUrl: "views/social.html"
         }
       },
     })
@@ -26,6 +29,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
         "top": {
           templateUrl: "views/top.html",
           controller: "top"          
+        },
+        "social": {
+          templateUrl: "views/social.html"
         }
       }    
     })    
@@ -35,11 +41,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
         "main": {
           templateUrl: "views/about.html",
           controller: "about"
-        },
-        
+        },        
         "top": {
           templateUrl: "views/top.html",
           controller: "top"
+        },
+        "social": {
+          templateUrl: "views/social.html"
         }
       }
     })
@@ -49,11 +57,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
         "main": {
           templateUrl: "views/contacts.html",
           controller: "contacts"
-        },
-        
+        },        
         "top": {
           templateUrl: "views/top.html",
           controller: "top"
+        },
+        "social": {
+          templateUrl: "views/social.html"
         }
       }
     })    
@@ -67,6 +77,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
         "top": {
           templateUrl: "views/top.html",
           controller: "top"          
+        },
+        "social": {
+          templateUrl: "views/social.html"
         }
       }    
     })
