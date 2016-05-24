@@ -2,9 +2,9 @@ app.factory('languages', function(values, $cookies) {
   LNGS = {
     'en': {
       /* Meta tags */
-      'meta_title': 'Estate search service',
-      "meta_keywords": 'search find buy rent estate apartments service',
-      'meta_description': 'Real estate offers management system. It eases routine work and helps to find the best option that fits your requirements on real estate market',
+      'meta_title': 'Estate search service - buy or rent an apartment',
+      "meta_keywords": 'search find buy rent estate apartments apartment service agent',
+      'meta_description': 'Real estate offers management system. It eases routine work and helps to find the best option that fits your requirements on real estate market. Add, edit, save, share offers online, keep the log and be flexible with handy mobile interface.',
       /* Login page*/
       'sign_in': 'sign in',
       'forgot_password': 'forgot password',
@@ -138,9 +138,9 @@ app.factory('languages', function(values, $cookies) {
     },
     'ru': {
       /* Meta tags */
-      'meta_title': 'Сервис поиска квартир и недвижимости',      
-      'meta_keywords': 'поиск аренда купить снять квартира недвижимость сервис',
-      'meta_description': 'Сервис для управления найденными на рынке предложениями о недвижимости. Он призван упростить рутинную работу и подобрать лучший вариант, подходящий именно вам',
+      'meta_title': 'Сервис поиска квартир и недвижимости - купить, снять квартиру без посредников',      
+      'meta_keywords': 'поиск аренда купить снять квартира недвижимость сервис без посредников недорого срок жилье хозяин агент',
+      'meta_description': 'Сервис для управления найденными на рынке предложениями о недвижимости. Он призван упростить рутинную работу и найти лучший вариант, подходящий именно вам. Добавляйте, редактируйте, сохраняйте предложения online, делитесь с друзьями, ведите журнал. Будьте динамичны с удобным мобильным интерфесом.',
       /* Login page*/      
       'sign_in': 'войти',
       'forgot_password': 'забыли пароль',
