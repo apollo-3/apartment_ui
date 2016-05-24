@@ -20,7 +20,8 @@ app.factory('userData', function($http, values, $cookies) {
   if (jQuery.isEmptyObject(data) && $cookies.get('token')!==undefined && $cookies.get('mail')!==undefined && $cookies.get('token')!=='' && $cookies.get('mail')!=='') {
     reloadData().then(function(res) {
       if (res.data.hasOwnProperty('error')) {
-        swal('Error', res.data.error);
+        // Ignore annoying error about expired token for production
+        // swal('Error', res.data.error);
       } else {
         setData(res.data.user);
       }
