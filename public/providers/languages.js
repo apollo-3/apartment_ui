@@ -128,15 +128,14 @@ app.factory('languages', function(values, $cookies) {
       'cvs_reports': 'cvs reports',
       'free_account': 'free standard account',
       'how_to': 'How to use?',
+      'we_have_users': 'people use our service',      
       /* Contacts Page */
       'contacts_description': 'The project is under development, so we are glad to hear any ideas from you. Please feel free to contact us on different questions.',
       'premium_features': 'premium features',      
       'possible_questions': 'possible questions',
       'improvements': 'improvements',
       'bug_reports': 'bug reports',
-      'business_offers': 'business offers',
-      'we_have_users' : 'people use our service'      
-      
+      'business_offers': 'business offers'      
     },
     'ru': {
       /* Meta tags */
