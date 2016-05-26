@@ -17,7 +17,7 @@ app.factory('languages', function(values, $cookies) {
       'mail_confirmation': 'Confirmation message has been sent to your email. Please follow instructuions in it',      
       'no_account': 'Don\'t have an account',
       'after_reset_msg': 'The email with further instructions how to reset the password was sent to you',
-      'learn_service': 'learn service',
+      'learn_service': 'Learn Service',
       /* Settings page*/
       'settings': 'settings',
       'del_account': 'delete account',
@@ -155,7 +155,7 @@ app.factory('languages', function(values, $cookies) {
       'no_account': 'Нет аккаунта',
       'mail_confirmation': 'На вашу почту было отправлено сообщение с указаниями, как активировать ваш аккаунт',
       'after_reset_msg': 'На вашу почту было отправлено письмо с инструкцией как сбросить пароль',
-      'learn_service': 'познакомься с сервисом',
+      'learn_service': 'Познакомься с сервисом',
       /* Settings page*/      
       'settings': 'настройки',
       'del_account': 'удалить аккаунт',
