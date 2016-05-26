@@ -1,6 +1,13 @@
 <div class="container-fluid" style="text-align:center;">
   <div class="block-title users-number">{{we_have_users}}</div>
 </div>
+<div class="container-fluid landing-block">
+  <div class="block-title">{{LNG.how_to}}<hr></div>
+  <div class="block-body col-xs-12" style="text-align:center;"> 
+    <iframe class="hidden-xs" ng-src="{{how_to_url}}" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    <iframe class="visible-xs-block" style="margin:auto;" ng-src="{{how_to_url}}" width="320" height="180" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+  </div>
+</div>
 <div class="container-fluid landing-block" style="min-height: 20px;">
   <div class="block-title">{{LNG.whats_for}}?<hr></div>
   <div class="block-body" style="text-align:center;">
@@ -9,7 +16,7 @@
 </div>
 <div class="container-fluid landing-block">
   <div class="block-title">{{LNG.users}}<hr></div>
-  <div class="block-body col-sm-4 col-sm-offset-4">
+  <div class="block-body col-sm-4 col-sm-offset-4">  
     <ul class="no-bullet-list">
       <li><i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;{{LNG.future_tenants}}</li>
       <li><i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;{{LNG.future_owners}}</li>

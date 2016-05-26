@@ -17,6 +17,7 @@ app.factory('languages', function(values, $cookies) {
       'mail_confirmation': 'Confirmation message has been sent to your email. Please follow instructuions in it',      
       'no_account': 'Don\'t have an account',
       'after_reset_msg': 'The email with further instructions how to reset the password was sent to you',
+      'learn_service': 'learn service',
       /* Settings page*/
       'settings': 'settings',
       'del_account': 'delete account',
@@ -126,6 +127,7 @@ app.factory('languages', function(values, $cookies) {
       'bunch_of_filters': 'bunch of filters',
       'cvs_reports': 'cvs reports',
       'free_account': 'free standard account',
+      'how_to': 'How to use?',
       /* Contacts Page */
       'contacts_description': 'The project is under development, so we are glad to hear any ideas from you. Please feel free to contact us on different questions.',
       'premium_features': 'premium features',      
@@ -152,7 +154,8 @@ app.factory('languages', function(values, $cookies) {
       'reset': 'сбросить',
       'no_account': 'Нет аккаунта',
       'mail_confirmation': 'На вашу почту было отправлено сообщение с указаниями, как активировать ваш аккаунт',
-      'after_reset_msg': 'На вашу почту было отправлено письмо с инструкцией как сбросить пароль',      
+      'after_reset_msg': 'На вашу почту было отправлено письмо с инструкцией как сбросить пароль',
+      'learn_service': 'познакомься с сервисом',
       /* Settings page*/      
       'settings': 'настройки',
       'del_account': 'удалить аккаунт',
@@ -262,6 +265,7 @@ app.factory('languages', function(values, $cookies) {
       'bunch_of_filters': 'набор фильтров',
       'cvs_reports': 'cvs отчеты',
       'free_account': 'бесплатный стандартный аккаунт',
+      'how_to': 'Как использовать?',      
       /* Contacts Page */
       'contacts_description': 'Проект находится в стадии разработки, поэтому мы рады узнать ваше мнение и идеи. Вы можете связаться с нами по разным вопросам.',
       'possible_questions': 'возможные вопросы',

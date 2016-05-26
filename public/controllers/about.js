@@ -1,4 +1,4 @@
-app.controller('about', function($scope, auth, languages, $http, values) {
+app.controller('about', function($scope, $sce, auth, languages, $http, values) {
   auth.checkSession();
   
   fakeLoadOff();
@@ -14,4 +14,10 @@ app.controller('about', function($scope, auth, languages, $http, values) {
           $scope.we_have_users = $scope.usersNum + ' ' + $scope.LNG.we_have_users;
         }
     });
+    
+  if (languages.availableLng() === 'en') {
+    $scope.how_to_url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/167996424?title=0&byline=0&portrait=0');
+  } else {
+    $scope.how_to_url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/167996424?title=0&byline=0&portrait=0');
+  }
 });
