@@ -247,7 +247,7 @@ app.factory('languages', function(values, $cookies) {
       'enter_comment': 'Введите комментарий', 
       /* About Page */      
       'whats_for': 'для чего',
-      'whats_for_description': 'Цель проекта - предоставить легкий, удобный, мобильный сервис по управлению предложениями недвижимости на рынке для пользователей.',
+      'whats_for_description': 'Цель проекта - предоставить легкий, удобный, мобильный сервис для управлению существующими на рынке предложениями о недвижимости для пользователей.',
       'future_tenants': 'будущие арендаторы',
       'future_owners': 'будущие владельцы',
       'realtors': 'агенты по недвижимости',
@@ -265,15 +265,15 @@ app.factory('languages', function(values, $cookies) {
       'bunch_of_filters': 'набор фильтров',
       'cvs_reports': 'cvs отчеты',
       'free_account': 'бесплатный стандартный аккаунт',
-      'how_to': 'Как использовать?',      
+      'how_to': 'Как использовать?',
+      'we_have_users': 'человек пользуются нашим сервисом',
       /* Contacts Page */
       'contacts_description': 'Проект находится в стадии разработки, поэтому мы рады узнать ваше мнение и идеи. Вы можете связаться с нами по разным вопросам.',
       'possible_questions': 'возможные вопросы',
       'premium_features': 'премиум возможности',
       'improvements': 'улучшения',
       'bug_reports': 'найденные ошибки',
-      'business_offers': 'бизнес предложения',
-      'we_have_users' : 'человек пользуется нашим сервисом'
+      'business_offers': 'бизнес предложения'
     },
     availableLng: function() {
       lan = values.def_lang;
