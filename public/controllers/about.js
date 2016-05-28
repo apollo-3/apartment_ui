@@ -16,8 +16,8 @@ app.controller('about', function($scope, $sce, auth, languages, $http, values) {
     });
     
   if (languages.availableLng() === 'en') {
-    $scope.how_to_url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/167996424?title=0&byline=0&portrait=0');
+    $scope.how_to_url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/168459871?title=0&byline=0&portrait=0');
   } else {
-    $scope.how_to_url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/167996424?title=0&byline=0&portrait=0');
+    $scope.how_to_url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/168460203?title=0&byline=0&portrait=0');
   }
 });
